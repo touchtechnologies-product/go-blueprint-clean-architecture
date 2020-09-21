@@ -19,18 +19,13 @@ func (app *App) GetStaffsByCompany(c *gin.Context) {
 	)
 	defer span.Finish()
 
-	input := &staff.GetStaffsByCompanyInput{}
+	input := &serviceStaff.GetStaffsByCompanyInput{}
 	if err := c.ShouldBind(input); err != nil {
 		ginresp.RespValidateError(c, err)
 		return
 	}
 
-	staffs, err := app.staffService.GetStaffsByCompany(ctx,
-		&serviceStaff.GetStaffsByCompanyInput{
-			CompanyId: input.CompanyId,
-			Offset:    input.Offset,
-			Limit:     input.Limit,
-		})
+	staffs, err := app.staffService.GetStaffsByCompany(ctx, input)
 	if err != nil {
 		ginresp.RespWithError(c, err)
 		return

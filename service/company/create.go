@@ -9,7 +9,7 @@ import (
 )
 
 type CreateCompanyInput struct {
-	Name string
+	Name string `json:"name" binding:"required"`
 }
 
 func (service *CompanyService) CreateCompany(ctx context.Context, input *CreateCompanyInput) (*domainCompany.Company, goerror.Error) {

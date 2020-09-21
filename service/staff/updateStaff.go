@@ -9,13 +9,13 @@ import (
 )
 
 type UpdateStaffInput struct {
-	StaffId string
-	Name    string
-	Tel     string
+	Id   string `json:"id" binding:"required"`
+	Name string `json:"name" binding:"required"`
+	Tel  string `json:"tel" binding:"required"`
 }
 
 func (service *StaffService) UpdateStaff(ctx context.Context, input *UpdateStaffInput) (*domainStaff.Staff, goerror.Error) {
-	staff, err := service.staffRepository.Get(ctx, input.StaffId)
+	staff, err := service.staffRepository.Get(ctx, input.Id)
 	if err != nil {
 		return nil, err
 	}

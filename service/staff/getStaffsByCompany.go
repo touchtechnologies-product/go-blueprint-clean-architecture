@@ -9,9 +9,9 @@ import (
 )
 
 type GetStaffsByCompanyInput struct {
-	CompanyId string
-	Offset    int64
-	Limit     int64
+	CompanyId string `json:"companyId" form:"companyId" binding:"required"`
+	Limit     int64  `json:"limit,default=20" form:"limit"`
+	Offset    int64  `json:"offset" form:"offset"`
 }
 
 func (service *StaffService) GetStaffsByCompany(ctx context.Context, input *GetStaffsByCompanyInput) ([]*domainStaff.Staff, goerror.Error) {

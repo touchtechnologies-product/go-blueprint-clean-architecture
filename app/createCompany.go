@@ -19,13 +19,13 @@ func (app *App) CreateCompany(c *gin.Context) {
 	)
 	defer span.Finish()
 
-	input := &company.CreateCompanyInput{}
+	input := &serviceCompany.CreateCompanyInput{}
 	if err := c.ShouldBindJSON(input); err != nil {
 		ginresp.RespValidateError(c, err)
 		return
 	}
 
-	newCompany, err := app.companyService.CreateCompany(ctx, &serviceCompany.CreateCompanyInput{Name: input.Name})
+	newCompany, err := app.companyService.CreateCompany(ctx, input)
 	if err != nil {
 		ginresp.RespWithError(c, err)
 		return

@@ -20,18 +20,13 @@ func (app *App) UpdateStaff(c *gin.Context) {
 	)
 	defer span.Finish()
 
-	input := &staff2.UpdateStaffInput{}
+	input := &serviceStaff.UpdateStaffInput{}
 	if err := c.ShouldBind(input); err != nil {
 		ginresp.RespValidateError(c, err)
 		return
 	}
 
-	staff, err := app.staffService.UpdateStaff(ctx,
-		&serviceStaff.UpdateStaffInput{
-			StaffId: input.Id,
-			Name:    input.Name,
-			Tel:     input.Tel,
-		})
+	staff, err := app.staffService.UpdateStaff(ctx, input)
 	if err != nil {
 		ginresp.RespWithError(c, err)
 		return

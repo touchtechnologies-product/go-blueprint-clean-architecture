@@ -20,18 +20,13 @@ func (app *App) CreateStaff(c *gin.Context) {
 	)
 	defer span.Finish()
 
-	input := &staff2.CreateStaffInput{}
+	input := &serviceStaff.CreateStaffInput{}
 	if err := c.ShouldBind(input); err != nil {
 		ginresp.RespValidateError(c, err)
 		return
 	}
 
-	staff, err := app.staffService.CreateStaff(ctx,
-		&serviceStaff.CreateStaffInput{
-			Name:      input.Name,
-			CompanyId: input.CompanyId,
-			Tel:       input.Tel,
-		})
+	staff, err := app.staffService.CreateStaff(ctx, input)
 	if err != nil {
 		ginresp.RespWithError(c, err)
 		return

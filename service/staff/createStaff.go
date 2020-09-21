@@ -9,9 +9,9 @@ import (
 )
 
 type CreateStaffInput struct {
-	Name      string
-	CompanyId string
-	Tel       string
+	Name      string `json:"name" binding:"required"`
+	CompanyId string `json:"companyId" binding:"required"`
+	Tel       string `json:"tel"`
 }
 
 func (service *StaffService) CreateStaff(ctx context.Context, input *CreateStaffInput) (*domainStaff.Staff, goerror.Error) {

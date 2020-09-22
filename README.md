@@ -12,8 +12,6 @@ simple project - implement api service by golang
 - [x]  Unit Test & Integration Test (DB)
 - [x]  Logstash to ElasticSearch
 - [x]  Implement Application, Service, Repository, domain Layer
-- [ ]  Kubenetes Deployment
-- [ ]  Gitlab CI
 
 ---
 ### Folder Structure

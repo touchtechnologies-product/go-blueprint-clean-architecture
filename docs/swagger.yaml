@@ -1,0 +1,81 @@
+definitions:
+  staff.CreateStaffInput:
+    properties:
+      companyId:
+        type: string
+      name:
+        type: string
+      tel:
+        type: string
+    required:
+    - companyId
+    - name
+    type: object
+  staff.CreateStaffOutput:
+    properties:
+      staff:
+        $ref: '#/definitions/staff.Staff'
+        type: object
+    type: object
+  staff.GetStaffsByCompanyOutput:
+    properties:
+      staffs:
+        items:
+          $ref: '#/definitions/staff.Staff'
+        type: array
+    type: object
+  staff.Staff:
+    properties:
+      companyId:
+        type: string
+      createdAt:
+        type: integer
+      id:
+        type: string
+      name:
+        type: string
+      tel:
+        type: string
+      updatedAt:
+        type: integer
+    type: object
+info:
+  contact: {}
+  license: {}
+paths:
+  /staff:
+    post:
+      consumes:
+      - application/json
+      description: CreateStaff
+      parameters:
+      - description: Request Ex.
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/staff.CreateStaffInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/staff.CreateStaffOutput'
+      summary: List existing videos
+  /staffsByCompany:
+    get:
+      consumes:
+      - application/json
+      description: Get all the existing Staff
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/staff.GetStaffsByCompanyOutput'
+            type: array
+      summary: List existing videos
+swagger: "2.0"

@@ -12,6 +12,14 @@ import (
 	"github.com/touchtechnologies-product/goerror/ginresp"
 )
 
+// CreateStaff godoc
+// @Summary List existing videos
+// @Description CreateStaff
+// @Accept  json
+// @Produce  json
+// @Param req body staff.CreateStaffInput true "Request Ex."
+// @Success 200 {object} staff.CreateStaffOutput
+// @Router /staff [post]
 func (app *App) CreateStaff(c *gin.Context) {
 	span, ctx := opentracing.StartSpanFromContextWithTracer(
 		c.Request.Context(),

@@ -14,7 +14,7 @@ import (
 	serviceCompany "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/company"
 )
 
-func buildRequestCreateCompany(mode string, input *company.CreateCompanyInput) (*http.Request, *httptest.ResponseRecorder) {
+func buildRequestCreateCompany(mode string, input *serviceCompany.CreateCompanyInput) (*http.Request, *httptest.ResponseRecorder) {
 	var req *http.Request
 	w := httptest.NewRecorder()
 
@@ -37,7 +37,7 @@ func (s *AppTestSuite) Test_CreateCompany() {
 		Company: &company.Company{Id: "test_1", Name: "CompanyTest"},
 	}
 
-	input := &company.CreateCompanyInput{Name: "CompanyTest"}
+	input := &serviceCompany.CreateCompanyInput{Name: "CompanyTest"}
 	req, resp := buildRequestCreateCompany("success", input)
 
 	s.companyService.On("CreateCompany", mock.Anything, &serviceCompany.CreateCompanyInput{Name: input.Name}).Return(&domainCompany.Company{
@@ -60,7 +60,7 @@ func replaceResponse(bytesBody []byte) string {
 }
 
 func (s *AppTestSuite) Test_CreateCompany_InvalidRequest() {
-	input := &company.CreateCompanyInput{Name: ""}
+	input := &serviceCompany.CreateCompanyInput{Name: ""}
 	req, resp := buildRequestCreateCompany("success", input)
 
 	errorJsonString := `{"errors":[],"message":"invalid request","type":"InvalidRequest"}`
@@ -72,7 +72,7 @@ func (s *AppTestSuite) Test_CreateCompany_InvalidRequest() {
 }
 
 func (s *AppTestSuite) Test_CreateCompany_MethodNotFound() {
-	input := &company.CreateCompanyInput{Name: "CompanyTest"}
+	input := &serviceCompany.CreateCompanyInput{Name: "CompanyTest"}
 	req, resp := buildRequestCreateCompany("notFound", input)
 
 	s.router.ServeHTTP(resp, req)

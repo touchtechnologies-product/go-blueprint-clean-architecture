@@ -23,8 +23,8 @@ func New(staffService staff.Service, companyService company.Service) *App {
 }
 
 func (app *App) RegisterRoute(router *gin.Engine) *App {
-	docs.SwaggerInfo.Title = "Pragmatic Reviews - Video API"
-	docs.SwaggerInfo.Description = "Pragmatic Reviews - Youtube Video API."
+	docs.SwaggerInfo.Title = "Touch Tech API"
+	docs.SwaggerInfo.Description = "API Spec Demo."
 	docs.SwaggerInfo.Version = "1.0"
 	docs.SwaggerInfo.Host = "http://localhost:8080"
 	docs.SwaggerInfo.BasePath = "/api/v1"

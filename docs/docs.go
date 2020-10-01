@@ -34,7 +34,7 @@ var doc = `{
                 "produces": [
                     "application/json"
                 ],
-                "summary": "List existing videos",
+                "summary": "Create Statff",
                 "parameters": [
                     {
                         "description": "Request Ex.",
@@ -65,7 +65,7 @@ var doc = `{
                 "produces": [
                     "application/json"
                 ],
-                "summary": "List existing videos",
+                "summary": "List Staff By Company",
                 "responses": {
                     "200": {
                         "description": "OK",

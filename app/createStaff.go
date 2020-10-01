@@ -13,7 +13,7 @@ import (
 )
 
 // CreateStaff godoc
-// @Summary List existing videos
+// @Summary Create Statff
 // @Description CreateStaff
 // @Accept  json
 // @Produce  json

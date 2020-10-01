@@ -12,7 +12,7 @@ import (
 )
 
 // GetStaffsByCompany godoc
-// @Summary List existing videos
+// @Summary List Staff By Company
 // @Description Get all the existing Staff
 // @Accept  json
 // @Produce  json

@@ -11,6 +11,13 @@ import (
 	serviceStaff "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/staff"
 )
 
+// GetStaffsByCompany godoc
+// @Summary List Staff By Company
+// @Description Get all the existing Staff
+// @Accept  json
+// @Produce  json
+// @Success 200 {array} staff.GetStaffsByCompanyOutput
+// @Router /staffsByCompany [get]
 func (app *App) GetStaffsByCompany(c *gin.Context) {
 	span, ctx := opentracing.StartSpanFromContextWithTracer(
 		c.Request.Context(),

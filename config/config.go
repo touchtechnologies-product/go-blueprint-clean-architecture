@@ -7,6 +7,8 @@ import (
 type Config struct {
 	AppName string `env:"APP_NAME"`
 
+	Timezone string `env:"TIMEZONE,required"`
+
 	// MongoDB config
 	MongoDBEndpoint         string `env:"MONGODB_ENDPOINT" envDefault:"mongodb://localhost:27017"`
 	MongoDBName             string `env:"MONGODB_NAME,required"`

@@ -1,59 +1,65 @@
 package main
 
 import (
-	"io"
-	"log"
-
+	"context"
 	"github.com/opentracing/opentracing-go"
 	"github.com/sirupsen/logrus"
-	goxid "github.com/touchtechnologies-product/xid"
-	jaegercfg "github.com/uber/jaeger-client-go/config"
-	jaegerlog "github.com/uber/jaeger-client-go/log"
-	"github.com/uber/jaeger-lib/metrics"
-
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/app"
+	"log"
+
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/config"
-	companyRepo "github.com/touchtechnologies-product/go-blueprint-clean-architecture/repository/company/store"
-	staffRepo "github.com/touchtechnologies-product/go-blueprint-clean-architecture/repository/staff/store"
+	compRepo "github.com/touchtechnologies-product/go-blueprint-clean-architecture/repository/company"
+	staffRepo "github.com/touchtechnologies-product/go-blueprint-clean-architecture/repository/staff"
+	//"io"
+	//"log"
+	//
+	//"github.com/opentracing/opentracing-go"
+	//"github.com/sirupsen/logrus"
+	//goxid "github.com/touchtechnologies-product/xid"
+	//"github.com/uber/jaeger-lib/metrics"
+	//
+	//"github.com/touchtechnologies-product/go-blueprint-clean-architecture/app"
+	//"github.com/touchtechnologies-product/go-blueprint-clean-architecture/config"
 	companyService "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/company"
-	companyServiceTracer "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/company/withtracer"
 	staffService "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/staff"
-	staffServiceTracer "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/staff/withtracer"
+	jaegerConf "github.com/uber/jaeger-client-go/config"
+	jaegerLog "github.com/uber/jaeger-client-go/log"
+	"github.com/uber/jaeger-lib/metrics"
+	"io"
 )
 
 func setupJaeger(appConfig *config.Config) io.Closer {
-	cfg, err := jaegercfg.FromEnv()
-	if err != nil {
-		log.Panic(err)
-	}
+	cfg, err := jaegerConf.FromEnv()
+	panicIfErr(err)
+
 	cfg.ServiceName = appConfig.AppName
 	cfg.Sampler.Type = "const"
 	cfg.Sampler.Param = 1
-	cfg.Reporter = &jaegercfg.ReporterConfig{LogSpans: true}
+	cfg.Reporter = &jaegerConf.ReporterConfig{LogSpans: true}
 
-	jLogger := jaegerlog.StdLogger
+	jLogger := jaegerLog.StdLogger
 	jMetricsFactory := metrics.NullFactory
 
 	tracer, closer, err := cfg.NewTracer(
-		jaegercfg.Logger(jLogger),
-		jaegercfg.Metrics(jMetricsFactory),
+		jaegerConf.Logger(jLogger),
+		jaegerConf.Metrics(jMetricsFactory),
 	)
-	if err != nil {
-		log.Panic(err)
-	}
+	panicIfErr(err)
 	opentracing.SetGlobalTracer(tracer)
 
 	return closer
 }
 
 func newApp(appConfig *config.Config) *app.App {
-	xid := goxid.New()
+	ctx := context.Background()
+	
+	cRepo, err := compRepo.New(ctx, appConfig.MongoDBEndpoint, appConfig.MongoDBName, appConfig.MongoDBCompanyTableName)
+	panicIfErr(err)
+	company := companyService.New(cRepo, appConfig.Timezone)
 
-	companyStore := companyRepo.New(appConfig.MongoDBEndpoint, appConfig.MongoDBName, appConfig.MongoDBCompanyTableName)
-	company := companyServiceTracer.Wrap(companyService.New(xid, companyStore))
-
-	staffStore := staffRepo.New(appConfig.MongoDBEndpoint, appConfig.MongoDBName, appConfig.MongoDBStaffTableName)
-	staff := staffServiceTracer.Wrap(staffService.New(xid, staffStore, companyStore))
+	sRepo, err := staffRepo.New(ctx, appConfig.MongoDBEndpoint, appConfig.MongoDBName, appConfig.MongoDBStaffTableName)
+	panicIfErr(err)
+	staff := staffService.New(sRepo, appConfig.Timezone)
 
 	return app.New(staff, company)
 }
@@ -63,4 +69,10 @@ func setupLog() *logrus.Logger {
 	lr.SetFormatter(&logrus.JSONFormatter{})
 
 	return lr
+}
+
+func panicIfErr(err error) {
+	if err != nil {
+		log.Panic(err)
+	}
 }

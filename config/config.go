@@ -7,7 +7,7 @@ import (
 type Config struct {
 	AppName string `env:"APP_NAME" envDefault:"gogo_blueprint"`
 
-	Timezone string `env:"TIMEZONE,required"`
+	Timezone string `env:"TIMEZONE"`
 
 	// MongoDB config
 	MongoDBEndpoint         string `env:"MONGODB_ENDPOINT" envDefault:"mongodb://localhost:27017"`

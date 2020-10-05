@@ -2,6 +2,7 @@ package company
 
 import (
 	"context"
+	"fmt"
 
 	domain "blueprint/domain/company"
 	"blueprint/repository/mongodb"
@@ -20,7 +21,7 @@ func New(ctx context.Context, uri string, dbName string, collName string) (repo 
 }
 
 func (repo *Repository) FindByName(ctx context.Context, name string) (company *domain.Company, err error) {
-	filters := map[string]interface{}{"name": name}
+	filters := []string{fmt.Sprintf("name:eq:%s", name)}
 	err = repo.Read(ctx, filters, company)
 	return company, err
 }

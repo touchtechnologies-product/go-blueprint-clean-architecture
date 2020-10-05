@@ -25,38 +25,7 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/staff": {
-            "post": {
-                "description": "CreateStaff",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "summary": "Create Statff",
-                "parameters": [
-                    {
-                        "description": "Request Ex.",
-                        "name": "req",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/staff.CreateStaffInput"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/staff.CreateStaffOutput"
-                        }
-                    }
-                }
-            }
-        },
-        "/staffsByCompany": {
+        "/staffsByCompany/{}": {
             "get": {
                 "description": "Get all the existing Staff",
                 "consumes": [
@@ -72,7 +41,7 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/staff.GetStaffsByCompanyOutput"
+                                "$ref": "#/definitions/staff.View"
                             }
                         }
                     }
@@ -81,45 +50,7 @@ var doc = `{
         }
     },
     "definitions": {
-        "staff.CreateStaffInput": {
-            "type": "object",
-            "required": [
-                "companyId",
-                "name"
-            ],
-            "properties": {
-                "companyId": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "tel": {
-                    "type": "string"
-                }
-            }
-        },
-        "staff.CreateStaffOutput": {
-            "type": "object",
-            "properties": {
-                "staff": {
-                    "type": "object",
-                    "$ref": "#/definitions/staff.Staff"
-                }
-            }
-        },
-        "staff.GetStaffsByCompanyOutput": {
-            "type": "object",
-            "properties": {
-                "staffs": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/staff.Staff"
-                    }
-                }
-            }
-        },
-        "staff.Staff": {
+        "staff.View": {
             "type": "object",
             "properties": {
                 "companyId": {
@@ -127,9 +58,6 @@ var doc = `{
                 },
                 "createdAt": {
                     "type": "integer"
-                },
-                "id": {
-                    "type": "string"
                 },
                 "name": {
                     "type": "string"

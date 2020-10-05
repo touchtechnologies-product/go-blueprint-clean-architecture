@@ -1,12 +1,11 @@
 package staff
 
 import (
-	"blueprint/app/view"
-	"blueprint/service/util"
-
 	"github.com/gin-gonic/gin"
 	"github.com/opentracing/opentracing-go"
-	"github.com/touchtechnologies-product/goerror/ginresp"
+
+	"blueprint/app/view"
+	"blueprint/service/util"
 )
 
 // GetStaffsByCompany godoc
@@ -14,8 +13,8 @@ import (
 // @Description Get all the existing Staff
 // @Accept  json
 // @Produce  json
-// @Success 200 {array} staff.GetStaffsByCompanyOutput
-// @Router /staffsByCompany [get]
+// @Success 200 {array} staff.View
+// @Router /staffsByCompany} [get]
 func (staff *Staff) GetStaffsByCompany(c *gin.Context) {
 	span, ctx := opentracing.StartSpanFromContextWithTracer(
 		c.Request.Context(),
@@ -26,13 +25,13 @@ func (staff *Staff) GetStaffsByCompany(c *gin.Context) {
 
 	input := &util.PageOption{}
 	if err := c.ShouldBind(input); err != nil {
-		ginresp.RespValidateError(c, err)
+		view.MakeErrResp(c, err)
 		return
 	}
 
 	total, items, err := staff.service.List(ctx, input)
 	if err != nil {
-		ginresp.RespWithError(c, err)
+		view.MakeErrResp(c, err)
 		return
 	}
 

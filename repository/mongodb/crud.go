@@ -12,20 +12,22 @@ import (
 
 func (repo *Repository) List(ctx context.Context, opt *util.PageOption, itemType interface{}) (total int, items []interface{}, err error) {
 	var filters bson.M
+	var optFilter []string
 	var opts *options.FindOptions
 	if opt != nil {
 		opts = repo.makePagingOpts(opt.Page, opt.PerPage)
 		if opt.Filters != nil && len(opt.Filters) > 0 {
-			filters = repo.makeFilters(opt.Filters)
+			optFilter = opt.Filters
+			filters = repo.makeFilters(nil)
 		}
 	}
 
-	total, err = repo.Count(ctx, filters)
+	total, err = repo.Count(ctx, optFilter)
 	if err != nil {
 		return 0, nil, err
 	}
 
-	cursor, err := repo.coll.Find(ctx, filters, opts)
+	cursor, err := repo.Coll.Find(ctx, filters, opts)
 	if err != nil {
 		return 0, nil, err
 	}
@@ -47,32 +49,32 @@ func (repo *Repository) List(ctx context.Context, opt *util.PageOption, itemType
 }
 
 func (repo *Repository) Create(ctx context.Context, ent interface{}) (ID string, err error) {
-	res, err := repo.coll.InsertOne(ctx, ent)
+	res, err := repo.Coll.InsertOne(ctx, ent)
 	if err != nil {
 		return "", err
 	}
 	return res.InsertedID.(primitive.ObjectID).Hex(), nil
 }
 
-func (repo *Repository) Read(ctx context.Context, filters map[string]interface{}, out interface{}) (err error) {
+func (repo *Repository) Read(ctx context.Context, filters []string, out interface{}) (err error) {
 	conditions := repo.makeFilters(filters)
-	return repo.coll.FindOne(ctx, conditions).Decode(out)
+	return repo.Coll.FindOne(ctx, conditions).Decode(out)
 }
 
-func (repo *Repository) Update(ctx context.Context, filters map[string]interface{}, ret interface{}) (err error) {
+func (repo *Repository) Update(ctx context.Context, filters []string, ret interface{}) (err error) {
 	conditions := repo.makeFilters(filters)
-	_, err = repo.coll.UpdateOne(ctx, conditions, bson.M{"$set": ret})
+	_, err = repo.Coll.UpdateOne(ctx, conditions, bson.M{"$set": ret})
 	return err
 }
 
-func (repo *Repository) Delete(ctx context.Context, filters map[string]interface{}) (err error) {
+func (repo *Repository) Delete(ctx context.Context, filters []string) (err error) {
 	conditions := repo.makeFilters(filters)
-	_, err = repo.coll.DeleteOne(ctx, conditions)
+	_, err = repo.Coll.DeleteOne(ctx, conditions)
 	return err
 }
 
-func (repo *Repository) Count(ctx context.Context, filters map[string]interface{}) (total int, err error) {
-	cnt, err := repo.coll.CountDocuments(ctx, repo.makeFilters(filters))
+func (repo *Repository) Count(ctx context.Context, filters []string) (total int, err error) {
+	cnt, err := repo.Coll.CountDocuments(ctx, repo.makeFilters(filters))
 	if err != nil {
 		return 0, err
 	}

@@ -2,6 +2,7 @@ package staff
 
 import (
 	"context"
+	"fmt"
 
 	domain "blueprint/domain/staff"
 	"blueprint/service/util"
@@ -87,6 +88,6 @@ func (impl *Staff) Delete(ctx context.Context, ID string) (err error) {
 	return nil
 }
 
-func (impl *Staff) makeIDFilters(ID string) (filters map[string]interface{}) {
-	return map[string]interface{}{"id": ID}
+func (impl *Staff) makeIDFilters(ID string) (filters []string) {
+	return []string{fmt.Sprintf("id:eq:%s", ID)}
 }

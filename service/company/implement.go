@@ -2,6 +2,7 @@ package company
 
 import (
 	"context"
+	"fmt"
 
 	domain "blueprint/domain/company"
 	"blueprint/service/util"
@@ -48,6 +49,6 @@ func (impl *Company) Read(ctx context.Context, ID string) (view *View, err error
 	return companyToView(company), nil
 }
 
-func (impl *Company) makeIDFilters(ID string) (filters map[string]interface{}) {
-	return map[string]interface{}{"id": ID}
+func (impl *Company) makeIDFilters(ID string) (filters []string) {
+	return []string{fmt.Sprintf("id:eq:%s", ID)}
 }

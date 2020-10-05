@@ -8,9 +8,9 @@ type Paginator struct {
 }
 
 type PageOption struct {
-	Page    int
-	PerPage int
-	Filters map[string]interface{}
+	Page    int      `form:"page"`
+	PerPage int      `form:"per_page"`
+	Filters []string `form:"filters"`
 }
 
 type SetOpParam struct {

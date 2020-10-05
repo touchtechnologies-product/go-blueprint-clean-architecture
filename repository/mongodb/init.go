@@ -9,11 +9,11 @@ import (
 )
 
 type Repository struct {
-	client *mongo.Client
-	db     *mongo.Database
-	coll   *mongo.Collection
-	uri    string
-	dbName string
+	Client *mongo.Client
+	DB     *mongo.Database
+	Coll   *mongo.Collection
+	URI    string
+	DBName string
 }
 
 func New(ctx context.Context, uri string, dbName string, collName string) (repo *Repository, err error) {
@@ -25,11 +25,11 @@ func New(ctx context.Context, uri string, dbName string, collName string) (repo 
 	}
 
 	repo = &Repository{}
-	repo.uri = uri
-	repo.dbName = dbName
-	repo.client = client
-	repo.db = client.Database(dbName)
-	repo.coll = repo.db.Collection(collName)
+	repo.URI = uri
+	repo.DBName = dbName
+	repo.Client = client
+	repo.DB = client.Database(dbName)
+	repo.Coll = repo.DB.Collection(collName)
 
 	return repo, nil
 }

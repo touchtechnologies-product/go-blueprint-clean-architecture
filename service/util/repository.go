@@ -8,10 +8,10 @@ import (
 type Repository interface {
 	List(ctx context.Context, opt *PageOption, itemType interface{}) (total int, items []interface{}, err error)
 	Create(ctx context.Context, ent interface{}) (ID string, err error)
-	Read(ctx context.Context, filters map[string]interface{}, out interface{}) (err error)
-	Update(ctx context.Context, filters map[string]interface{}, ent interface{}) (err error)
-	Delete(ctx context.Context, filters map[string]interface{}) (err error)
-	Count(ctx context.Context, filters map[string]interface{}) (total int, err error)
+	Read(ctx context.Context, filters []string, out interface{}) (err error)
+	Update(ctx context.Context, filters []string, ent interface{}) (err error)
+	Delete(ctx context.Context, filters []string) (err error)
+	Count(ctx context.Context, filters []string) (total int, err error)
 
 	Push(ctx context.Context, param *SetOpParam) (err error)
 	Pop(ctx context.Context, param *SetOpParam) (err error)

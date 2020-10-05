@@ -1,18 +1,18 @@
 package staff
 
 import (
+	"blueprint/repository/mongodb"
 	"context"
-	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/repository/base"
 )
 
-type Staff struct {
-	*base.MongoDB
+type Repository struct {
+	*mongodb.Repository
 }
 
-func New(ctx context.Context, uri string, dbName string, collName string) (repo *Staff, err error) {
-	mongoDB, err := base.New(ctx, uri, dbName, collName)
+func New(ctx context.Context, uri string, dbName string, collName string) (repo *Repository, err error) {
+	mongoDB, err := mongodb.New(ctx, uri, dbName, collName)
 	if err != nil {
 		return nil, err
 	}
-	return &Staff{mongoDB}, nil
+	return &Repository{mongoDB}, nil
 }

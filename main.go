@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	ginlogrus "github.com/toorop/gin-logrus"
 
-	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/config"
+	"blueprint/config"
 )
 
 func main() {

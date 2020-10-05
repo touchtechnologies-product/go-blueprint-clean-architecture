@@ -5,7 +5,7 @@ import (
 
 	"github.com/opentracing/opentracing-go"
 
-	serviceStaff "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/staff"
+	serviceStaff "blueprint/service/staff"
 
 	"github.com/gin-gonic/gin"
 	"github.com/touchtechnologies-product/goerror/ginresp"

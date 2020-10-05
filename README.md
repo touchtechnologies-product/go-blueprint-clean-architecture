@@ -1,7 +1,7 @@
 # gogo-blueprint 🔥
 
 <p align="left">
-  <a href="https://github.com/touchtechnologies-product/go-blueprint-clean-architecture"><img alt="GitHub Actions status" src="https://github.com/touchtechnologies-product/go-blueprint-clean-architecture/workflows/go-unit-test/badge.svg"></a>
+  <a href="https://blueprint"><img alt="GitHub Actions status" src="https://blueprint/workflows/go-unit-test/badge.svg"></a>
 </p>
 
 simple project - implement api service by golang
@@ -12,8 +12,6 @@ simple project - implement api service by golang
 - [x]  Unit Test & Integration Test (DB)
 - [x]  Logstash to ElasticSearch
 - [x]  Implement Application, Service, Repository, domain Layer
-- [ ]  Kubenetes Deployment
-- [ ]  Gitlab CI
 
 ---
 ### Folder Structure
@@ -75,7 +73,7 @@ GO111MODULE=off go get github.com/vektra/mockery/.../
 ### Installation
 
 ```
-  git clone https://github.com/touchtechnologies-product/go-blueprint-clean-architecture.git
+  git clone https://blueprint.git
   cd gogo-blueprint
   go mod download
 ```

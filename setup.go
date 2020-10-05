@@ -2,30 +2,22 @@ package main
 
 import (
 	"context"
-	"github.com/opentracing/opentracing-go"
-	"github.com/sirupsen/logrus"
-	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/app"
 	"log"
 
-	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/config"
-	compRepo "github.com/touchtechnologies-product/go-blueprint-clean-architecture/repository/company"
-	staffRepo "github.com/touchtechnologies-product/go-blueprint-clean-architecture/repository/staff"
-	//"io"
-	//"log"
-	//
-	//"github.com/opentracing/opentracing-go"
-	//"github.com/sirupsen/logrus"
-	//goxid "github.com/touchtechnologies-product/xid"
-	//"github.com/uber/jaeger-lib/metrics"
-	//
-	//"github.com/touchtechnologies-product/go-blueprint-clean-architecture/app"
-	//"github.com/touchtechnologies-product/go-blueprint-clean-architecture/config"
-	companyService "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/company"
-	staffService "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/staff"
+	"github.com/opentracing/opentracing-go"
+	"github.com/sirupsen/logrus"
+	"blueprint/app"
+
+	"io"
+
+	"blueprint/config"
+	compRepo "blueprint/repository/company"
+	staffRepo "blueprint/repository/staff"
+	companyService "blueprint/service/company"
+	staffService "blueprint/service/staff"
 	jaegerConf "github.com/uber/jaeger-client-go/config"
 	jaegerLog "github.com/uber/jaeger-client-go/log"
 	"github.com/uber/jaeger-lib/metrics"
-	"io"
 )
 
 func setupJaeger(appConfig *config.Config) io.Closer {
@@ -52,7 +44,7 @@ func setupJaeger(appConfig *config.Config) io.Closer {
 
 func newApp(appConfig *config.Config) *app.App {
 	ctx := context.Background()
-	
+
 	cRepo, err := compRepo.New(ctx, appConfig.MongoDBEndpoint, appConfig.MongoDBName, appConfig.MongoDBCompanyTableName)
 	panicIfErr(err)
 	company := companyService.New(cRepo, appConfig.Timezone)

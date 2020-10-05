@@ -1,7 +1,7 @@
 package company
 
 import (
-	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/company"
+	"blueprint/service/company"
 )
 
 type Company struct {

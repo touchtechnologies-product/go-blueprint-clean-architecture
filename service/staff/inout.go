@@ -1,15 +1,23 @@
 package staff
 
 import (
-	domain "github.com/touchtechnologies-product/go-blueprint-clean-architecture/domain/staff"
+	domain "blueprint/domain/staff"
+	"blueprint/service/util"
+
 	"github.com/uniplaces/carbon"
 )
 
 type CreateInput struct {
-	Id        string `json:"id"`
-	Name      string `json:"name"`
-	CompanyId string `json:"companyId"`
+	ID        string `json:"id" validator:"required"`
+	Name      string `json:"name" validator:"required"`
+	CompanyID string `json:"companyId" validator:"required"`
 	Tel       string `json:"tel"`
+}
+
+type Paginator struct {
+	Items    []*domain.Staff
+	PageLeft int
+	*util.Paginator
 }
 
 func createInputToStaffDomain(input *CreateInput, timezone string) (staff *domain.Staff, err error) {
@@ -19,8 +27,8 @@ func createInputToStaffDomain(input *CreateInput, timezone string) (staff *domai
 	}
 
 	return &domain.Staff{
-		Id:        input.Id,
-		CompanyId: input.CompanyId,
+		ID:        input.ID,
+		CompanyID: input.CompanyID,
 		Name:      input.Name,
 		Tel:       input.Tel,
 		CreatedAt: now.Timestamp(),

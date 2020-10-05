@@ -1,14 +1,14 @@
 package staff
 
 import (
+	domain "blueprint/domain/staff"
+	"blueprint/service/util"
 	"context"
-	domain "github.com/touchtechnologies-product/go-blueprint-clean-architecture/domain/staff"
-	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/common"
 )
 
 //go:generate mockery --name=Staff
 type Service interface {
-	List(ctx context.Context, opt *common.ListOption) (list *common.List, err error)
+	List(ctx context.Context, opt *util.PageOption) (list *Paginator, err error)
 	Create(ctx context.Context, input *CreateInput) (ID string, err error)
 	Read(ctx context.Context, ID string) (staff *domain.Staff, err error)
 	Update(ctx context.Context, ID string, input *CreateInput) (err error)
@@ -16,13 +16,15 @@ type Service interface {
 }
 
 type Staff struct {
-	staffRepo common.Repository
+	validator util.Validator
+	repo      util.Repository
 	timezone  string
 }
 
-func New(staffRepo common.Repository, timezone string) Service {
+func New(validator util.Validator, staffRepo util.Repository, timezone string) Service {
 	return &Staff{
-		staffRepo: staffRepo,
+		validator: validator,
+		repo:      staffRepo,
 		timezone:  timezone,
 	}
 }

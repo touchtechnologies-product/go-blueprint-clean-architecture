@@ -1,7 +1,7 @@
 package staff
 
 import (
-	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/staff"
+	"blueprint/service/staff"
 )
 
 type Staff struct {

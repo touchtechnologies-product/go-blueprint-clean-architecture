@@ -1,43 +1,57 @@
 package company
 
 import (
+	domain "blueprint/domain/company"
+	"blueprint/service/util"
 	"context"
-	domain "github.com/touchtechnologies-product/go-blueprint-clean-architecture/domain/company"
-	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/common"
+	"math"
 )
 
+func (impl *Company) List(ctx context.Context, opt *util.PageOption) (list *Paginator, err error) {
+	total, items, err := impl.repo.List(ctx, opt, domain.Company{})
+	if err != nil {
+		return nil, util.RepoListErr(err)
+	}
 
-func (impl *Company) List(ctx context.Context, opt *common.ListOption) (list *common.List, err error) {
-	return impl.companyRepo.List(ctx, opt, domain.Company{})
+	list = &Paginator{}
+	list.Items = make([]*domain.Company, len(items))
+	for i, item := range items {
+		list.Items[i] = item.(*domain.Company)
+	}
+	list.Total = total
+	list.PerPage = opt.PerPage
+	list.CurPage = opt.Page
+	list.LastPage = int(math.Ceil(float64(total / opt.PerPage)))
+	list.HasMore = opt.Page < list.LastPage
+
+	return list, nil
 }
 
 func (impl *Company) Create(ctx context.Context, input *CreateInput) (ID string, err error) {
-	company, err := createInputToCompanyDomain(input, impl.timezone)
+	err = impl.validator.Validate(input)
 	if err != nil {
-		return "", err
+		return "", util.ValidationCreateErr(err)
 	}
-	return impl.companyRepo.Create(ctx, company)
+
+	company := createInputDomain(input)
+	ID, err = impl.repo.Create(ctx, company)
+	if err != nil {
+		return "", util.RepoCreateErr(err)
+	}
+
+	return ID, nil
 }
 
 func (impl *Company) Read(ctx context.Context, ID string) (company *domain.Company, err error) {
 	company = &domain.Company{}
 	filters := impl.makeIDFilters(ID)
-	return company, impl.companyRepo.Read(ctx, filters, company)
-}
 
-func (impl *Company) Update(ctx context.Context, ID string, input *CreateInput) (err error) {
-	filters := impl.makeIDFilters(ID)
-	return impl.companyRepo.Update(ctx, filters, input)
-}
-
-func (impl *Company) Delete(ctx context.Context, ID string) (err error) {
-	company := &domain.Company{}
-	filters := impl.makeIDFilters(ID)
-	err = impl.companyRepo.Read(ctx, filters, company)
+	err = impl.repo.Read(ctx, filters, company)
 	if err != nil {
-		return err
+		return nil, util.RepoReadErr(err)
 	}
-	return impl.companyRepo.Delete(ctx, filters)
+
+	return company, nil
 }
 
 func (impl *Company) makeIDFilters(ID string) (filters map[string]interface{}) {

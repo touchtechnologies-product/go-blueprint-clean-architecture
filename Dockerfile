@@ -5,7 +5,7 @@ FROM golang:1.13.2-alpine AS builder
 # Install git
 # Git is required for fetching the dependencies
 RUN apk update && apk add --no-cache git
-WORKDIR $GOPATH/src/github.com/touchtechnologies-product/go-blueprint-clean-architecture/
+WORKDIR $GOPATH/src/blueprint/
 COPY . .
 # Enable go module
 ENV GO111MODULE=on

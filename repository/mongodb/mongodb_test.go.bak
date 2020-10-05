@@ -1,44 +1,51 @@
-package base
+package mongodb
 
 import (
+	"blueprint/config"
+	domain "blueprint/domain/company"
+	"blueprint/service/util"
 	"context"
-	"github.com/stretchr/testify/suite"
-	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/config"
-	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/domain/common"
-	domain "github.com/touchtechnologies-product/go-blueprint-clean-architecture/domain/company"
-	"go.mongodb.org/mongo-driver/bson"
 	"os"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/suite"
+	"github.com/uniplaces/carbon"
+	"go.mongodb.org/mongo-driver/bson"
 )
 
 const collName = "RoomMock"
 
 type MongoDBTestSuite struct {
 	suite.Suite
-	ctx context.Context
-	db  *MongoDB
+	ctx  context.Context
+	repo *Repository
 }
 
 func (suite *MongoDBTestSuite) SetupSuite() {
 	suite.ctx = context.Background()
+	timeStr := "2020-10-01T14:54:35+07:00"
+	t, err := carbon.Parse(time.RFC3339, timeStr, "Africa/Kampala")
+	results := t.String()
+	suite.NoError(err)
+	suite.Equal(results, timeStr)
 }
 
 func (suite *MongoDBTestSuite) SetupTest() {
 	appConfig := config.Get()
 	var err error
-	suite.db, err = New(suite.ctx, appConfig.MongoDBEndpoint, appConfig.MongoDBName, collName)
+	suite.repo, err = New(suite.ctx, appConfig.MongoDBEndpoint, appConfig.MongoDBName, collName)
 	suite.NoError(err)
-	suite.NotNil(suite.db)
+	suite.NotNil(suite.repo)
 	suite.NoError(err)
 }
 
 func (suite *MongoDBTestSuite) TearDownTest() {
-	_, _ = suite.db.coll.DeleteMany(suite.ctx, bson.M{})
+	_, _ = suite.repo.coll.DeleteMany(suite.ctx, bson.M{})
 }
 
 func (suite *MongoDBTestSuite) TearDownSuite() {
-	_ = suite.db.db.Drop(suite.ctx)
+	_ = suite.repo.db.Drop(suite.ctx)
 }
 
 func TestMongoDBTestSuite(t *testing.T) {
@@ -46,37 +53,40 @@ func TestMongoDBTestSuite(t *testing.T) {
 }
 
 func (suite *MongoDBTestSuite) TestCreate() {
-	ID, err := suite.db.Create(suite.ctx, domain.Create("cid", "cname"))
+	ID, err := suite.repo.Create(suite.ctx, domain.Create("cid", "cname"))
 	suite.NoError(err)
 	suite.NotEmpty(ID)
 }
 
 func (suite *MongoDBTestSuite) TestList() {
 	company1 := domain.Create("cid", "cname")
-	_, err := suite.db.Create(suite.ctx, company1)
+	_, err := suite.repo.Create(suite.ctx, company1)
 	suite.NoError(err)
-	time.Sleep(5*time.Second)
+	time.Sleep(5 * time.Second)
 	company2 := domain.Create("cid", "cname")
 	company2.Name = "cname2"
-	_, err = suite.db.Create(suite.ctx, company2)
+	_, err = suite.repo.Create(suite.ctx, company2)
 	suite.NoError(err)
-
-	list := &common.List{}
 
 	typeGuide := domain.Create("cid", "cname")
-	list, err = suite.db.List(suite.ctx, common.MakeTestListOption(), typeGuide)
+	utilOpt := &util.ListOption{
+		Page:    1,
+		PerPage: 10,
+	}
+	total, items, err := suite.repo.List(suite.ctx, utilOpt, typeGuide)
 
 	suite.NoError(err)
-	suite.Equal(2, list.Total)
+	suite.Equal(2, total)
+	suite.Equal(2, len(items))
 }
 
 func (suite *MongoDBTestSuite) TestRead() {
 	company := domain.Create("cid", "cname")
 	expect := domain.Create("cid", "cname")
 
-	_, _ = suite.db.Create(suite.ctx, company)
+	_, _ = suite.repo.Create(suite.ctx, company)
 	filters := map[string]interface{}{"id": company.Id}
-	err := suite.db.Read(suite.ctx, filters, expect)
+	err := suite.repo.Read(suite.ctx, filters, expect)
 
 	suite.NoError(err)
 	suite.Equal(company.Id, expect.Id)
@@ -84,15 +94,15 @@ func (suite *MongoDBTestSuite) TestRead() {
 
 func (suite *MongoDBTestSuite) TestUpdate() {
 	company := domain.Create("cid", "cname")
-	_, _ = suite.db.Create(suite.ctx, company)
+	_, _ = suite.repo.Create(suite.ctx, company)
 	filters := map[string]interface{}{"id": company.Id}
 
 	company.Name = "test update"
-	err := suite.db.Update(suite.ctx, filters, company)
+	err := suite.repo.Update(suite.ctx, filters, company)
 	suite.NoError(err)
 
 	expect := domain.Create("cid", "cname")
-	err = suite.db.Read(suite.ctx, filters, expect)
+	err = suite.repo.Read(suite.ctx, filters, expect)
 
 	suite.NoError(err)
 	suite.Equal(company.Name, expect.Name)
@@ -101,8 +111,8 @@ func (suite *MongoDBTestSuite) TestUpdate() {
 func (suite *MongoDBTestSuite) TestDelete() {
 	company := domain.Create("cid", "cname")
 	filters := map[string]interface{}{"id": company.Id}
-	_, _ = suite.db.Create(suite.ctx, company)
-	err := suite.db.Delete(suite.ctx, filters)
+	_, _ = suite.repo.Create(suite.ctx, company)
+	err := suite.repo.Delete(suite.ctx, filters)
 	suite.NoError(err)
 }
 
@@ -110,30 +120,34 @@ func (suite *MongoDBTestSuite) TestSearchList() {
 	company1 := domain.Create("cid", "cname")
 	company2 := domain.Create("cid", "cname")
 	company2.Name = "test1"
-	_, _ = suite.db.Create(suite.ctx, company1)
-	_, _ = suite.db.Create(suite.ctx, company2)
-	opt := common.MakeTestListOption()
+	_, _ = suite.repo.Create(suite.ctx, company1)
+	_, _ = suite.repo.Create(suite.ctx, company2)
+	opt := &util.ListOption{
+		Page:    1,
+		PerPage: 10,
+	}
 	opt.Filters = map[string]interface{}{"name": map[string]interface{}{"$regex": "1"}}
-	list, err := suite.db.List(suite.ctx, opt, domain.Create("cid", "cname"))
+	total, items, err := suite.repo.List(suite.ctx, opt, domain.Create("cid", "cname"))
 	suite.NoError(err)
-	suite.Equal(1, list.Total)
+	suite.Equal(1, total)
+	suite.Equal(1, len(items))
 }
 
 func (suite *MongoDBTestSuite) TestPush() {
 	company := domain.Create("cid", "cname")
-	opt := &common.SetOpParam{
+	opt := &util.SetOpParam{
 		ID:           "test",
 		SetFieldName: "queue",
 		Item:         "www",
 	}
 
-	_, _ = suite.db.Create(suite.ctx, company)
-	err := suite.db.Push(suite.ctx, opt)
+	_, _ = suite.repo.Create(suite.ctx, company)
+	err := suite.repo.Push(suite.ctx, opt)
 	suite.NoError(err)
 
 	filters := map[string]interface{}{"id": company.Id}
 	expect := domain.Create("cid", "cname")
-	err = suite.db.Read(suite.ctx, filters, expect)
+	err = suite.repo.Read(suite.ctx, filters, expect)
 
 	suite.NoError(err)
 	suite.Equal(company.Id, expect.Id)
@@ -144,18 +158,22 @@ func (suite *MongoDBTestSuite) TestNewWithIncorrectURI() {
 	_ = os.Setenv("MONGODB_URI", "some-uri")
 	appConfig := config.Get()
 	var err error
-	suite.db, err = New(suite.ctx, appConfig.MongoDBEndpoint, appConfig.MongoDBName, collName)
+	suite.repo, err = New(suite.ctx, appConfig.MongoDBEndpoint, appConfig.MongoDBName, collName)
 	suite.Error(err)
 	_ = os.Setenv("MONGODB_URI", tmp)
 }
 
 func (suite *MongoDBTestSuite) TestListCountErr() {
-	_ = suite.db.client.Disconnect(suite.ctx)
-	_, err := suite.db.List(suite.ctx, common.MakeTestListOption(), domain.Create("cid", "cname"))
+	_ = suite.repo.client.Disconnect(suite.ctx)
+	opt := &util.ListOption{
+		Page:    1,
+		PerPage: 10,
+	}
+	_, _, err := suite.repo.List(suite.ctx, opt, domain.Create("cid", "cname"))
 	suite.Error(err)
 }
 
 func (suite *MongoDBTestSuite) TestCreateErr() {
-	_, err := suite.db.Create(suite.ctx, nil)
+	_, err := suite.repo.Create(suite.ctx, nil)
 	suite.Error(err)
 }

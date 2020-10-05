@@ -1,0 +1,126 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {},
+        "license": {}
+    },
+    "paths": {
+        "/staff": {
+            "post": {
+                "description": "CreateStaff",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Create Statff",
+                "parameters": [
+                    {
+                        "description": "Request Ex.",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/staff.CreateStaffInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/staff.CreateStaffOutput"
+                        }
+                    }
+                }
+            }
+        },
+        "/staffsByCompany": {
+            "get": {
+                "description": "Get all the existing Staff",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "List Staff By Company",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/staff.GetStaffsByCompanyOutput"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "staff.CreateStaffInput": {
+            "type": "object",
+            "required": [
+                "companyId",
+                "name"
+            ],
+            "properties": {
+                "companyId": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "tel": {
+                    "type": "string"
+                }
+            }
+        },
+        "staff.CreateStaffOutput": {
+            "type": "object",
+            "properties": {
+                "staff": {
+                    "type": "object",
+                    "$ref": "#/definitions/staff.Staff"
+                }
+            }
+        },
+        "staff.GetStaffsByCompanyOutput": {
+            "type": "object",
+            "properties": {
+                "staffs": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/staff.Staff"
+                    }
+                }
+            }
+        },
+        "staff.Staff": {
+            "type": "object",
+            "properties": {
+                "companyId": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "tel": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}

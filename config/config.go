@@ -5,19 +5,19 @@ import (
 )
 
 type Config struct {
-	AppName string `env:"APP_NAME"`
+	AppName string `env:"APP_NAME" envDefault:"gogo_blueprint"`
 
 	Timezone string `env:"TIMEZONE,required"`
 
 	// MongoDB config
 	MongoDBEndpoint         string `env:"MONGODB_ENDPOINT" envDefault:"mongodb://localhost:27017"`
-	MongoDBName             string `env:"MONGODB_NAME,required"`
-	MongoDBStaffTableName   string `env:"MONGODB_STAFF_TABLE_NAME,required"`
-	MongoDBCompanyTableName string `env:"MONGODB_COMPANY_TABLE_NAME,required"`
+	MongoDBName             string `env:"MONGODB_NAME" envDefault:"go_project"`
+	MongoDBStaffTableName   string `env:"MONGODB_STAFF_TABLE_NAME" envDefault:"staff_test"`
+	MongoDBCompanyTableName string `env:"MONGODB_COMPANY_TABLE_NAME" envDefault:"company_tes"`
 
 	// Jaeger config
-	JaegerAgentHost string `env:"JAEGER_AGENT_HOST,required"`
-	JaegerAgentPort string `env:"JAEGER_AGENT_PORT,required"`
+	JaegerAgentHost string `env:"JAEGER_AGENT_HOST" envDefault:"localhost"`
+	JaegerAgentPort string `env:"JAEGER_AGENT_PORT" envDefault:"6831"`
 }
 
 func Get() *Config {

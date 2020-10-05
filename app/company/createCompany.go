@@ -1,14 +1,12 @@
 package company
 
 import (
-	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/app/view"
+	"blueprint/app/view"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/opentracing/opentracing-go"
-	"github.com/touchtechnologies-product/goerror/ginresp"
-
-	service "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/company"
+	service "blueprint/service/company"
 )
 
 func (company *Company) CreateCompany(c *gin.Context) {
@@ -20,14 +18,14 @@ func (company *Company) CreateCompany(c *gin.Context) {
 	defer span.Finish()
 
 	input := &service.CreateInput{}
-	if err := c.ShouldBind(input); err != nil {
-		ginresp.RespValidateError(c, err)
+	if err := c.ShouldBindJSON(input); err != nil {
+		view.MakeErrResp(c, err)
 		return
 	}
 
 	ID, err := company.service.Create(ctx, input)
 	if err != nil {
-		ginresp.RespWithError(c, err)
+		view.MakeErrResp(c, err)
 		return
 	}
 

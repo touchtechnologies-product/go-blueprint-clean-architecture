@@ -1,29 +1,24 @@
 package company
 
 import (
-	domain "github.com/touchtechnologies-product/go-blueprint-clean-architecture/domain/staff"
-	"github.com/uniplaces/carbon"
+	domain "blueprint/domain/company"
+	"blueprint/service/util"
 )
 
 type CreateInput struct {
-	Id        string `json:"id"`
-	Name      string `json:"name"`
-	CompanyId string `json:"companyId"`
-	Tel       string `json:"tel"`
+	ID   string `json:"id"`
+	Name string `json:"name"`
 }
 
-func createInputToCompanyDomain(input *CreateInput, timezone string) (staff *domain.Staff, err error) {
-	now, err := carbon.NowInLocation(timezone)
-	if err != nil {
-		return nil, err
-	}
+type Paginator struct {
+	Items    []*domain.Company
+	LastPage int
+	*util.Paginator
+}
 
-	return &domain.Staff{
-		Id:        input.Id,
-		CompanyId: input.CompanyId,
-		Name:      input.Name,
-		Tel:       input.Tel,
-		CreatedAt: now.Timestamp(),
-		UpdatedAt: now.Timestamp(),
-	}, nil
+func createInputDomain(input *CreateInput) (staff *domain.Company) {
+	return &domain.Company{
+		ID:   input.ID,
+		Name: input.Name,
+	}
 }

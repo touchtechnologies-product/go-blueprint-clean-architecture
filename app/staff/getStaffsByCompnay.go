@@ -2,8 +2,8 @@ package staff
 
 import (
 	"fmt"
-	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/app/view"
-	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/common"
+	"blueprint/app/view"
+	"blueprint/service/common"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -11,11 +11,18 @@ import (
 	"github.com/touchtechnologies-product/goerror/ginresp"
 )
 
+// GetStaffsByCompany godoc
+// @Summary List Staff By Company
+// @Description Get all the existing Staff
+// @Accept  json
+// @Produce  json
+// @Success 200 {array} staff.GetStaffsByCompanyOutput
+// @Router /staffsByCompany [get]
 func (staff *Staff) GetStaffsByCompany(c *gin.Context) {
 	span, ctx := opentracing.StartSpanFromContextWithTracer(
 		c.Request.Context(),
 		opentracing.GlobalTracer(),
-		"handler.getStaffsByStaff",
+		"handler.getStaffsByCompany",
 	)
 	defer span.Finish()
 

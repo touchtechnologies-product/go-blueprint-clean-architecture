@@ -62,7 +62,7 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/staff.CreateStaffOutput'
-      summary: Create Statff
+      summary: Create Staff
   /staffsByCompany:
     get:
       consumes:

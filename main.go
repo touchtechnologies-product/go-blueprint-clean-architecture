@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	ginlogrus "github.com/toorop/gin-logrus"
+	ginLogRus "github.com/toorop/gin-logrus"
 
 	"blueprint/config"
 )
@@ -18,7 +18,7 @@ func main() {
 	router := gin.New()
 
 	// Set custom log for gin
-	router.Use(ginlogrus.Logger(log), gin.Recovery())
+	router.Use(ginLogRus.Logger(log), gin.Recovery())
 
 	// Jaeger setup
 	closer := setupJaeger(appConfig)

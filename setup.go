@@ -2,22 +2,24 @@ package main
 
 import (
 	"context"
+	"io"
 	"log"
 
 	"github.com/opentracing/opentracing-go"
 	"github.com/sirupsen/logrus"
-	"blueprint/app"
 
-	"io"
+	"blueprint/app"
+	"blueprint/service/util"
+
+	jaegerConf "github.com/uber/jaeger-client-go/config"
+	jaegerLog "github.com/uber/jaeger-client-go/log"
+	"github.com/uber/jaeger-lib/metrics"
 
 	"blueprint/config"
 	compRepo "blueprint/repository/company"
 	staffRepo "blueprint/repository/staff"
 	companyService "blueprint/service/company"
 	staffService "blueprint/service/staff"
-	jaegerConf "github.com/uber/jaeger-client-go/config"
-	jaegerLog "github.com/uber/jaeger-client-go/log"
-	"github.com/uber/jaeger-lib/metrics"
 )
 
 func setupJaeger(appConfig *config.Config) io.Closer {
@@ -44,14 +46,17 @@ func setupJaeger(appConfig *config.Config) io.Closer {
 
 func newApp(appConfig *config.Config) *app.App {
 	ctx := context.Background()
+	validator := util.NewValidator()
+	generateID, err := util.NewUUID()
+	panicIfErr(err)
 
 	cRepo, err := compRepo.New(ctx, appConfig.MongoDBEndpoint, appConfig.MongoDBName, appConfig.MongoDBCompanyTableName)
 	panicIfErr(err)
-	company := companyService.New(cRepo, appConfig.Timezone)
+	company := companyService.New(validator, generateID, cRepo, appConfig.Timezone)
 
 	sRepo, err := staffRepo.New(ctx, appConfig.MongoDBEndpoint, appConfig.MongoDBName, appConfig.MongoDBStaffTableName)
 	panicIfErr(err)
-	staff := staffService.New(sRepo, appConfig.Timezone)
+	staff := staffService.New(validator, generateID, sRepo, appConfig.Timezone)
 
 	return app.New(staff, company)
 }

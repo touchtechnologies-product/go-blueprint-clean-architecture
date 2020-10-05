@@ -1,7 +1,7 @@
 package config
 
 import (
-	env "github.com/caarlos0/env/v6"
+	"github.com/caarlos0/env/v6"
 )
 
 type Config struct {

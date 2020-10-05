@@ -13,7 +13,7 @@ type SnowflakeUUID struct {
 	generator *snowflake.Node
 }
 
-func New() (uuid UUID, err error) {
+func NewUUID() (uuid UUID, err error) {
 	node, err := snowflake.NewNode(1023)
 	if err != nil {
 		return nil, err

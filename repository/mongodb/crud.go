@@ -1,8 +1,9 @@
 package mongodb
 
 import (
-	"blueprint/service/util"
 	"context"
+
+	"blueprint/service/util"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -54,19 +55,19 @@ func (repo *Repository) Create(ctx context.Context, ent interface{}) (ID string,
 }
 
 func (repo *Repository) Read(ctx context.Context, filters map[string]interface{}, out interface{}) (err error) {
-	conds := repo.makeFilters(filters)
-	return repo.coll.FindOne(ctx, conds).Decode(out)
+	conditions := repo.makeFilters(filters)
+	return repo.coll.FindOne(ctx, conditions).Decode(out)
 }
 
 func (repo *Repository) Update(ctx context.Context, filters map[string]interface{}, ret interface{}) (err error) {
-	conds := repo.makeFilters(filters)
-	_, err = repo.coll.UpdateOne(ctx, conds, bson.M{"$set": ret})
+	conditions := repo.makeFilters(filters)
+	_, err = repo.coll.UpdateOne(ctx, conditions, bson.M{"$set": ret})
 	return err
 }
 
 func (repo *Repository) Delete(ctx context.Context, filters map[string]interface{}) (err error) {
-	conds := repo.makeFilters(filters)
-	_, err = repo.coll.DeleteOne(ctx, conds)
+	conditions := repo.makeFilters(filters)
+	_, err = repo.coll.DeleteOne(ctx, conditions)
 	return err
 }
 

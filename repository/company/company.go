@@ -1,9 +1,10 @@
 package company
 
 import (
-	"blueprint/app/company"
-	"blueprint/repository/mongodb"
 	"context"
+
+	domain "blueprint/domain/company"
+	"blueprint/repository/mongodb"
 )
 
 type Repository struct {
@@ -18,7 +19,7 @@ func New(ctx context.Context, uri string, dbName string, collName string) (repo 
 	return &Repository{mongoDB}, nil
 }
 
-func (repo *Repository) FindByName(ctx context.Context, name string) (company *company.Company, err error) {
+func (repo *Repository) FindByName(ctx context.Context, name string) (company *domain.Company, err error) {
 	filters := map[string]interface{}{"name": name}
 	err = repo.Read(ctx, filters, company)
 	return company, err

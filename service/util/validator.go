@@ -1,7 +1,7 @@
 package util
 
 import (
-	validator "github.com/go-playground/validator/v10"
+	"github.com/go-playground/validator/v10"
 )
 
 //go:generate mockery -name=Validator

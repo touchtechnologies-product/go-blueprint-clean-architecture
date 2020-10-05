@@ -1,6 +1,6 @@
 # gogo-blueprint 🔥
 
-<p align="left">
+<p>
   <a href="https://blueprint"><img alt="GitHub Actions status" src="https://blueprint/workflows/go-unit-test/badge.svg"></a>
 </p>
 

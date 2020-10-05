@@ -1,8 +1,9 @@
 package staff
 
 import (
-	"blueprint/repository/mongodb"
 	"context"
+
+	"blueprint/repository/mongodb"
 )
 
 type Repository struct {

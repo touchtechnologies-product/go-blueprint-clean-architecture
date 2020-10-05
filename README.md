@@ -1,67 +1,27 @@
-# gogo-blueprint 🔥
+# Touch Go Blueprint 😸
 
-<p>
-  <a href="https://blueprint"><img alt="GitHub Actions status" src="https://blueprint/workflows/go-unit-test/badge.svg"></a>
+# A starter kit for Golang API project development  
+
+#### Feature
+- [x]  Company creation
+- [x]  Staff creation
+- [x]  Staff update
+- [x]  Get staff by company ID
+
+
+#### System requirements Development
+- [x]  Docker
+- [x]  Jaeger
+- [x]  MongoDB
+
+#### Prototype
+<p align="left">
+    <a href="https://github.com/touchtechnologies-product/go-blueprint-clean-architecture">Touch Go Blueprint</a>
 </p>
 
-simple project - implement api service by golang
+### Api Specification
 
-#### Blueprint
-- [x]  Support Jaeger
-- [x]  MongoDB
-- [x]  Unit Test & Integration Test (DB)
-- [x]  Logstash to ElasticSearch
-- [x]  Implement Application, Service, Repository, domain Layer
-
----
-### Folder Structure
-
-```
-  /app                        # application layer
-    /inout                    # api input / output
-      /company
-      	company.go           
-	craeteCompany.go      # create company input / output
-    app.go                    # setup api handlers
-    createCompany.go          # api
-    createCompany_test.go     # api testing
-
-  /config                     # load config (from env)
-    config.go
-
-  /deployment                 # kubernetes config for deploy
-
-  /development                # development tools (db, jaeger, local env)
-    docker-compose.yml        # docker mongodb, elasticsearch + kibana, jaeger
-    local.env                 # local env for integration test
-
-  /domain                     # business logic layer
-    /company
-      company.go
-      company_test.go
-
-  /external                   # external service layer
-  
-  /lib                        # internal library
-  
-  /repository                 # repository layer
-    /company
-      /mocks                  # repository mocks for testing
-      /store                  # repository implement interface
-      repository.go           # repository interface & repository errors
-
-  /service                    # service layer for control domains
-    /company
-      /withtracer	      # implement jaeger trace by wrap service interface
-      /mocks                  # mock service for testing
-      create.go
- 
-  main.go                     # initial application
-  setup.go                    # load and setup dependency
-```
-
-
----
+URL: <a href="http://example.swagger-api-touch.com">example.swagger-api-touch.com</a>
 
 ### Pre-Require
 
@@ -69,13 +29,19 @@ Mockery
 ```
 GO111MODULE=off go get github.com/vektra/mockery/.../
 ```
+Swagger
+```
+go get -u github.com/swaggo/swag/cmd/swag
+go get -u github.com/swaggo/gin-swagger
+go get -u github.com/swaggo/files
+```
 
 ### Installation
 
 ```
-  git clone https://blueprint.git
-  cd gogo-blueprint
-  go mod download
+git clone https://github.com/touchtechnologies-product/go-blueprint-clean-architecture
+cd go-blueprint-clean-architecture
+go mod download
 ```
 
 
@@ -84,7 +50,7 @@ GO111MODULE=off go get github.com/vektra/mockery/.../
 unit testing command
 
 ```
-  go test ./...
+  go test ./... -v
 ```
 
 integrating testing command
@@ -104,7 +70,7 @@ generate mocks from interfaces for unit testing
 
 
 ### Local development
-development in local start mongodb, elasticsearch + kibana, jaeger
+development in local start mongodb jaeger
 
 ```
 cd development

@@ -1,22 +1,26 @@
 package view
 
 import (
-	"blueprint/service/util"
+	"errors"
 	"net/http"
+
+	"github.com/go-playground/validator/v10"
+
+	"blueprint/service/util"
 
 	"github.com/gin-gonic/gin"
 )
 
 const errorStatus = "error"
 
-type ErrResp struct {
+type errResp struct {
 	Status string        `json:"status"`
 	Code   int           `json:"code"`
 	Errors []*util.Error `json:"errors"`
 }
 
 func MakeErrResp(c *gin.Context, err error) {
-	errResp := &ErrResp{
+	errResp := &errResp{
 		Status: errorStatus,
 		Code:   getHTTPStatusCode(err),
 		Errors: getRespErrors(err),
@@ -47,8 +51,22 @@ func getRespErrors(err error) (errs []*util.Error) {
 func utilToResp(err error) (errs []*util.Error) {
 	switch err := util.TypeOfErr(err); {
 	case err.IsType(util.ValidationCreateErr):
-		return http.StatusUnprocessableEntity
+		return validateToResp(err)
 	default:
 		return []*util.Error{err}
 	}
+}
+
+func validateToResp(err *util.Error) (errs []*util.Error) {
+	vErrs := err.Cause.(validator.ValidationErrors)
+	errs = make([]*util.Error, len(vErrs))
+	for i, vErr := range vErrs {
+		errs[i] = &util.Error{
+			Cause:   errors.New(vErr.Translate(nil)),
+			Code:    vErr.Tag(),
+			SubCode: vErr.Field(),
+		}
+	}
+
+	return
 }

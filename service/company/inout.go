@@ -2,23 +2,25 @@ package company
 
 import (
 	domain "blueprint/domain/company"
-	"blueprint/service/util"
 )
 
 type CreateInput struct {
-	ID   string `json:"id"`
+	Name string `json:"name" validate:"required"`
+}
+
+type View struct {
 	Name string `json:"name"`
 }
 
-type Paginator struct {
-	Items    []*domain.Company
-	LastPage int
-	*util.Paginator
+func (impl *Company) createInputDomain(input *CreateInput) (staff *domain.Company) {
+	return &domain.Company{
+		ID:   impl.uuid.Generate(),
+		Name: input.Name,
+	}
 }
 
-func createInputDomain(input *CreateInput) (staff *domain.Company) {
-	return &domain.Company{
-		ID:   input.ID,
-		Name: input.Name,
+func companyToView(company *domain.Company) (view *View) {
+	return &View{
+		Name: company.Name,
 	}
 }

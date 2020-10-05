@@ -1,30 +1,24 @@
 package company
 
 import (
+	"context"
+
 	domain "blueprint/domain/company"
 	"blueprint/service/util"
-	"context"
-	"math"
 )
 
-func (impl *Company) List(ctx context.Context, opt *util.PageOption) (list *Paginator, err error) {
+func (impl *Company) List(ctx context.Context, opt *util.PageOption) (total int, list []*View, err error) {
 	total, items, err := impl.repo.List(ctx, opt, domain.Company{})
 	if err != nil {
-		return nil, util.RepoListErr(err)
+		return 0, nil, util.RepoListErr(err)
 	}
 
-	list = &Paginator{}
-	list.Items = make([]*domain.Company, len(items))
+	list = make([]*View, len(items))
 	for i, item := range items {
-		list.Items[i] = item.(*domain.Company)
+		list[i] = companyToView(item.(*domain.Company))
 	}
-	list.Total = total
-	list.PerPage = opt.PerPage
-	list.CurPage = opt.Page
-	list.LastPage = int(math.Ceil(float64(total / opt.PerPage)))
-	list.HasMore = opt.Page < list.LastPage
 
-	return list, nil
+	return total, list, nil
 }
 
 func (impl *Company) Create(ctx context.Context, input *CreateInput) (ID string, err error) {
@@ -33,7 +27,7 @@ func (impl *Company) Create(ctx context.Context, input *CreateInput) (ID string,
 		return "", util.ValidationCreateErr(err)
 	}
 
-	company := createInputDomain(input)
+	company := impl.createInputDomain(input)
 	ID, err = impl.repo.Create(ctx, company)
 	if err != nil {
 		return "", util.RepoCreateErr(err)
@@ -42,8 +36,8 @@ func (impl *Company) Create(ctx context.Context, input *CreateInput) (ID string,
 	return ID, nil
 }
 
-func (impl *Company) Read(ctx context.Context, ID string) (company *domain.Company, err error) {
-	company = &domain.Company{}
+func (impl *Company) Read(ctx context.Context, ID string) (view *View, err error) {
+	company := &domain.Company{}
 	filters := impl.makeIDFilters(ID)
 
 	err = impl.repo.Read(ctx, filters, company)
@@ -51,7 +45,7 @@ func (impl *Company) Read(ctx context.Context, ID string) (company *domain.Compa
 		return nil, util.RepoReadErr(err)
 	}
 
-	return company, nil
+	return companyToView(company), nil
 }
 
 func (impl *Company) makeIDFilters(ID string) (filters map[string]interface{}) {

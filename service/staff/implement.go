@@ -1,31 +1,24 @@
 package staff
 
 import (
+	"context"
+
 	domain "blueprint/domain/staff"
 	"blueprint/service/util"
-	"context"
-	"math"
 )
 
-func (impl *Staff) List(ctx context.Context, opt *util.PageOption) (list *Paginator, err error) {
+func (impl *Staff) List(ctx context.Context, opt *util.PageOption) (total int, list []*View, err error) {
 	total, items, err := impl.repo.List(ctx, opt, domain.Staff{})
 	if err != nil {
-		return nil, util.RepoListErr(err)
+		return 0, nil, util.RepoListErr(err)
 	}
 
-	list = &Paginator{}
-	list.Items = make([]*domain.Staff, len(items))
+	list = make([]*View, len(items))
 	for i, item := range items {
-		list.Items[i] = item.(*domain.Staff)
+		list[i] = staffToView(item.(*domain.Staff))
 	}
-	list.Total = total
-	list.PerPage = opt.PerPage
-	list.CurPage = opt.Page
-	lastPage := int(math.Ceil(float64(total / opt.PerPage)))
-	list.PageLeft = lastPage - opt.Page
-	list.HasMore = opt.Page < lastPage
 
-	return list, nil
+	return total, list, nil
 }
 
 func (impl *Staff) Create(ctx context.Context, input *CreateInput) (ID string, err error) {
@@ -34,7 +27,7 @@ func (impl *Staff) Create(ctx context.Context, input *CreateInput) (ID string, e
 		return "", util.ValidationCreateErr(err)
 	}
 
-	staff, err := createInputToStaffDomain(input, impl.timezone)
+	staff, err := impl.createInputToStaffDomain(input, impl.timezone)
 	if err != nil {
 		return "", util.ConvertInputToDomainErr(err)
 	}

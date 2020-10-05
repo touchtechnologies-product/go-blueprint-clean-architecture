@@ -1,11 +1,10 @@
 package company
 
 import (
-	"blueprint/app/view"
-	"net/http"
-
 	"github.com/gin-gonic/gin"
 	"github.com/opentracing/opentracing-go"
+
+	"blueprint/app/view"
 	service "blueprint/service/company"
 )
 
@@ -29,5 +28,5 @@ func (company *Company) CreateCompany(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, &view.CreateCompanyOutput{ID: ID})
+	view.MakeCreatedResp(c, ID)
 }

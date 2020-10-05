@@ -1,10 +1,8 @@
 package staff
 
 import (
-	"fmt"
 	"blueprint/app/view"
-	"blueprint/service/common"
-	"net/http"
+	"blueprint/service/util"
 
 	"github.com/gin-gonic/gin"
 	"github.com/opentracing/opentracing-go"
@@ -26,20 +24,17 @@ func (staff *Staff) GetStaffsByCompany(c *gin.Context) {
 	)
 	defer span.Finish()
 
-	input := &common.ListOption{}
+	input := &util.PageOption{}
 	if err := c.ShouldBind(input); err != nil {
 		ginresp.RespValidateError(c, err)
 		return
 	}
 
-	list, err := staff.service.List(ctx, input)
+	total, items, err := staff.service.List(ctx, input)
 	if err != nil {
 		ginresp.RespWithError(c, err)
 		return
 	}
 
-	c.JSON(http.StatusOK, &view.GetStaffsByCompanyOutput{
-		ID: fmt.Sprintf("%d", list.Total),
-		Name: fmt.Sprintf("%d", list.Total),
-	})
+	view.MakePaginatorResp(c, tot)
 }

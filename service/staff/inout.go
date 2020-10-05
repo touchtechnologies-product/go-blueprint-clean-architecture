@@ -1,37 +1,43 @@
 package staff
 
 import (
-	domain "blueprint/domain/staff"
-	"blueprint/service/util"
-
 	"github.com/uniplaces/carbon"
+
+	domain "blueprint/domain/staff"
 )
 
 type CreateInput struct {
-	ID        string `json:"id" validator:"required"`
 	Name      string `json:"name" validator:"required"`
 	CompanyID string `json:"companyId" validator:"required"`
 	Tel       string `json:"tel"`
 }
 
-type Paginator struct {
-	Items    []*domain.Staff
-	PageLeft int
-	*util.Paginator
+type View struct {
+	Name      string `json:"name"`
+	CompanyID string `json:"companyId" validator:"required"`
+	Tel       string `json:"tel"`
+	CreatedAt int64  `bson:"createdAt"`
+	UpdatedAt int64  `bson:"updatedAt"`
 }
 
-func createInputToStaffDomain(input *CreateInput, timezone string) (staff *domain.Staff, err error) {
+func (impl *Staff) createInputToStaffDomain(input *CreateInput, timezone string) (staff *domain.Staff, err error) {
 	now, err := carbon.NowInLocation(timezone)
 	if err != nil {
 		return nil, err
 	}
 
 	return &domain.Staff{
-		ID:        input.ID,
+		ID:        impl.uuid.Generate(),
 		CompanyID: input.CompanyID,
 		Name:      input.Name,
 		Tel:       input.Tel,
 		CreatedAt: now.Timestamp(),
 		UpdatedAt: now.Timestamp(),
 	}, nil
+}
+
+func staffToView(staff *domain.Staff) (view *View) {
+	return &View{
+		Name: staff.Name,
+	}
 }

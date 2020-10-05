@@ -36,5 +36,5 @@ func (staff *Staff) GetStaffsByCompany(c *gin.Context) {
 		return
 	}
 
-	view.MakePaginatorResp(c, tot)
+	view.MakePaginatorResp(c, total, items)
 }

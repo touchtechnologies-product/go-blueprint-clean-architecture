@@ -3,7 +3,6 @@ package staff
 import (
 	"context"
 
-	domain "blueprint/domain/staff"
 	"blueprint/service/util"
 )
 
@@ -11,7 +10,7 @@ import (
 type Service interface {
 	List(ctx context.Context, opt *util.PageOption) (total int, items []*View, err error)
 	Create(ctx context.Context, input *CreateInput) (ID string, err error)
-	Read(ctx context.Context, ID string) (staff *domain.Staff, err error)
+	Read(ctx context.Context, ID string) (staff *View, err error)
 	Update(ctx context.Context, ID string, input *CreateInput) (err error)
 	Delete(ctx context.Context, ID string) (err error)
 }

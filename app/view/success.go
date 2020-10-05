@@ -27,7 +27,7 @@ func MakeSuccessResp(c *gin.Context, status int, data interface{}) {
 	})
 }
 
-func MakePaginatorResp(c *gin.Context, total int, items []interface{}) {
+func MakePaginatorResp(c *gin.Context, total int, items interface{}) {
 	status := http.StatusOK
 	if total < 1 {
 		status = http.StatusNoContent

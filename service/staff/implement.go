@@ -40,8 +40,8 @@ func (impl *Staff) Create(ctx context.Context, input *CreateInput) (ID string, e
 	return ID, nil
 }
 
-func (impl *Staff) Read(ctx context.Context, ID string) (staff *domain.Staff, err error) {
-	staff = &domain.Staff{}
+func (impl *Staff) Read(ctx context.Context, ID string) (view *View, err error) {
+	staff := &domain.Staff{}
 	filters := impl.makeIDFilters(ID)
 
 	err = impl.repo.Read(ctx, filters, staff)
@@ -49,7 +49,7 @@ func (impl *Staff) Read(ctx context.Context, ID string) (staff *domain.Staff, er
 		return nil, util.RepoReadErr(err)
 	}
 
-	return staff, nil
+	return staffToView(staff), nil
 }
 
 func (impl *Staff) Update(ctx context.Context, ID string, input *CreateInput) (err error) {

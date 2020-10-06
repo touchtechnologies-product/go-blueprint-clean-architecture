@@ -3,21 +3,15 @@ package staff
 import (
 	"github.com/uniplaces/carbon"
 
-	domain "blueprint/domain/staff"
+	"content-service/domain"
 )
 
 type CreateInput struct {
 	Name      string `json:"name" validator:"required"`
 	CompanyID string `json:"companyId" validator:"required"`
 	Tel       string `json:"tel"`
-}
-
-type View struct {
-	Name      string `json:"name"`
-	CompanyID string `json:"companyId" validator:"required"`
-	Tel       string `json:"tel"`
-	CreatedAt int64  `bson:"createdAt"`
-	UpdatedAt int64  `bson:"updatedAt"`
+	CreatedAt string `json:"createdAt"`
+	UpdatedAt string `json:"updatedAt"`
 }
 
 func (impl *Staff) createInputToStaffDomain(input *CreateInput, timezone string) (staff *domain.Staff, err error) {
@@ -34,10 +28,4 @@ func (impl *Staff) createInputToStaffDomain(input *CreateInput, timezone string)
 		CreatedAt: now.Timestamp(),
 		UpdatedAt: now.Timestamp(),
 	}, nil
-}
-
-func staffToView(staff *domain.Staff) (view *View) {
-	return &View{
-		Name: staff.Name,
-	}
 }

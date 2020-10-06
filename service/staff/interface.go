@@ -3,7 +3,7 @@ package staff
 import (
 	"context"
 
-	"blueprint/service/util"
+	"content-service/service/util"
 )
 
 //go:generate mockery --name=Staff
@@ -22,11 +22,17 @@ type Staff struct {
 	timezone  string
 }
 
+type Wrapper struct {
+	svc *Staff
+}
+
 func New(validator util.Validator, uuid util.UUID, staffRepo util.Repository, timezone string) Service {
-	return &Staff{
-		validator: validator,
-		uuid:      uuid,
-		repo:      staffRepo,
-		timezone:  timezone,
+	return &Wrapper{
+		svc: &Staff{
+			validator: validator,
+			uuid:      uuid,
+			repo:      staffRepo,
+			timezone:  timezone,
+		},
 	}
 }

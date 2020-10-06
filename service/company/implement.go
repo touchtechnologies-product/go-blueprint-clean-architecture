@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	domain "blueprint/domain/company"
-	"blueprint/service/util"
+	"content-service/domain"
+	"content-service/service/util"
 )
 
 func (impl *Company) List(ctx context.Context, opt *util.PageOption) (total int, list []*View, err error) {

@@ -1,4 +1,4 @@
-package staff
+package domain
 
 type Staff struct {
 	ID        string `bson:"id"`

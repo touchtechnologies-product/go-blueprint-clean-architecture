@@ -3,7 +3,7 @@ package staff
 import (
 	"context"
 
-	"content-service/service/util"
+	"blueprint/service/util"
 )
 
 //go:generate mockery --name=Staff

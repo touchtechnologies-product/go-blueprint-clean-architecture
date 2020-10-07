@@ -3,8 +3,8 @@ package company
 import (
 	"context"
 
-	"content-service/domain"
-	"content-service/service/util"
+	"blueprint/domain"
+	"blueprint/service/util"
 )
 
 //go:generate mockery --name=Company

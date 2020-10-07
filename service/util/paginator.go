@@ -14,7 +14,7 @@ type PageOption struct {
 }
 
 type SetOpParam struct {
-	ID           string
+	Filters      []string
 	SetFieldName string
 	Item         interface{}
 }

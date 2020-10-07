@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	domain "blueprint/domain/company"
+	"blueprint/domain"
 	"blueprint/repository/mongodb"
 )
 

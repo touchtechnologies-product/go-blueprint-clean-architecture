@@ -4,7 +4,7 @@ import (
 	"context"
 )
 
-//go:generate mockery -name=Repository
+//go:generate mockery --name=Repository
 type Repository interface {
 	List(ctx context.Context, opt *PageOption, itemType interface{}) (total int, items []interface{}, err error)
 	Create(ctx context.Context, ent interface{}) (ID string, err error)

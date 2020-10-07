@@ -25,15 +25,19 @@ func (repo *Repository) makeFilters(filters []string) (bsonFilters bson.M) {
 		switch operations {
 		case "ne":
 			bsonFilters[key] = bson.M{"$ne": value}
+			break
 		case "like":
 			bsonFilters[key] = bson.M{
-				"$regex":  value,
-				"$option": "i",
+				"$regex":   value,
+				"$options": "i",
 			}
+			break
 		case "eq":
 			bsonFilters[key] = value
+			break
 		default:
 			bsonFilters[key] = value
+			break
 		}
 	}
 

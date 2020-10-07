@@ -4,7 +4,7 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
-//go:generate mockery -name=Validator
+//go:generate mockery --name=Validator
 type Validator interface {
 	Validate(item interface{}) (err error)
 }

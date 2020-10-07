@@ -18,7 +18,7 @@ func (repo *Repository) List(ctx context.Context, opt *util.PageOption, itemType
 		opts = repo.makePagingOpts(opt.Page, opt.PerPage)
 		if opt.Filters != nil && len(opt.Filters) > 0 {
 			optFilter = opt.Filters
-			filters = repo.makeFilters(nil)
+			filters = repo.makeFilters(opt.Filters)
 		}
 	}
 

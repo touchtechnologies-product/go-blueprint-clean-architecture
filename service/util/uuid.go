@@ -4,7 +4,7 @@ import (
 	"github.com/bwmarrin/snowflake"
 )
 
-//go:generate mockery -name=UUID
+//go:generate mockery --name=UUID
 type UUID interface {
 	Generate() (uuid string)
 }

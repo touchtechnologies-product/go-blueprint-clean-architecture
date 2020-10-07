@@ -1,7 +1,7 @@
 package company
 
 import (
-	"content-service/domain"
+	"blueprint/domain"
 )
 
 type View struct {

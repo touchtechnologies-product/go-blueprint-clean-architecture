@@ -1,4 +1,4 @@
-package company
+package domain
 
 type Company struct {
 	ID   string `bson:"id"`

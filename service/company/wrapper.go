@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/opentracing/opentracing-go"
 
-	"content-service/service/util"
+	"blueprint/service/util"
 )
 
 func (wrp *Wrapper) List(ctx context.Context, opt *util.PageOption) (total int, list []*View, err error) {

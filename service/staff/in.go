@@ -3,15 +3,13 @@ package staff
 import (
 	"github.com/uniplaces/carbon"
 
-	"content-service/domain"
+	"blueprint/domain"
 )
 
 type CreateInput struct {
 	Name      string `json:"name" validator:"required"`
 	CompanyID string `json:"companyId" validator:"required"`
 	Tel       string `json:"tel"`
-	CreatedAt string `json:"createdAt"`
-	UpdatedAt string `json:"updatedAt"`
 }
 
 func (impl *Staff) createInputToStaffDomain(input *CreateInput, timezone string) (staff *domain.Staff, err error) {

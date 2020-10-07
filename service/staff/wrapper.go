@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/opentracing/opentracing-go"
 
-	"content-service/service/util"
+	"blueprint/service/util"
 )
 
 func (wrp *Wrapper) List(ctx context.Context, opt *util.PageOption) (total int, list []*View, err error) {
@@ -31,8 +31,6 @@ func (wrp *Wrapper) Create(ctx context.Context, input *CreateInput) (ID string, 
 	sp.LogKV("name", input.Name)
 	sp.LogKV("companyID", input.CompanyID)
 	sp.LogKV("tel", input.Tel)
-	sp.LogKV("createdAt", input.CreatedAt)
-	sp.LogKV("updatedAt", input.UpdatedAt)
 
 	ID, err = wrp.svc.Create(ctx, input)
 
@@ -60,12 +58,9 @@ func (wrp *Wrapper) Update(ctx context.Context, ID string, input *CreateInput) (
 	sp, ctx := opentracing.StartSpanFromContext(ctx, "service.staff.Update")
 	defer sp.Finish()
 
-	sp.LogKV("ID", ID)
 	sp.LogKV("name", input.Name)
 	sp.LogKV("companyID", input.CompanyID)
 	sp.LogKV("tel", input.Tel)
-	sp.LogKV("createdAt", input.CreatedAt)
-	sp.LogKV("updatedAt", input.UpdatedAt)
 
 	err = wrp.svc.Update(ctx, ID, input)
 

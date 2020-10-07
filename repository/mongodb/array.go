@@ -11,7 +11,7 @@ import (
 )
 
 func (repo *Repository) Push(ctx context.Context, param *util.SetOpParam) (err error) {
-	filters := repo.makeFilters([]string{fmt.Sprintf("id:eq:%s", param.ID)})
+	filters := repo.makeFilters(param.Filters)
 	update := bson.M{
 		"$addToSet": bson.M{
 			param.SetFieldName: param.Item,
@@ -22,7 +22,7 @@ func (repo *Repository) Push(ctx context.Context, param *util.SetOpParam) (err e
 }
 
 func (repo *Repository) Pop(ctx context.Context, param *util.SetOpParam) (err error) {
-	filters := repo.makeFilters([]string{fmt.Sprintf("id:eq:%s", param.ID)})
+	filters := repo.makeFilters(param.Filters)
 	update := bson.M{
 		"$pop": bson.M{
 			param.SetFieldName: -1,
@@ -35,7 +35,7 @@ func (repo *Repository) Pop(ctx context.Context, param *util.SetOpParam) (err er
 func (repo *Repository) IsFirst(ctx context.Context, param *util.SetOpParam) (is bool, err error) {
 	pipeline := bson.A{
 		bson.M{
-			"$match": bson.M{"id": param.ID},
+			"$match": repo.makeFilters(param.Filters),
 		},
 		bson.M{
 			"$project": bson.M{
@@ -71,7 +71,7 @@ func (repo *Repository) IsFirst(ctx context.Context, param *util.SetOpParam) (is
 func (repo *Repository) CountArray(ctx context.Context, param *util.SetOpParam) (total int, err error) {
 	pipeline := bson.A{
 		bson.M{
-			"$match": bson.M{"id": param.ID},
+			"$match": repo.makeFilters(param.Filters),
 		},
 		bson.M{
 			"$project": bson.M{
@@ -105,7 +105,7 @@ func (repo *Repository) CountArray(ctx context.Context, param *util.SetOpParam) 
 }
 
 func (repo *Repository) ClearArray(ctx context.Context, param *util.SetOpParam) (err error) {
-	filters := repo.makeFilters([]string{fmt.Sprintf("id:eq:%s", param.ID)})
+	filters := repo.makeFilters(param.Filters)
 	_, err = repo.Coll.UpdateOne(ctx, filters, bson.M{"$set": bson.M{param.SetFieldName: param.Item}})
 	return err
 }

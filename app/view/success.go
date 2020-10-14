@@ -20,7 +20,7 @@ type successResp struct {
 }
 
 func MakeSuccessResp(c *gin.Context, status int, data interface{}) {
-	c.JSON(http.StatusOK, successResp{
+	c.JSON(status, successResp{
 		Status: okStatus,
 		Code:   status,
 		Data:   data,

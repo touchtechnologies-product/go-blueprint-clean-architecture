@@ -1,8 +1,11 @@
+// +build integration
+
 package mongodb
 
 import (
-	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/util"
 	"fmt"
+
+	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/util"
 )
 
 func (suite *MongoDBTestSuite) TestPush() {

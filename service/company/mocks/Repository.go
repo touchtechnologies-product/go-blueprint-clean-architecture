@@ -6,6 +6,8 @@ import (
 	context "context"
 
 	mock "github.com/stretchr/testify/mock"
+	domain "github.com/touchtechnologies-product/go-blueprint-clean-architecture/domain"
+
 	util "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/util"
 )
 
@@ -103,6 +105,29 @@ func (_m *Repository) Delete(ctx context.Context, filters []string) error {
 	}
 
 	return r0
+}
+
+// FindByName provides a mock function with given fields: ctx, name
+func (_m *Repository) FindByName(ctx context.Context, name string) (*domain.Company, error) {
+	ret := _m.Called(ctx, name)
+
+	var r0 *domain.Company
+	if rf, ok := ret.Get(0).(func(context.Context, string) *domain.Company); ok {
+		r0 = rf(ctx, name)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*domain.Company)
+		}
+	}
+
+	var r1 error
+	if rf, ok := ret.Get(1).(func(context.Context, string) error); ok {
+		r1 = rf(ctx, name)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
 }
 
 // IsFirst provides a mock function with given fields: ctx, param

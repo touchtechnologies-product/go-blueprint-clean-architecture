@@ -1,13 +1,17 @@
+// +build integration
+
 package mongodb
 
 import (
-	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/config"
 	"context"
+	"testing"
+
 	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/suite"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	"testing"
+
+	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/config"
 )
 
 type TestStruct struct {
@@ -57,6 +61,6 @@ func TestMongoDBTestSuite(t *testing.T) {
 func (suite *MongoDBTestSuite) makeTestStruct(title string, list ...string) (test *TestStruct) {
 	return &TestStruct{
 		Title: title,
-		List: list,
+		List:  list,
 	}
 }

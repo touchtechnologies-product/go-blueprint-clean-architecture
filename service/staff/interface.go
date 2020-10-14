@@ -6,7 +6,7 @@ import (
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/util"
 )
 
-//go:generate mockery --name=Staff
+//go:generate mockery --name=Service
 type Service interface {
 	List(ctx context.Context, opt *util.PageOption) (total int, items []*View, err error)
 	Create(ctx context.Context, input *CreateInput) (ID string, err error)

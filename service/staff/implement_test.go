@@ -2,12 +2,14 @@ package staff
 
 import (
 	"context"
+	"testing"
+
 	"github.com/stretchr/testify/mock"
+	"github.com/uniplaces/carbon"
+
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/domain"
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/util"
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/util/mocks"
-	"github.com/uniplaces/carbon"
-	"testing"
 
 	"github.com/stretchr/testify/suite"
 )

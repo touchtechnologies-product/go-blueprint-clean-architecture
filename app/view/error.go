@@ -1,7 +1,6 @@
 package view
 
 import (
-	"errors"
 	"net/http"
 
 	"github.com/go-playground/validator/v10"
@@ -11,16 +10,22 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-const errorStatus = "error"
+const errorStatus = "ERROR"
 
-type errResp struct {
-	Status string        `json:"status"`
-	Code   int           `json:"code"`
-	Errors []*util.Error `json:"errors"`
-}
+type ErrResp struct {
+	Status string     `json:"status"`
+	Code   int        `json:"code"`
+	Errors []*ErrItem `json:"errors"`
+}// @Name ErrorResponse
+
+type ErrItem struct {
+	Cause   string `json:"cause"`
+	Code    string `json:"code"`
+	SubCode string `json:"subCode"`
+}// @Name ErrorItemResponse
 
 func MakeErrResp(c *gin.Context, err error) {
-	errResp := &errResp{
+	errResp := &ErrResp{
 		Status: errorStatus,
 		Code:   getHTTPStatusCode(err),
 		Errors: getRespErrors(err),
@@ -34,39 +39,62 @@ func getHTTPStatusCode(err error) (code int) {
 		return http.StatusBadRequest
 	case err.IsType(util.ValidationCreateErr):
 		return http.StatusUnprocessableEntity
+	case err.IsType(util.ValidationUpdateErr):
+		return http.StatusUnprocessableEntity
+	case err.IsType(util.RepoReadErr):
+		return http.StatusNoContent
+	case err.IsType(util.RepoListErr):
+		return http.StatusNoContent
+	case err.IsType(util.RepoCreateErr):
+		return http.StatusInternalServerError
 	default:
 		return http.StatusInternalServerError
 	}
 }
 
-func getRespErrors(err error) (errs []*util.Error) {
+func getRespErrors(err error) (errs []*ErrItem) {
 	switch err.(type) {
 	case *util.Error:
 		return utilToResp(err.(*util.Error))
 	default:
-		return []*util.Error{util.UnknownErr(err)}
+		ukErr := util.UnknownErr(err)
+		return []*ErrItem{
+			{
+				Cause:   ukErr.Error(),
+				Code:    ukErr.Code,
+				SubCode: ukErr.SubCode,
+			},
+		}
 	}
 }
 
-func utilToResp(err error) (errs []*util.Error) {
+func utilToResp(err *util.Error) (errs []*ErrItem) {
 	switch err := util.TypeOfErr(err); {
 	case err.IsType(util.ValidationCreateErr):
 		return validateToResp(err)
+	case err.IsType(util.ValidationUpdateErr):
+		return validateToResp(err)
 	default:
-		return []*util.Error{err}
+		return []*ErrItem{
+			{
+				Cause:   err.Error(),
+				Code:    err.Code,
+				SubCode: err.SubCode,
+			},
+		}
 	}
 }
 
-func validateToResp(err *util.Error) (errs []*util.Error) {
+func validateToResp(err *util.Error) (errs []*ErrItem) {
 	vErrs := err.Cause.(validator.ValidationErrors)
-	errs = make([]*util.Error, len(vErrs))
+	errs = make([]*ErrItem, len(vErrs))
 	for i, vErr := range vErrs {
-		errs[i] = &util.Error{
-			Cause:   errors.New(vErr.Translate(nil)),
+		errs[i] = &ErrItem{
+			Cause:   vErr.Translate(nil),
 			Code:    vErr.Tag(),
 			SubCode: vErr.Field(),
 		}
 	}
 
-	return
+	return errs
 }

@@ -2,37 +2,17 @@ package staff
 
 import (
 	"context"
+	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/domain"
+	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/staff/out"
 
-	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/util"
+	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/staff/staffin"
 )
 
-//go:generate mockery --name=Staff
+//go:generate mockery --name=Service
 type Service interface {
-	List(ctx context.Context, opt *util.PageOption) (total int, items []*View, err error)
-	Create(ctx context.Context, input *CreateInput) (ID string, err error)
-	Read(ctx context.Context, ID string) (staff *View, err error)
-	Update(ctx context.Context, ID string, input *CreateInput) (err error)
-	Delete(ctx context.Context, ID string) (err error)
-}
-
-type Staff struct {
-	validator util.Validator
-	uuid      util.UUID
-	repo      util.Repository
-	timezone  string
-}
-
-type Wrapper struct {
-	svc *Staff
-}
-
-func New(validator util.Validator, uuid util.UUID, staffRepo util.Repository, timezone string) Service {
-	return &Wrapper{
-		svc: &Staff{
-			validator: validator,
-			uuid:      uuid,
-			repo:      staffRepo,
-			timezone:  timezone,
-		},
-	}
+	List(ctx context.Context, opt *domain.PageOption) (total int, items []*out.StaffView, err error)
+	Create(ctx context.Context, input *staffin.CreateInput) (ID string, err error)
+	Read(ctx context.Context, input *staffin.ReadInput) (staff *out.StaffView, err error)
+	Update(ctx context.Context, input *staffin.UpdateInput) (err error)
+	Delete(ctx context.Context, input *staffin.DeleteInput) (err error)
 }

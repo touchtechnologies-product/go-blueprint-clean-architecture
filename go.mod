@@ -25,7 +25,6 @@ require (
 	github.com/swaggo/gin-swagger v1.2.0
 	github.com/swaggo/swag v1.6.7
 	github.com/toorop/gin-logrus v0.0.0-20200831135515-d2ee50d38dae
-	github.com/touchtechnologies-product/goerror v0.0.0-20200715045855-5a67ae0b43a5
 	github.com/uber/jaeger-client-go v2.25.0+incompatible
 	github.com/uber/jaeger-lib v2.4.0+incompatible
 	github.com/ugorji/go v1.1.10 // indirect

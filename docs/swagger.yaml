@@ -1,34 +1,651 @@
 definitions:
-  staff.View:
+  CompanyCreateInput:
     properties:
-      companyId:
+      id:
         type: string
-      createdAt:
+      name:
+        type: string
+    required:
+    - id
+    - name
+    type: object
+  CompanyUpdateInput:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    required:
+    - id
+    - name
+    type: object
+  CompanyView:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+  ErrorItemResponse:
+    properties:
+      cause:
+        type: string
+      code:
+        type: string
+      subCode:
+        type: string
+    type: object
+  ErrorResponse:
+    properties:
+      code:
         type: integer
+      errors:
+        items:
+          $ref: '#/definitions/ErrorItemResponse'
+        type: array
+      status:
+        type: string
+    type: object
+  StaffCreateInput:
+    properties:
+      companyID:
+        type: string
+      id:
+        type: string
       name:
         type: string
       tel:
         type: string
-      updatedAt:
+    required:
+    - companyID
+    - id
+    - name
+    - tel
+    type: object
+  StaffUpdateInput:
+    properties:
+      companyID:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      tel:
+        type: string
+    required:
+    - companyID
+    - id
+    - name
+    - tel
+    type: object
+  StaffView:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+  SuccessResponse:
+    properties:
+      code:
         type: integer
+      data:
+        type: object
+      status:
+        type: string
     type: object
 info:
   contact: {}
   license: {}
 paths:
-  /staffsByCompany}:
+  /companies:
     get:
-      consumes:
-      - application/json
-      description: Get all the existing Staff
+      description: Return a list of companies filtered by a given filters if any
+      parameters:
+      - description: A page number
+        in: query
+        name: page
+        type: string
+      - description: A total number of items per page
+        in: query
+        name: per_page
+        type: string
+      - description: Condition for company retrieval, ex. 'companyName:eq:some name'
+        in: query
+        items:
+          type: string
+        name: filters
+        type: array
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/staff.View'
-            type: array
-      summary: List Staff By Company
+            allOf:
+            - $ref: '#/definitions/SuccessResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/CompanyView'
+                  type: array
+              type: object
+        "204":
+          description: No Content
+          schema:
+            allOf:
+            - $ref: '#/definitions/SuccessResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/CompanyView'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Get a list of companies
+      tags:
+      - Companies
+    post:
+      consumes:
+      - application/json
+      description: A newly created company ID will be given in a Content-Location response header
+      parameters:
+      - description: Input
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/CompanyCreateInput'
+      - description: User ID
+        in: header
+        name: X-Authenticated-Userid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Create a new company
+      tags:
+      - Companies
+  /companies/{company_id}:
+    delete:
+      description: Mark a company with a given company ID as deleted but keep its content
+      parameters:
+      - description: Company ID
+        in: path
+        name: company_id
+        required: true
+        type: string
+      - description: User ID
+        in: header
+        name: X-Authenticated-Userid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/SuccessResponse'
+        "204":
+          description: No Content
+          schema:
+            $ref: '#/definitions/SuccessResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Soft delete a company
+      tags:
+      - Companies
+    get:
+      description: Response a company data with a given company ID
+      parameters:
+      - description: Company ID
+        in: path
+        name: company_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/SuccessResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/CompanyView'
+              type: object
+        "204":
+          description: No Content
+          schema:
+            $ref: '#/definitions/SuccessResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Get a company by company ID
+      tags:
+      - Companies
+    put:
+      consumes:
+      - application/json
+      description: Update company with a given company ID according to a given data
+      parameters:
+      - description: Company ID
+        in: path
+        name: company_id
+        required: true
+        type: string
+      - description: Input
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/CompanyUpdateInput'
+      - description: User ID
+        in: header
+        name: X-Authenticated-Userid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/SuccessResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/CompanyView'
+              type: object
+        "204":
+          description: No Content
+          schema:
+            $ref: '#/definitions/SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Update contents of a company
+      tags:
+      - Companies
+  /staffs:
+    get:
+      description: Return a list of staffs filtered by a given filters if any
+      parameters:
+      - description: A page number
+        in: query
+        name: page
+        type: string
+      - description: A total number of items per page
+        in: query
+        name: per_page
+        type: string
+      - description: Condition for staff retrieval, ex. 'staffName:eq:some name'
+        in: query
+        items:
+          type: string
+        name: filters
+        type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/SuccessResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/StaffView'
+                  type: array
+              type: object
+        "204":
+          description: No Content
+          schema:
+            allOf:
+            - $ref: '#/definitions/SuccessResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/StaffView'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Get a list of staffs
+      tags:
+      - Staffs
+    post:
+      consumes:
+      - application/json
+      description: A newly created staff ID will be given in a Content-Location response header
+      parameters:
+      - description: Input
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/StaffCreateInput'
+      - description: User ID
+        in: header
+        name: X-Authenticated-Userid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Create a new staff
+      tags:
+      - Staffs
+  /staffs/{staff_id}:
+    delete:
+      description: Mark a staff with a given staff ID as deleted but keep its content
+      parameters:
+      - description: Staff ID
+        in: path
+        name: staff_id
+        required: true
+        type: string
+      - description: User ID
+        in: header
+        name: X-Authenticated-Userid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/SuccessResponse'
+        "204":
+          description: No Content
+          schema:
+            $ref: '#/definitions/SuccessResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Soft delete a staff
+      tags:
+      - Staffs
+    get:
+      description: Response a staff data with a given staff ID
+      parameters:
+      - description: Staff ID
+        in: path
+        name: staff_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/SuccessResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/StaffView'
+              type: object
+        "204":
+          description: No Content
+          schema:
+            $ref: '#/definitions/SuccessResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Get a staff by staff ID
+      tags:
+      - Staffs
+    put:
+      consumes:
+      - application/json
+      description: Update staff with a given staff ID according to a given data
+      parameters:
+      - description: Staff ID
+        in: path
+        name: staff_id
+        required: true
+        type: string
+      - description: Input
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/StaffUpdateInput'
+      - description: User ID
+        in: header
+        name: X-Authenticated-Userid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/SuccessResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/StaffView'
+              type: object
+        "204":
+          description: No Content
+          schema:
+            $ref: '#/definitions/SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Update contents of a staff
+      tags:
+      - Staffs
 swagger: "2.0"

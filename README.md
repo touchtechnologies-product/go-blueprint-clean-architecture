@@ -15,7 +15,7 @@
 - [x]  MongoDB
 
 #### Prototype
-<p align="left">
+<p>
     <a href="https://github.com/touchtechnologies-product/go-blueprint-clean-architecture">Touch Go Blueprint</a>
 </p>
 
@@ -50,7 +50,7 @@ go mod download
 unit testing command
 
 ```
-  go test ./... -v
+  go test ./... -cover
 ```
 
 integrating testing command

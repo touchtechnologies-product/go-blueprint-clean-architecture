@@ -3,14 +3,14 @@ package mongodb
 import (
 	"context"
 
-	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/util"
-
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo/options"
+
+	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/domain"
 )
 
-func (repo *Repository) List(ctx context.Context, opt *util.PageOption, itemType interface{}) (total int, items []interface{}, err error) {
+func (repo *Repository) List(ctx context.Context, opt *domain.PageOption, itemType interface{}) (total int, items []interface{}, err error) {
 	var filters bson.M
 	var optFilter []string
 	var opts *options.FindOptions
@@ -19,6 +19,9 @@ func (repo *Repository) List(ctx context.Context, opt *util.PageOption, itemType
 		if opt.Filters != nil && len(opt.Filters) > 0 {
 			optFilter = opt.Filters
 			filters = repo.makeFilters(opt.Filters)
+		}
+		if opt.Sorts != nil && len(opt.Sorts) > 0 {
+			opts.Sort = repo.makeSorts(opt.Sorts)
 		}
 	}
 

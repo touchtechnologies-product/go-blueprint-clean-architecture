@@ -8,19 +8,19 @@ import (
 )
 
 const (
-	okStatus       = "ok"
+	okStatus       = "OK"
 	xContentLength = "X-Content-Length"
-	location       = "Location"
+	location       = "Content-Location"
 )
 
-type successResp struct {
+type SuccessResp struct {
 	Status string      `json:"status"`
 	Code   int         `json:"code"`
 	Data   interface{} `json:"data"`
-}
+}// @Name SuccessResponse
 
 func MakeSuccessResp(c *gin.Context, status int, data interface{}) {
-	c.JSON(http.StatusOK, successResp{
+	c.JSON(status, SuccessResp{
 		Status: okStatus,
 		Code:   status,
 		Data:   data,

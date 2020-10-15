@@ -4,10 +4,10 @@ import (
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/staff"
 )
 
-type Staff struct {
-	service staff.Service
+type Controller struct {
+	service       staff.Service
 }
 
-func New(staffService staff.Service) (staff *Staff) {
-	return &Staff{service: staffService}
+func New(service staff.Service) (ctrl *Controller) {
+	return &Controller{service}
 }

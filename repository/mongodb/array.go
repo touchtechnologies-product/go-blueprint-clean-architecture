@@ -4,13 +4,13 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/util"
-
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+
+	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/domain"
 )
 
-func (repo *Repository) Push(ctx context.Context, param *util.SetOpParam) (err error) {
+func (repo *Repository) Push(ctx context.Context, param *domain.SetOpParam) (err error) {
 	filters := repo.makeFilters(param.Filters)
 	update := bson.M{
 		"$addToSet": bson.M{
@@ -21,7 +21,7 @@ func (repo *Repository) Push(ctx context.Context, param *util.SetOpParam) (err e
 	return err
 }
 
-func (repo *Repository) Pop(ctx context.Context, param *util.SetOpParam) (err error) {
+func (repo *Repository) Pop(ctx context.Context, param *domain.SetOpParam) (err error) {
 	filters := repo.makeFilters(param.Filters)
 	update := bson.M{
 		"$pop": bson.M{
@@ -32,7 +32,7 @@ func (repo *Repository) Pop(ctx context.Context, param *util.SetOpParam) (err er
 	return err
 }
 
-func (repo *Repository) IsFirst(ctx context.Context, param *util.SetOpParam) (is bool, err error) {
+func (repo *Repository) IsFirst(ctx context.Context, param *domain.SetOpParam) (is bool, err error) {
 	pipeline := bson.A{
 		bson.M{
 			"$match": repo.makeFilters(param.Filters),
@@ -68,7 +68,7 @@ func (repo *Repository) IsFirst(ctx context.Context, param *util.SetOpParam) (is
 	return items[0].First == param.Item.(string), nil
 }
 
-func (repo *Repository) CountArray(ctx context.Context, param *util.SetOpParam) (total int, err error) {
+func (repo *Repository) CountArray(ctx context.Context, param *domain.SetOpParam) (total int, err error) {
 	pipeline := bson.A{
 		bson.M{
 			"$match": repo.makeFilters(param.Filters),
@@ -104,7 +104,7 @@ func (repo *Repository) CountArray(ctx context.Context, param *util.SetOpParam) 
 	return items[0].Total, nil
 }
 
-func (repo *Repository) ClearArray(ctx context.Context, param *util.SetOpParam) (err error) {
+func (repo *Repository) ClearArray(ctx context.Context, param *domain.SetOpParam) (err error) {
 	filters := repo.makeFilters(param.Filters)
 	_, err = repo.Coll.UpdateOne(ctx, filters, bson.M{"$set": bson.M{param.SetFieldName: param.Item}})
 	return err

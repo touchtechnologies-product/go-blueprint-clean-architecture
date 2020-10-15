@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	validatorService "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/validator"
 	"io"
 	"log"
 
@@ -18,8 +19,8 @@ import (
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/config"
 	compRepo "github.com/touchtechnologies-product/go-blueprint-clean-architecture/repository/company"
 	staffRepo "github.com/touchtechnologies-product/go-blueprint-clean-architecture/repository/staff"
-	companyService "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/company"
-	staffService "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/staff"
+	companyService "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/company/implement"
+	staffService "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/staff/implement"
 )
 
 func setupJaeger(appConfig *config.Config) io.Closer {
@@ -46,17 +47,18 @@ func setupJaeger(appConfig *config.Config) io.Closer {
 
 func newApp(appConfig *config.Config) *app.App {
 	ctx := context.Background()
-	validator := util.NewValidator()
-	generateID, err := util.NewUUID()
-	panicIfErr(err)
 
 	cRepo, err := compRepo.New(ctx, appConfig.MongoDBEndpoint, appConfig.MongoDBName, appConfig.MongoDBCompanyTableName)
 	panicIfErr(err)
-	company := companyService.New(validator, generateID, cRepo, appConfig.Timezone)
-
 	sRepo, err := staffRepo.New(ctx, appConfig.MongoDBEndpoint, appConfig.MongoDBName, appConfig.MongoDBStaffTableName)
 	panicIfErr(err)
-	staff := staffService.New(validator, generateID, sRepo, appConfig.Timezone)
+
+	validator := validatorService.New(cRepo, sRepo)
+	generateID, err := util.NewUUID()
+	panicIfErr(err)
+
+	company := companyService.New(validator, cRepo, generateID)
+	staff := staffService.New(validator, sRepo, generateID)
 
 	return app.New(staff, company)
 }

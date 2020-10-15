@@ -1,26 +1,44 @@
-############################
-# STEP 1 setup for build project
-############################
-FROM golang:1.13.2-alpine AS builder
-# Install git
-# Git is required for fetching the dependencies
-RUN apk update && apk add --no-cache git
-WORKDIR $GOPATH/src/github.com/touchtechnologies-product/go-blueprint-clean-architecture/
-COPY . .
-# Enable go module
-ENV GO111MODULE=on
-# Fetch dependencies
-RUN go mod download
-# Build the binary
-RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -ldflags="-w -s" -o /go/bin/gogo-blueprint
+# Dockerfile References: https://docs.docker.com/engine/reference/builder/
 
-############################
-# STEP 2 build a small image
-############################
-FROM scratch
-# Expose port
+# Start from the latest golang base image
+FROM golang:1.15 as builder
+
+# Set the Current Working Directory inside the container
+WORKDIR /app
+
+# Fetch dependencies first; they are less susceptible to change on every build
+# and will therefore be cached for speeding up the next build
+COPY ./go.mod ./
+
+RUN go mod download
+RUN go get -u github.com/swaggo/swag/cmd/swag
+RUN go get -u github.com/swaggo/gin-swagger
+RUN go get -u github.com/swaggo/files
+
+# Copy everything from the current directory to the Working Directory inside the container
+COPY . .
+
+RUN swag init
+
+# Build the Go app
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
+
+######## Start a new stage from scratch #######
+FROM alpine:latest
+
+RUN apk --no-cache add ca-certificates tzdata
+
+WORKDIR /root/
+
+# Copy the Pre-built binary file from the previous stage
+COPY --from=builder /app/main .
+
+# Add files to the image
+ADD config config
+
+# Expose port 8080 to the outside world
 EXPOSE 8080
-# Copy our static executable.
-COPY --from=builder /go/bin/gogo-blueprint /go/bin/gogo-blueprint
-# Run the gogo-blueprint binary
-ENTRYPOINT ["/go/bin/gogo-blueprint"]
+
+# Command to run the executable
+CMD ["./main"]
+

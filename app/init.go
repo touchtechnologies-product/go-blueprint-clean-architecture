@@ -14,8 +14,8 @@ import (
 )
 
 type App struct {
-	staff   *staff.Staff
-	company *company.Company
+	staff   *staff.Controller
+	company *company.Controller
 }
 
 func New(staffService staffService.Service, companyService companyService.Service) *App {
@@ -33,10 +33,17 @@ func (app *App) RegisterRoute(router *gin.Engine) *App {
 	docs.SwaggerInfo.BasePath = "/api/v1"
 	apiRoutes := router.Group(docs.SwaggerInfo.BasePath)
 	{
-		apiRoutes.POST("/staff", app.staff.CreateStaff)
-		apiRoutes.PUT("/staff", app.staff.UpdateStaff)
-		apiRoutes.GET("/staffsByCompany", app.staff.GetStaffsByCompany)
-		apiRoutes.POST("/company", app.company.CreateCompany)
+		apiRoutes.GET("/companies", app.company.Update)
+		apiRoutes.POST("/companies", app.company.Create)
+		apiRoutes.GET("/companies/:id", app.company.Read)
+		apiRoutes.PUT("/companies/:id", app.company.Update)
+		apiRoutes.DELETE("/companies/:id", app.company.Delete)
+		
+		apiRoutes.GET("/staffs", app.staff.Update)
+		apiRoutes.POST("/staffs", app.staff.Create)
+		apiRoutes.GET("/staffs/:id", app.staff.Read)
+		apiRoutes.PUT("/staffs/:id", app.staff.Update)
+		apiRoutes.DELETE("/staffs/:id", app.staff.Delete)
 	}
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 

@@ -1,4 +1,6 @@
-package test
+// +build integration
+
+package mongodb
 
 import (
 	"fmt"

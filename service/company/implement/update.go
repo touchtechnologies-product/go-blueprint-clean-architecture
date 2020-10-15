@@ -15,9 +15,9 @@ func (impl *implementation) Update(ctx context.Context, input *companyin.UpdateI
 		return util.ValidationUpdateErr(err)
 	}
 
-	company := &domain.Company{}
 	filters := makeCompanyIDFilters(input.ID)
 
+	company := &domain.Company{}
 	err = impl.repo.Read(ctx, filters, company)
 	if err != nil {
 		return util.RepoReadErr(err)

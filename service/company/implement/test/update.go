@@ -14,6 +14,7 @@ func (suite *PackageTestSuite) TestUpdate() {
 
 	suite.repo.On("Read", mock.Anything, givenCompanyIDFilter, &domain.Company{}).Once().Return(nil)
 	suite.validator.On("Validate", givenInput).Once().Return(nil)
+	givenCompany.ID = ""
 	suite.repo.On("Update", mock.Anything, givenCompanyIDFilter, givenCompany).Once().Return(nil)
 	err := suite.service.Update(suite.ctx, givenInput)
 

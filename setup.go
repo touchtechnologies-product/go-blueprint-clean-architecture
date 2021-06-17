@@ -5,6 +5,7 @@ import (
 	validatorService "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/validator"
 	"io"
 	"log"
+	"time"
 
 	"github.com/opentracing/opentracing-go"
 	"github.com/sirupsen/logrus"
@@ -59,6 +60,10 @@ func newApp(appConfig *config.Config) *app.App {
 
 	company := companyService.New(validator, cRepo, generateID)
 	staff := staffService.New(validator, sRepo, generateID)
+
+	// Start GRPC server
+	go app.NewGrpcServer(appConfig, generateID, cRepo, validator)
+	time.Sleep(1 * time.Second)
 
 	return app.New(staff, company)
 }

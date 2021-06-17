@@ -1,7 +1,7 @@
 package domain
 
 type Company struct {
-	ID   string `bson:"id"`
+	ID   string `bson:"_id"`
 	Name string `bson:"name"`
 }
 

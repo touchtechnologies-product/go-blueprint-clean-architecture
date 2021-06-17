@@ -1,13 +1,13 @@
 package company
 
 import (
+	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/company/companyin"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/opentracing/opentracing-go"
 
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/app/view"
-	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/company/companyin"
 )
 
 // Read godoc
@@ -32,7 +32,6 @@ func (ctrl *Controller) Read(c *gin.Context) {
 	defer span.Finish()
 
 	input := &companyin.ReadInput{CompanyID: c.Param("id")}
-
 	company, err := ctrl.service.Read(ctx, input)
 	if err != nil {
 		view.MakeErrResp(c, err)
@@ -41,3 +40,22 @@ func (ctrl *Controller) Read(c *gin.Context) {
 
 	view.MakeSuccessResp(c, http.StatusOK, company)
 }
+
+//func (ctrl *Controller) Read(c *gin.Context) {
+//	span, ctx := opentracing.StartSpanFromContextWithTracer(
+//		c.Request.Context(),
+//		opentracing.GlobalTracer(),
+//		"handler.company.Read",
+//	)
+//	defer span.Finish()
+//
+//	input := &companyin.ReadInput{CompanyID: c.Param("id")}
+//
+//	company, err := ctrl.service.Read(ctx, input)
+//	if err != nil {
+//		view.MakeErrResp(c, err)
+//		return
+//	}
+//
+//	view.MakeSuccessResp(c, http.StatusOK, company)
+//}

@@ -1,6 +1,7 @@
 package company
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/opentracing/opentracing-go"
 
@@ -37,7 +38,7 @@ func (ctrl *Controller) List(c *gin.Context) {
 		view.MakeErrResp(c, err)
 		return
 	}
-
+	fmt.Println(input)
 	if len(input.Sorts) < 1 {
 		input.Sorts = append(input.Sorts, "createdAt:desc")
 	}

@@ -2,9 +2,7 @@ package mongodb
 
 import (
 	"context"
-
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo/options"
 
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/domain"
@@ -56,7 +54,7 @@ func (repo *Repository) Create(ctx context.Context, ent interface{}) (ID string,
 	if err != nil {
 		return "", err
 	}
-	return res.InsertedID.(primitive.ObjectID).Hex(), nil
+	return res.InsertedID.(string), nil
 }
 
 func (repo *Repository) Read(ctx context.Context, filters []string, out interface{}) (err error) {

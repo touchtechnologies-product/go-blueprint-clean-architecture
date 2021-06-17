@@ -4,12 +4,18 @@ import (
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
-
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/app/company"
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/app/staff"
+	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/config"
+	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/grpc/company/implement"
+	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/util"
+	validatorService "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/validator"
+	"google.golang.org/grpc"
+	"net"
 
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/docs"
 	companyService "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/company"
+	pb "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/grpc/protobuf"
 	staffService "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/staff"
 )
 
@@ -18,10 +24,30 @@ type App struct {
 	company *company.Controller
 }
 
+const (
+	NETWORK = "tcp"
+)
+
 func New(staffService staffService.Service, companyService companyService.Service) *App {
 	return &App{
 		staff:   staff.New(staffService),
 		company: company.New(companyService),
+	}
+}
+
+func NewGrpcServer(appConfig *config.Config, uuid util.UUID, repo util.Repository, validator validatorService.Validator) {
+	companyServiceServer := implement.NewCompanyGrpcService(validator, repo, uuid)
+
+	lis, err := net.Listen(NETWORK, appConfig.GRPCAddress)
+	if err != nil {
+		panic(err)
+	}
+
+	grpcServer := grpc.NewServer()
+	pb.RegisterCompanyGrpcServiceServer(grpcServer, companyServiceServer)
+
+	if err = grpcServer.Serve(lis); err != nil {
+		panic(err)
 	}
 }
 
@@ -38,7 +64,7 @@ func (app *App) RegisterRoute(router *gin.Engine) *App {
 		apiRoutes.GET("/companies/:id", app.company.Read)
 		apiRoutes.PUT("/companies/:id", app.company.Update)
 		apiRoutes.DELETE("/companies/:id", app.company.Delete)
-		
+
 		apiRoutes.GET("/staffs", app.staff.Update)
 		apiRoutes.POST("/staffs", app.staff.Create)
 		apiRoutes.GET("/staffs/:id", app.staff.Read)

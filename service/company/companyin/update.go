@@ -2,12 +2,13 @@ package companyin
 
 import (
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/domain"
+	pb "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/grpc/protobuf"
 )
 
 type UpdateInput struct {
 	ID   string `json:"id" validate:"required"`
 	Name string `json:"name" validate:"required"`
-}// @Name CompanyUpdateInput
+} // @Name CompanyUpdateInput
 
 func MakeTestUpdateInput() (input *UpdateInput) {
 	return &UpdateInput{
@@ -19,6 +20,13 @@ func MakeTestUpdateInput() (input *UpdateInput) {
 func UpdateInputToCompanyDomain(input *UpdateInput) (company *domain.Company) {
 	return &domain.Company{
 		ID:   input.ID,
+		Name: input.Name,
+	}
+}
+
+func UpdateInputGrpcToCompanyInputDomain(input *pb.UpdateCompanyRequest) (company *domain.Company) {
+	return &domain.Company{
+		ID:   input.Id,
 		Name: input.Name,
 	}
 }

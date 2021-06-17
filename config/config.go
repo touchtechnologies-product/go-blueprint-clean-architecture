@@ -13,6 +13,8 @@ type Config struct {
 	MongoDBStaffTableName   string `env:"MONGODB_STAFF_TABLE_NAME" envDefault:"staff_test"`
 	MongoDBCompanyTableName string `env:"MONGODB_COMPANY_TABLE_NAME" envDefault:"company_test"`
 
+	GRPCAddress string `env:"GRPC_ADDRESS" envDefault:"localhost:10000"`
+
 	// Jaeger config
 	JaegerAgentHost string `env:"JAEGER_AGENT_HOST" envDefault:"localhost"`
 	JaegerAgentPort string `env:"JAEGER_AGENT_PORT" envDefault:"6831"`

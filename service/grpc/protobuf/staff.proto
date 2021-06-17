@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+option go_package = "/protobuf";
+
+package protobuf;
+
+
+// Request create company message
+message CreateStaffRequest {
+  string id = 1;
+  string name = 2;
+}
+
+// Response create company message
+message CreateStaffResponse {
+  string id = 1;
+  string name = 2;
+}
+
+// Request list company message
+message ListStaffRequest {
+  string id = 1;
+  string name = 2;
+}
+
+// Response list company message
+message ListStaffResponse {
+  string id = 1;
+  string name = 2;
+}
+
+// Request read company message
+message ReadStaffRequest {
+  string company_id = 1;
+}
+
+// Response read company message
+message ReadStaffResponse {
+  string company_id = 1;
+}
+
+// Request update company message
+message UpdateStaffRequest {
+  string id = 1;
+  string name = 2;
+}
+
+// Response update company message
+message UpdateStaffResponse {
+  string id = 1;
+  string name = 2;
+}
+
+// Request delete company message
+message DeleteStaffRequest {
+  string id = 1;
+}
+
+// Response delete company message
+message DeleteStaffResponse {
+  string id = 1;
+  string name = 2;
+}
+
+
+// Services
+service StaffGrpcService {
+  rpc List(ListStaffRequest) returns (ListStaffResponse);
+  rpc Read(ReadStaffRequest) returns (ReadStaffResponse);
+  rpc Create(CreateStaffRequest) returns (CreateStaffResponse);
+  rpc Update(UpdateStaffRequest) returns (UpdateStaffResponse);
+  rpc Delete(DeleteStaffRequest) returns (DeleteStaffResponse);
+}

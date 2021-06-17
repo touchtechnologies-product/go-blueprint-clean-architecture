@@ -1,0 +1,86 @@
+syntax = "proto3";
+
+option go_package = "/protobuf";
+
+package protobuf;
+
+
+// Request create company message
+message CreateCompanyRequest {
+  string id = 1;
+  string name = 2;
+}
+
+// Response create company message
+message CreateCompanyResponse {
+  string id = 1;
+  string name = 2;
+}
+
+// Request list company message
+message ListCompanyRequest {
+  string page = 1;
+  string per_page = 2;
+  repeated string filters = 3;
+  repeated string sorts = 4;
+}
+
+// Response list company message
+message ListCompanyResponse {
+  message Output {
+    string id = 1;
+    string name = 2;
+  }
+
+  int64 total = 1;
+  repeated Output items = 2;
+}
+
+
+// Request read company message
+message ReadCompanyRequest {
+  string company_id = 1;
+}
+
+// Response read company message
+message ReadCompanyResponse {
+  string id = 1;
+  string name = 2;
+}
+
+// Request update company message
+message UpdateCompanyRequest {
+  string id = 1;
+  string name = 2;
+}
+
+// Response update company message
+message UpdateCompanyResponse {
+//  string id = 1;
+//  string name = 2;
+}
+
+// Request delete company message
+message DeleteCompanyRequest {
+  string id = 1;
+}
+
+// Response delete company message
+message DeleteCompanyResponse {
+//  string id = 1;
+//  string name = 2;
+}
+
+message TotalList {
+  string id = 1;
+  string name = 2;
+}
+
+// Services
+service CompanyGrpcService {
+  rpc List(ListCompanyRequest) returns (ListCompanyResponse);
+  rpc Read(ReadCompanyRequest) returns (ReadCompanyResponse);
+  rpc Create(CreateCompanyRequest) returns (CreateCompanyResponse);
+  rpc Update(UpdateCompanyRequest) returns (UpdateCompanyResponse);
+  rpc Delete(DeleteCompanyRequest) returns (DeleteCompanyResponse);
+}

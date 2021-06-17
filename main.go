@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	ginLogRus "github.com/toorop/gin-logrus"
-
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/config"
 )
 

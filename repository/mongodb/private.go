@@ -21,7 +21,6 @@ func (repo *Repository) makeFilters(filters []string) (bsonFilters bson.M) {
 		slFilter := strings.Split(v, ":")
 		key := slFilter[0]
 		operations := slFilter[1]
-
 		switch operations {
 		case "ne":
 			bsonFilters[key] = bson.M{"$ne": slFilter[2]}

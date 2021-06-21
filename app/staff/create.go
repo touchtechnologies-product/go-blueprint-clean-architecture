@@ -44,5 +44,5 @@ func (ctrl *Controller) Create(c *gin.Context) {
 		return
 	}
 
-	view.MakeCreatedResp(c, ID)
+	view.MakeCreatedResp(c, ID, input)
 }

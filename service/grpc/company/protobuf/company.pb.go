@@ -144,8 +144,8 @@ type ListCompanyRequest struct {
 
 	Page    string   `protobuf:"bytes,1,opt,name=page,proto3" json:"page,omitempty" form:"page"`
 	PerPage string   `protobuf:"bytes,2,opt,name=per_page,json=perPage,proto3" json:"per_page,omitempty" form:"per_page"`
-	Filters []string `protobuf:"bytes,3,rep,name=filters,proto3" json:"filters,omitempty" form:"filters"`
-	Sorts   []string `protobuf:"bytes,4,rep,name=sorts,proto3" json:"sorts,omitempty" form:"sorts"`
+	Filters []string `protobuf:"bytes,3,rep,name=filters,proto3" json:"filters,omitempty" form:"filters[]"`
+	Sorts   []string `protobuf:"bytes,4,rep,name=sorts,proto3" json:"sorts,omitempty" form:"sorts[]"`
 }
 
 func (x *ListCompanyRequest) Reset() {

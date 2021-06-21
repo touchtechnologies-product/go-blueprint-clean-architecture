@@ -2,9 +2,8 @@ package implement
 
 import (
 	"context"
-	pb "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/grpc/protobuf"
-
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/company/companyin"
+	pb "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/grpc/company/protobuf"
 
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/domain"
 )
@@ -31,5 +30,5 @@ func (impl *implementation) Update(ctx context.Context, input *pb.UpdateCompanyR
 		return nil, err
 	}
 
-	return nil, nil
+	return new(pb.UpdateCompanyResponse), nil
 }

@@ -1,10 +1,8 @@
 package company
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/opentracing/opentracing-go"
-
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/app/view"
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/domain"
 )
@@ -34,11 +32,11 @@ func (ctrl *Controller) List(c *gin.Context) {
 	defer span.Finish()
 
 	input := &domain.PageOption{}
-	if err := c.ShouldBind(input); err != nil {
+	if err := c.ShouldBindQuery(input); err != nil {
 		view.MakeErrResp(c, err)
 		return
 	}
-	fmt.Println(input)
+
 	if len(input.Sorts) < 1 {
 		input.Sorts = append(input.Sorts, "createdAt:desc")
 	}

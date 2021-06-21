@@ -2,6 +2,7 @@ package view
 
 import (
 	"net/http"
+	"reflect"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -17,7 +18,7 @@ type SuccessResp struct {
 	Status string      `json:"status"`
 	Code   int         `json:"code"`
 	Data   interface{} `json:"data"`
-}// @Name SuccessResponse
+} // @Name SuccessResponse
 
 func MakeSuccessResp(c *gin.Context, status int, data interface{}) {
 	c.JSON(status, SuccessResp{
@@ -36,7 +37,7 @@ func MakePaginatorResp(c *gin.Context, total int, items interface{}) {
 	MakeSuccessResp(c, status, items)
 }
 
-func MakeCreatedResp(c *gin.Context, ID string) {
+func MakeCreatedResp(c *gin.Context, ID string, t interface{}) {
 	c.Header(location, ID)
-	MakeSuccessResp(c, http.StatusCreated, nil)
+	MakeSuccessResp(c, http.StatusCreated, reflect.TypeOf(t))
 }

@@ -2,12 +2,12 @@ package companyin
 
 import (
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/domain"
-	pb "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/grpc/protobuf"
+	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/grpc/company/protobuf"
 	"strconv"
 )
 
 type CreateInput struct {
-	ID   string `json:"id" validate:"required"`
+	ID   string `json:"id"`
 	Name string `json:"name" validate:"required"`
 } // @Name CompanyCreateInput
 
@@ -25,14 +25,14 @@ func CreateInputToCompanyDomain(input *CreateInput) (company *domain.Company) {
 	}
 }
 
-func CreateInputGrpcToCompanyInputDomain(input *pb.CreateCompanyRequest) *domain.Company {
+func CreateInputGrpcToCompanyInputDomain(input *protobuf.CreateCompanyRequest) *domain.Company {
 	return &domain.Company{
 		ID:   input.Id,
 		Name: input.Name,
 	}
 }
 
-func CreateInputPageOptGrpcToPageOtpDomain(opt *pb.ListCompanyRequest) *domain.PageOption {
+func CreateInputPageOptGrpcToPageOtpDomain(opt *protobuf.ListCompanyRequest) *domain.PageOption {
 	page, err := strconv.Atoi(opt.Page)
 	if err != nil {
 		page = 1

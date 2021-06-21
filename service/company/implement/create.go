@@ -7,6 +7,7 @@ import (
 )
 
 func (impl *implementation) Create(ctx context.Context, input *companyin.CreateInput) (ID string, err error) {
+	input.ID = impl.uuid.Generate()
 	err = impl.validator.Validate(input)
 	if err != nil {
 		return "", util.ValidationCreateErr(err)

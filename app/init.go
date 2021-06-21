@@ -8,6 +8,7 @@ import (
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/app/staff"
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/config"
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/grpc/company/implement"
+	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/grpc/company/protobuf"
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/util"
 	validatorService "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/validator"
 	"google.golang.org/grpc"
@@ -15,7 +16,6 @@ import (
 
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/docs"
 	companyService "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/company"
-	pb "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/grpc/protobuf"
 	staffService "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/staff"
 )
 
@@ -44,7 +44,7 @@ func NewGrpcServer(appConfig *config.Config, uuid util.UUID, repo util.Repositor
 	}
 
 	grpcServer := grpc.NewServer()
-	pb.RegisterCompanyGrpcServiceServer(grpcServer, companyServiceServer)
+	protobuf.RegisterCompanyGrpcServiceServer(grpcServer, companyServiceServer)
 
 	if err = grpcServer.Serve(lis); err != nil {
 		panic(err)
@@ -59,17 +59,17 @@ func (app *App) RegisterRoute(router *gin.Engine) *App {
 	docs.SwaggerInfo.BasePath = "/api/v1"
 	apiRoutes := router.Group(docs.SwaggerInfo.BasePath)
 	{
-		apiRoutes.GET("/companies", app.company.Update)
+		apiRoutes.GET("/companies", app.company.List)
 		apiRoutes.POST("/companies", app.company.Create)
 		apiRoutes.GET("/companies/:id", app.company.Read)
 		apiRoutes.PUT("/companies/:id", app.company.Update)
 		apiRoutes.DELETE("/companies/:id", app.company.Delete)
 
-		apiRoutes.GET("/staffs", app.staff.Update)
-		apiRoutes.POST("/staffs", app.staff.Create)
-		apiRoutes.GET("/staffs/:id", app.staff.Read)
-		apiRoutes.PUT("/staffs/:id", app.staff.Update)
-		apiRoutes.DELETE("/staffs/:id", app.staff.Delete)
+		apiRoutes.GET("/staff", app.staff.List)
+		apiRoutes.POST("/staff", app.staff.Create)
+		apiRoutes.GET("/staff/:id", app.staff.Read)
+		apiRoutes.PUT("/staff/:id", app.staff.Update)
+		apiRoutes.DELETE("/staff/:id", app.staff.Delete)
 	}
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 

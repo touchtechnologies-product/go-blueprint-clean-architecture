@@ -2,7 +2,7 @@ package companyin
 
 import (
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/domain"
-	pb "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/grpc/protobuf"
+	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/grpc/company/protobuf"
 )
 
 type UpdateInput struct {
@@ -24,7 +24,7 @@ func UpdateInputToCompanyDomain(input *UpdateInput) (company *domain.Company) {
 	}
 }
 
-func UpdateInputGrpcToCompanyInputDomain(input *pb.UpdateCompanyRequest) (company *domain.Company) {
+func UpdateInputGrpcToCompanyInputDomain(input *protobuf.UpdateCompanyRequest) (company *domain.Company) {
 	return &domain.Company{
 		ID:   input.Id,
 		Name: input.Name,

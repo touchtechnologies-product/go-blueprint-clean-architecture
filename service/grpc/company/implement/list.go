@@ -2,11 +2,10 @@ package implement
 
 import (
 	"context"
-	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/company/companyin"
-	pb "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/grpc/protobuf"
-
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/domain"
+	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/company/companyin"
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/company/out"
+	pb "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/grpc/company/protobuf"
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/util"
 )
 

@@ -1,4 +1,4 @@
-package company
+package staff
 
 import (
 	"context"

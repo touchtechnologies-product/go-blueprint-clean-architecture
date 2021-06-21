@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/company/companyin"
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/company/out"
-	pb "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/grpc/protobuf"
+	pb "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/grpc/company/protobuf"
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/util"
 )
 

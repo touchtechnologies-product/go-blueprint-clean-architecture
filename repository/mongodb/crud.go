@@ -12,12 +12,15 @@ func (repo *Repository) List(ctx context.Context, opt *domain.PageOption, itemTy
 	var filters bson.M
 	var optFilter []string
 	var opts *options.FindOptions
+
 	if opt != nil {
 		opts = repo.makePagingOpts(opt.Page, opt.PerPage)
+
 		if opt.Filters != nil && len(opt.Filters) > 0 {
 			optFilter = opt.Filters
 			filters = repo.makeFilters(opt.Filters)
 		}
+
 		if opt.Sorts != nil && len(opt.Sorts) > 0 {
 			opts.Sort = repo.makeSorts(opt.Sorts)
 		}

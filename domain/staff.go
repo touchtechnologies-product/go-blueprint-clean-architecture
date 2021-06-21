@@ -3,7 +3,7 @@ package domain
 import "github.com/uniplaces/carbon"
 
 type Staff struct {
-	ID        string `bson:"id"`
+	ID        string `bson:"_id"`
 	CompanyID string `bson:"companyID"`
 	Name      string `bson:"name"`
 	Tel       string `bson:"tel"`

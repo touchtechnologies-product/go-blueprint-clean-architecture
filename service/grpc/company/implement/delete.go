@@ -3,7 +3,7 @@ package implement
 import (
 	"context"
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/domain"
-	pb "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/grpc/protobuf"
+	pb "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/grpc/company/protobuf"
 )
 
 func (impl *implementation) Delete(ctx context.Context, input *pb.DeleteCompanyRequest) (item *pb.DeleteCompanyResponse, err error) {
@@ -20,5 +20,5 @@ func (impl *implementation) Delete(ctx context.Context, input *pb.DeleteCompanyR
 		return nil, err
 	}
 
-	return nil, err
+	return new(pb.DeleteCompanyResponse), err
 }

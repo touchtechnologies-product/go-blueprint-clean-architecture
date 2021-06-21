@@ -10,8 +10,8 @@ type Paginator struct {
 type PageOption struct {
 	Page    int      `form:"page" validate:"min=0"`
 	PerPage int      `form:"per_page" validate:"min=0"`
-	Filters []string `form:"filters"`
-	Sorts   []string `form:"sorts"`
+	Filters []string `form:"filters[]"`
+	Sorts   []string `form:"sorts[]"`
 }
 
 type SetOpParam struct {

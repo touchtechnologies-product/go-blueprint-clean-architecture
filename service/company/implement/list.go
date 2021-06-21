@@ -9,6 +9,7 @@ import (
 
 func (impl *implementation) List(ctx context.Context, opt *domain.PageOption) (total int, items []*out.CompanyView, err error) {
 	total, records, err := impl.repo.List(ctx, opt, &domain.Company{})
+
 	if err != nil {
 		return 0, nil, util.RepoListErr(err)
 	}

@@ -2,6 +2,7 @@ package company
 
 import (
 	"net/http"
+	"reflect"
 
 	"github.com/gin-gonic/gin"
 	"github.com/opentracing/opentracing-go"
@@ -51,5 +52,5 @@ func (ctrl *Controller) Update(c *gin.Context) {
 		return
 	}
 
-	view.MakeSuccessResp(c, http.StatusOK, nil)
+	view.MakeSuccessResp(c, http.StatusOK, reflect.TypeOf(input))
 }

@@ -2,6 +2,7 @@ package company
 
 import (
 	"net/http"
+	"reflect"
 
 	"github.com/gin-gonic/gin"
 	"github.com/opentracing/opentracing-go"
@@ -34,7 +35,7 @@ func (ctrl *Controller) Delete(c *gin.Context) {
 	defer span.Finish()
 
 	input := &companyin.DeleteInput{
-		ID:    c.Param("id"),
+		ID: c.Param("id"),
 	}
 
 	err := ctrl.service.Delete(ctx, input)
@@ -43,5 +44,5 @@ func (ctrl *Controller) Delete(c *gin.Context) {
 		return
 	}
 
-	view.MakeSuccessResp(c, http.StatusOK, nil)
+	view.MakeSuccessResp(c, http.StatusOK, reflect.TypeOf(input))
 }

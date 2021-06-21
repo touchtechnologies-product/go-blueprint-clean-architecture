@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.26.0
 // 	protoc        v3.17.3
-// source: service/grpc/protobuf/staff.proto
+// source: service/grpc/staff/protobuf/staff.proto
 
 package protobuf
 
@@ -30,14 +30,16 @@ type CreateStaffRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id   string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	CompanyId string `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	Id        string `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
+	Name      string `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	Tel       string `protobuf:"bytes,4,opt,name=tel,proto3" json:"tel,omitempty"`
 }
 
 func (x *CreateStaffRequest) Reset() {
 	*x = CreateStaffRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_service_grpc_protobuf_staff_proto_msgTypes[0]
+		mi := &file_service_grpc_staff_protobuf_staff_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -50,7 +52,7 @@ func (x *CreateStaffRequest) String() string {
 func (*CreateStaffRequest) ProtoMessage() {}
 
 func (x *CreateStaffRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_service_grpc_protobuf_staff_proto_msgTypes[0]
+	mi := &file_service_grpc_staff_protobuf_staff_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -63,7 +65,14 @@ func (x *CreateStaffRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateStaffRequest.ProtoReflect.Descriptor instead.
 func (*CreateStaffRequest) Descriptor() ([]byte, []int) {
-	return file_service_grpc_protobuf_staff_proto_rawDescGZIP(), []int{0}
+	return file_service_grpc_staff_protobuf_staff_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *CreateStaffRequest) GetCompanyId() string {
+	if x != nil {
+		return x.CompanyId
+	}
+	return ""
 }
 
 func (x *CreateStaffRequest) GetId() string {
@@ -76,6 +85,13 @@ func (x *CreateStaffRequest) GetId() string {
 func (x *CreateStaffRequest) GetName() string {
 	if x != nil {
 		return x.Name
+	}
+	return ""
+}
+
+func (x *CreateStaffRequest) GetTel() string {
+	if x != nil {
+		return x.Tel
 	}
 	return ""
 }
@@ -93,7 +109,7 @@ type CreateStaffResponse struct {
 func (x *CreateStaffResponse) Reset() {
 	*x = CreateStaffResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_service_grpc_protobuf_staff_proto_msgTypes[1]
+		mi := &file_service_grpc_staff_protobuf_staff_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -106,7 +122,7 @@ func (x *CreateStaffResponse) String() string {
 func (*CreateStaffResponse) ProtoMessage() {}
 
 func (x *CreateStaffResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_service_grpc_protobuf_staff_proto_msgTypes[1]
+	mi := &file_service_grpc_staff_protobuf_staff_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -119,7 +135,7 @@ func (x *CreateStaffResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateStaffResponse.ProtoReflect.Descriptor instead.
 func (*CreateStaffResponse) Descriptor() ([]byte, []int) {
-	return file_service_grpc_protobuf_staff_proto_rawDescGZIP(), []int{1}
+	return file_service_grpc_staff_protobuf_staff_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *CreateStaffResponse) GetId() string {
@@ -142,14 +158,16 @@ type ListStaffRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id   string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Page    string   `protobuf:"bytes,1,opt,name=page,proto3" json:"page,omitempty"`
+	PerPage string   `protobuf:"bytes,2,opt,name=per_page,json=perPage,proto3" json:"per_page,omitempty"`
+	Filters []string `protobuf:"bytes,3,rep,name=filters,proto3" json:"filters,omitempty"`
+	Sorts   []string `protobuf:"bytes,4,rep,name=sorts,proto3" json:"sorts,omitempty"`
 }
 
 func (x *ListStaffRequest) Reset() {
 	*x = ListStaffRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_service_grpc_protobuf_staff_proto_msgTypes[2]
+		mi := &file_service_grpc_staff_protobuf_staff_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -162,7 +180,7 @@ func (x *ListStaffRequest) String() string {
 func (*ListStaffRequest) ProtoMessage() {}
 
 func (x *ListStaffRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_service_grpc_protobuf_staff_proto_msgTypes[2]
+	mi := &file_service_grpc_staff_protobuf_staff_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -175,21 +193,35 @@ func (x *ListStaffRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListStaffRequest.ProtoReflect.Descriptor instead.
 func (*ListStaffRequest) Descriptor() ([]byte, []int) {
-	return file_service_grpc_protobuf_staff_proto_rawDescGZIP(), []int{2}
+	return file_service_grpc_staff_protobuf_staff_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *ListStaffRequest) GetId() string {
+func (x *ListStaffRequest) GetPage() string {
 	if x != nil {
-		return x.Id
+		return x.Page
 	}
 	return ""
 }
 
-func (x *ListStaffRequest) GetName() string {
+func (x *ListStaffRequest) GetPerPage() string {
 	if x != nil {
-		return x.Name
+		return x.PerPage
 	}
 	return ""
+}
+
+func (x *ListStaffRequest) GetFilters() []string {
+	if x != nil {
+		return x.Filters
+	}
+	return nil
+}
+
+func (x *ListStaffRequest) GetSorts() []string {
+	if x != nil {
+		return x.Sorts
+	}
+	return nil
 }
 
 // Response list company message
@@ -198,14 +230,14 @@ type ListStaffResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id   string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Total int64                       `protobuf:"varint,1,opt,name=total,proto3" json:"total,omitempty"`
+	Items []*ListStaffResponse_Output `protobuf:"bytes,2,rep,name=items,proto3" json:"items,omitempty"`
 }
 
 func (x *ListStaffResponse) Reset() {
 	*x = ListStaffResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_service_grpc_protobuf_staff_proto_msgTypes[3]
+		mi := &file_service_grpc_staff_protobuf_staff_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -218,7 +250,7 @@ func (x *ListStaffResponse) String() string {
 func (*ListStaffResponse) ProtoMessage() {}
 
 func (x *ListStaffResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_service_grpc_protobuf_staff_proto_msgTypes[3]
+	mi := &file_service_grpc_staff_protobuf_staff_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -231,21 +263,21 @@ func (x *ListStaffResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListStaffResponse.ProtoReflect.Descriptor instead.
 func (*ListStaffResponse) Descriptor() ([]byte, []int) {
-	return file_service_grpc_protobuf_staff_proto_rawDescGZIP(), []int{3}
+	return file_service_grpc_staff_protobuf_staff_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *ListStaffResponse) GetId() string {
+func (x *ListStaffResponse) GetTotal() int64 {
 	if x != nil {
-		return x.Id
+		return x.Total
 	}
-	return ""
+	return 0
 }
 
-func (x *ListStaffResponse) GetName() string {
+func (x *ListStaffResponse) GetItems() []*ListStaffResponse_Output {
 	if x != nil {
-		return x.Name
+		return x.Items
 	}
-	return ""
+	return nil
 }
 
 // Request read company message
@@ -254,13 +286,13 @@ type ReadStaffRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	CompanyId string `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	StaffId string `protobuf:"bytes,1,opt,name=staff_id,json=staffId,proto3" json:"staff_id,omitempty"`
 }
 
 func (x *ReadStaffRequest) Reset() {
 	*x = ReadStaffRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_service_grpc_protobuf_staff_proto_msgTypes[4]
+		mi := &file_service_grpc_staff_protobuf_staff_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -273,7 +305,7 @@ func (x *ReadStaffRequest) String() string {
 func (*ReadStaffRequest) ProtoMessage() {}
 
 func (x *ReadStaffRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_service_grpc_protobuf_staff_proto_msgTypes[4]
+	mi := &file_service_grpc_staff_protobuf_staff_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -286,12 +318,12 @@ func (x *ReadStaffRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReadStaffRequest.ProtoReflect.Descriptor instead.
 func (*ReadStaffRequest) Descriptor() ([]byte, []int) {
-	return file_service_grpc_protobuf_staff_proto_rawDescGZIP(), []int{4}
+	return file_service_grpc_staff_protobuf_staff_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *ReadStaffRequest) GetCompanyId() string {
+func (x *ReadStaffRequest) GetStaffId() string {
 	if x != nil {
-		return x.CompanyId
+		return x.StaffId
 	}
 	return ""
 }
@@ -302,13 +334,14 @@ type ReadStaffResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	CompanyId string `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	Id   string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 }
 
 func (x *ReadStaffResponse) Reset() {
 	*x = ReadStaffResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_service_grpc_protobuf_staff_proto_msgTypes[5]
+		mi := &file_service_grpc_staff_protobuf_staff_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -321,7 +354,7 @@ func (x *ReadStaffResponse) String() string {
 func (*ReadStaffResponse) ProtoMessage() {}
 
 func (x *ReadStaffResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_service_grpc_protobuf_staff_proto_msgTypes[5]
+	mi := &file_service_grpc_staff_protobuf_staff_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -334,12 +367,19 @@ func (x *ReadStaffResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReadStaffResponse.ProtoReflect.Descriptor instead.
 func (*ReadStaffResponse) Descriptor() ([]byte, []int) {
-	return file_service_grpc_protobuf_staff_proto_rawDescGZIP(), []int{5}
+	return file_service_grpc_staff_protobuf_staff_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *ReadStaffResponse) GetCompanyId() string {
+func (x *ReadStaffResponse) GetId() string {
 	if x != nil {
-		return x.CompanyId
+		return x.Id
+	}
+	return ""
+}
+
+func (x *ReadStaffResponse) GetName() string {
+	if x != nil {
+		return x.Name
 	}
 	return ""
 }
@@ -350,14 +390,16 @@ type UpdateStaffRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id   string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	CompanyId string `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	Id        string `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
+	Name      string `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	Tel       string `protobuf:"bytes,4,opt,name=tel,proto3" json:"tel,omitempty"`
 }
 
 func (x *UpdateStaffRequest) Reset() {
 	*x = UpdateStaffRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_service_grpc_protobuf_staff_proto_msgTypes[6]
+		mi := &file_service_grpc_staff_protobuf_staff_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -370,7 +412,7 @@ func (x *UpdateStaffRequest) String() string {
 func (*UpdateStaffRequest) ProtoMessage() {}
 
 func (x *UpdateStaffRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_service_grpc_protobuf_staff_proto_msgTypes[6]
+	mi := &file_service_grpc_staff_protobuf_staff_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -383,7 +425,14 @@ func (x *UpdateStaffRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateStaffRequest.ProtoReflect.Descriptor instead.
 func (*UpdateStaffRequest) Descriptor() ([]byte, []int) {
-	return file_service_grpc_protobuf_staff_proto_rawDescGZIP(), []int{6}
+	return file_service_grpc_staff_protobuf_staff_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *UpdateStaffRequest) GetCompanyId() string {
+	if x != nil {
+		return x.CompanyId
+	}
+	return ""
 }
 
 func (x *UpdateStaffRequest) GetId() string {
@@ -400,20 +449,24 @@ func (x *UpdateStaffRequest) GetName() string {
 	return ""
 }
 
+func (x *UpdateStaffRequest) GetTel() string {
+	if x != nil {
+		return x.Tel
+	}
+	return ""
+}
+
 // Response update company message
 type UpdateStaffResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
-
-	Id   string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 }
 
 func (x *UpdateStaffResponse) Reset() {
 	*x = UpdateStaffResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_service_grpc_protobuf_staff_proto_msgTypes[7]
+		mi := &file_service_grpc_staff_protobuf_staff_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -426,7 +479,7 @@ func (x *UpdateStaffResponse) String() string {
 func (*UpdateStaffResponse) ProtoMessage() {}
 
 func (x *UpdateStaffResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_service_grpc_protobuf_staff_proto_msgTypes[7]
+	mi := &file_service_grpc_staff_protobuf_staff_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -439,21 +492,7 @@ func (x *UpdateStaffResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateStaffResponse.ProtoReflect.Descriptor instead.
 func (*UpdateStaffResponse) Descriptor() ([]byte, []int) {
-	return file_service_grpc_protobuf_staff_proto_rawDescGZIP(), []int{7}
-}
-
-func (x *UpdateStaffResponse) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *UpdateStaffResponse) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
+	return file_service_grpc_staff_protobuf_staff_proto_rawDescGZIP(), []int{7}
 }
 
 // Request delete company message
@@ -468,7 +507,7 @@ type DeleteStaffRequest struct {
 func (x *DeleteStaffRequest) Reset() {
 	*x = DeleteStaffRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_service_grpc_protobuf_staff_proto_msgTypes[8]
+		mi := &file_service_grpc_staff_protobuf_staff_proto_msgTypes[8]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -481,7 +520,7 @@ func (x *DeleteStaffRequest) String() string {
 func (*DeleteStaffRequest) ProtoMessage() {}
 
 func (x *DeleteStaffRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_service_grpc_protobuf_staff_proto_msgTypes[8]
+	mi := &file_service_grpc_staff_protobuf_staff_proto_msgTypes[8]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -494,7 +533,7 @@ func (x *DeleteStaffRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteStaffRequest.ProtoReflect.Descriptor instead.
 func (*DeleteStaffRequest) Descriptor() ([]byte, []int) {
-	return file_service_grpc_protobuf_staff_proto_rawDescGZIP(), []int{8}
+	return file_service_grpc_staff_protobuf_staff_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *DeleteStaffRequest) GetId() string {
@@ -509,15 +548,12 @@ type DeleteStaffResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
-
-	Id   string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 }
 
 func (x *DeleteStaffResponse) Reset() {
 	*x = DeleteStaffResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_service_grpc_protobuf_staff_proto_msgTypes[9]
+		mi := &file_service_grpc_staff_protobuf_staff_proto_msgTypes[9]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -530,7 +566,7 @@ func (x *DeleteStaffResponse) String() string {
 func (*DeleteStaffResponse) ProtoMessage() {}
 
 func (x *DeleteStaffResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_service_grpc_protobuf_staff_proto_msgTypes[9]
+	mi := &file_service_grpc_staff_protobuf_staff_proto_msgTypes[9]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -543,140 +579,194 @@ func (x *DeleteStaffResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteStaffResponse.ProtoReflect.Descriptor instead.
 func (*DeleteStaffResponse) Descriptor() ([]byte, []int) {
-	return file_service_grpc_protobuf_staff_proto_rawDescGZIP(), []int{9}
+	return file_service_grpc_staff_protobuf_staff_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *DeleteStaffResponse) GetId() string {
+type ListStaffResponse_Output struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id   string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+}
+
+func (x *ListStaffResponse_Output) Reset() {
+	*x = ListStaffResponse_Output{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_service_grpc_staff_protobuf_staff_proto_msgTypes[10]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ListStaffResponse_Output) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListStaffResponse_Output) ProtoMessage() {}
+
+func (x *ListStaffResponse_Output) ProtoReflect() protoreflect.Message {
+	mi := &file_service_grpc_staff_protobuf_staff_proto_msgTypes[10]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListStaffResponse_Output.ProtoReflect.Descriptor instead.
+func (*ListStaffResponse_Output) Descriptor() ([]byte, []int) {
+	return file_service_grpc_staff_protobuf_staff_proto_rawDescGZIP(), []int{3, 0}
+}
+
+func (x *ListStaffResponse_Output) GetId() string {
 	if x != nil {
 		return x.Id
 	}
 	return ""
 }
 
-func (x *DeleteStaffResponse) GetName() string {
+func (x *ListStaffResponse_Output) GetName() string {
 	if x != nil {
 		return x.Name
 	}
 	return ""
 }
 
-var File_service_grpc_protobuf_staff_proto protoreflect.FileDescriptor
+var File_service_grpc_staff_protobuf_staff_proto protoreflect.FileDescriptor
 
-var file_service_grpc_protobuf_staff_proto_rawDesc = []byte{
-	0x0a, 0x21, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2f, 0x67, 0x72, 0x70, 0x63, 0x2f, 0x70,
-	0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x73, 0x74, 0x61, 0x66, 0x66, 0x2e, 0x70, 0x72,
-	0x6f, 0x74, 0x6f, 0x12, 0x08, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x22, 0x38, 0x0a,
-	0x12, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x53, 0x74, 0x61, 0x66, 0x66, 0x52, 0x65, 0x71, 0x75,
-	0x65, 0x73, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x02, 0x69, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x22, 0x39, 0x0a, 0x13, 0x43, 0x72, 0x65, 0x61, 0x74,
-	0x65, 0x53, 0x74, 0x61, 0x66, 0x66, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x0e,
-	0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x12,
-	0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61,
-	0x6d, 0x65, 0x22, 0x36, 0x0a, 0x10, 0x4c, 0x69, 0x73, 0x74, 0x53, 0x74, 0x61, 0x66, 0x66, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x22, 0x37, 0x0a, 0x11, 0x4c, 0x69,
-	0x73, 0x74, 0x53, 0x74, 0x61, 0x66, 0x66, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12,
-	0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12,
-	0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e,
-	0x61, 0x6d, 0x65, 0x22, 0x31, 0x0a, 0x10, 0x52, 0x65, 0x61, 0x64, 0x53, 0x74, 0x61, 0x66, 0x66,
-	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1d, 0x0a, 0x0a, 0x63, 0x6f, 0x6d, 0x70, 0x61,
-	0x6e, 0x79, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x63, 0x6f, 0x6d,
-	0x70, 0x61, 0x6e, 0x79, 0x49, 0x64, 0x22, 0x32, 0x0a, 0x11, 0x52, 0x65, 0x61, 0x64, 0x53, 0x74,
-	0x61, 0x66, 0x66, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x1d, 0x0a, 0x0a, 0x63,
-	0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x09, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x49, 0x64, 0x22, 0x38, 0x0a, 0x12, 0x55, 0x70,
-	0x64, 0x61, 0x74, 0x65, 0x53, 0x74, 0x61, 0x66, 0x66, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
-	0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64,
-	0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04,
-	0x6e, 0x61, 0x6d, 0x65, 0x22, 0x39, 0x0a, 0x13, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x53, 0x74,
-	0x61, 0x66, 0x66, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x0e, 0x0a, 0x02, 0x69,
-	0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x6e,
-	0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x22,
-	0x24, 0x0a, 0x12, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x53, 0x74, 0x61, 0x66, 0x66, 0x52, 0x65,
-	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x02, 0x69, 0x64, 0x22, 0x39, 0x0a, 0x13, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x53,
-	0x74, 0x61, 0x66, 0x66, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x0e, 0x0a, 0x02,
+var file_service_grpc_staff_protobuf_staff_proto_rawDesc = []byte{
+	0x0a, 0x27, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2f, 0x67, 0x72, 0x70, 0x63, 0x2f, 0x73,
+	0x74, 0x61, 0x66, 0x66, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x73, 0x74,
+	0x61, 0x66, 0x66, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x08, 0x70, 0x72, 0x6f, 0x74, 0x6f,
+	0x62, 0x75, 0x66, 0x22, 0x69, 0x0a, 0x12, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x53, 0x74, 0x61,
+	0x66, 0x66, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1d, 0x0a, 0x0a, 0x63, 0x6f, 0x6d,
+	0x70, 0x61, 0x6e, 0x79, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x63,
+	0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x49, 0x64, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x10, 0x0a, 0x03,
+	0x74, 0x65, 0x6c, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x74, 0x65, 0x6c, 0x22, 0x39,
+	0x0a, 0x13, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x53, 0x74, 0x61, 0x66, 0x66, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x22, 0x71, 0x0a, 0x10, 0x4c, 0x69, 0x73,
+	0x74, 0x53, 0x74, 0x61, 0x66, 0x66, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x12, 0x0a,
+	0x04, 0x70, 0x61, 0x67, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x70, 0x61, 0x67,
+	0x65, 0x12, 0x19, 0x0a, 0x08, 0x70, 0x65, 0x72, 0x5f, 0x70, 0x61, 0x67, 0x65, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x07, 0x70, 0x65, 0x72, 0x50, 0x61, 0x67, 0x65, 0x12, 0x18, 0x0a, 0x07,
+	0x66, 0x69, 0x6c, 0x74, 0x65, 0x72, 0x73, 0x18, 0x03, 0x20, 0x03, 0x28, 0x09, 0x52, 0x07, 0x66,
+	0x69, 0x6c, 0x74, 0x65, 0x72, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x73, 0x6f, 0x72, 0x74, 0x73, 0x18,
+	0x04, 0x20, 0x03, 0x28, 0x09, 0x52, 0x05, 0x73, 0x6f, 0x72, 0x74, 0x73, 0x22, 0x91, 0x01, 0x0a,
+	0x11, 0x4c, 0x69, 0x73, 0x74, 0x53, 0x74, 0x61, 0x66, 0x66, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x03, 0x52, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x12, 0x38, 0x0a, 0x05, 0x69, 0x74, 0x65, 0x6d,
+	0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x22, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62,
+	0x75, 0x66, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x53, 0x74, 0x61, 0x66, 0x66, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x2e, 0x4f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x52, 0x05, 0x69, 0x74, 0x65,
+	0x6d, 0x73, 0x1a, 0x2c, 0x0a, 0x06, 0x4f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x12, 0x0e, 0x0a, 0x02,
 	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x12, 0x0a, 0x04,
 	0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65,
-	0x32, 0xe9, 0x02, 0x0a, 0x10, 0x53, 0x74, 0x61, 0x66, 0x66, 0x47, 0x72, 0x70, 0x63, 0x53, 0x65,
-	0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x3f, 0x0a, 0x04, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x1a, 0x2e,
-	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x53, 0x74, 0x61,
-	0x66, 0x66, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1b, 0x2e, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x62, 0x75, 0x66, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x53, 0x74, 0x61, 0x66, 0x66, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x3f, 0x0a, 0x04, 0x52, 0x65, 0x61, 0x64, 0x12, 0x1a,
-	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x52, 0x65, 0x61, 0x64, 0x53, 0x74,
-	0x61, 0x66, 0x66, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1b, 0x2e, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x52, 0x65, 0x61, 0x64, 0x53, 0x74, 0x61, 0x66, 0x66, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x45, 0x0a, 0x06, 0x43, 0x72, 0x65, 0x61, 0x74,
-	0x65, 0x12, 0x1c, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x43, 0x72, 0x65,
-	0x61, 0x74, 0x65, 0x53, 0x74, 0x61, 0x66, 0x66, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a,
-	0x1d, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74,
-	0x65, 0x53, 0x74, 0x61, 0x66, 0x66, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x45,
-	0x0a, 0x06, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x12, 0x1c, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x62, 0x75, 0x66, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x53, 0x74, 0x61, 0x66, 0x66, 0x52,
+	0x22, 0x2d, 0x0a, 0x10, 0x52, 0x65, 0x61, 0x64, 0x53, 0x74, 0x61, 0x66, 0x66, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x12, 0x19, 0x0a, 0x08, 0x73, 0x74, 0x61, 0x66, 0x66, 0x5f, 0x69, 0x64,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x73, 0x74, 0x61, 0x66, 0x66, 0x49, 0x64, 0x22,
+	0x37, 0x0a, 0x11, 0x52, 0x65, 0x61, 0x64, 0x53, 0x74, 0x61, 0x66, 0x66, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x02, 0x69, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x22, 0x69, 0x0a, 0x12, 0x55, 0x70, 0x64, 0x61,
+	0x74, 0x65, 0x53, 0x74, 0x61, 0x66, 0x66, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1d,
+	0x0a, 0x0a, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x09, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x49, 0x64, 0x12, 0x0e, 0x0a,
+	0x02, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x12, 0x0a,
+	0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d,
+	0x65, 0x12, 0x10, 0x0a, 0x03, 0x74, 0x65, 0x6c, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03,
+	0x74, 0x65, 0x6c, 0x22, 0x15, 0x0a, 0x13, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x53, 0x74, 0x61,
+	0x66, 0x66, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x24, 0x0a, 0x12, 0x44, 0x65,
+	0x6c, 0x65, 0x74, 0x65, 0x53, 0x74, 0x61, 0x66, 0x66, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64,
+	0x22, 0x15, 0x0a, 0x13, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x53, 0x74, 0x61, 0x66, 0x66, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x32, 0xe9, 0x02, 0x0a, 0x10, 0x53, 0x74, 0x61, 0x66,
+	0x66, 0x47, 0x72, 0x70, 0x63, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x3f, 0x0a, 0x04,
+	0x4c, 0x69, 0x73, 0x74, 0x12, 0x1a, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e,
+	0x4c, 0x69, 0x73, 0x74, 0x53, 0x74, 0x61, 0x66, 0x66, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x1a, 0x1b, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x4c, 0x69, 0x73, 0x74,
+	0x53, 0x74, 0x61, 0x66, 0x66, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x3f, 0x0a,
+	0x04, 0x52, 0x65, 0x61, 0x64, 0x12, 0x1a, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66,
+	0x2e, 0x52, 0x65, 0x61, 0x64, 0x53, 0x74, 0x61, 0x66, 0x66, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x1a, 0x1b, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x52, 0x65, 0x61,
+	0x64, 0x53, 0x74, 0x61, 0x66, 0x66, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x45,
+	0x0a, 0x06, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x12, 0x1c, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f,
+	0x62, 0x75, 0x66, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x53, 0x74, 0x61, 0x66, 0x66, 0x52,
 	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1d, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75,
-	0x66, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x53, 0x74, 0x61, 0x66, 0x66, 0x52, 0x65, 0x73,
-	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x45, 0x0a, 0x06, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x12,
-	0x1c, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74,
+	0x66, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x53, 0x74, 0x61, 0x66, 0x66, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x45, 0x0a, 0x06, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x12,
+	0x1c, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74,
 	0x65, 0x53, 0x74, 0x61, 0x66, 0x66, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1d, 0x2e,
-	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x53,
-	0x74, 0x61, 0x66, 0x66, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0x0b, 0x5a, 0x09,
-	0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x33,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x53,
+	0x74, 0x61, 0x66, 0x66, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x45, 0x0a, 0x06,
+	0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x12, 0x1c, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75,
+	0x66, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x53, 0x74, 0x61, 0x66, 0x66, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x1a, 0x1d, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e,
+	0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x53, 0x74, 0x61, 0x66, 0x66, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x42, 0x0b, 0x5a, 0x09, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66,
+	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
-	file_service_grpc_protobuf_staff_proto_rawDescOnce sync.Once
-	file_service_grpc_protobuf_staff_proto_rawDescData = file_service_grpc_protobuf_staff_proto_rawDesc
+	file_service_grpc_staff_protobuf_staff_proto_rawDescOnce sync.Once
+	file_service_grpc_staff_protobuf_staff_proto_rawDescData = file_service_grpc_staff_protobuf_staff_proto_rawDesc
 )
 
-func file_service_grpc_protobuf_staff_proto_rawDescGZIP() []byte {
-	file_service_grpc_protobuf_staff_proto_rawDescOnce.Do(func() {
-		file_service_grpc_protobuf_staff_proto_rawDescData = protoimpl.X.CompressGZIP(file_service_grpc_protobuf_staff_proto_rawDescData)
+func file_service_grpc_staff_protobuf_staff_proto_rawDescGZIP() []byte {
+	file_service_grpc_staff_protobuf_staff_proto_rawDescOnce.Do(func() {
+		file_service_grpc_staff_protobuf_staff_proto_rawDescData = protoimpl.X.CompressGZIP(file_service_grpc_staff_protobuf_staff_proto_rawDescData)
 	})
-	return file_service_grpc_protobuf_staff_proto_rawDescData
+	return file_service_grpc_staff_protobuf_staff_proto_rawDescData
 }
 
-var file_service_grpc_protobuf_staff_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
-var file_service_grpc_protobuf_staff_proto_goTypes = []interface{}{
-	(*CreateStaffRequest)(nil),  // 0: protobuf.CreateStaffRequest
-	(*CreateStaffResponse)(nil), // 1: protobuf.CreateStaffResponse
-	(*ListStaffRequest)(nil),    // 2: protobuf.ListStaffRequest
-	(*ListStaffResponse)(nil),   // 3: protobuf.ListStaffResponse
-	(*ReadStaffRequest)(nil),    // 4: protobuf.ReadStaffRequest
-	(*ReadStaffResponse)(nil),   // 5: protobuf.ReadStaffResponse
-	(*UpdateStaffRequest)(nil),  // 6: protobuf.UpdateStaffRequest
-	(*UpdateStaffResponse)(nil), // 7: protobuf.UpdateStaffResponse
-	(*DeleteStaffRequest)(nil),  // 8: protobuf.DeleteStaffRequest
-	(*DeleteStaffResponse)(nil), // 9: protobuf.DeleteStaffResponse
+var file_service_grpc_staff_protobuf_staff_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
+var file_service_grpc_staff_protobuf_staff_proto_goTypes = []interface{}{
+	(*CreateStaffRequest)(nil),       // 0: protobuf.CreateStaffRequest
+	(*CreateStaffResponse)(nil),      // 1: protobuf.CreateStaffResponse
+	(*ListStaffRequest)(nil),         // 2: protobuf.ListStaffRequest
+	(*ListStaffResponse)(nil),        // 3: protobuf.ListStaffResponse
+	(*ReadStaffRequest)(nil),         // 4: protobuf.ReadStaffRequest
+	(*ReadStaffResponse)(nil),        // 5: protobuf.ReadStaffResponse
+	(*UpdateStaffRequest)(nil),       // 6: protobuf.UpdateStaffRequest
+	(*UpdateStaffResponse)(nil),      // 7: protobuf.UpdateStaffResponse
+	(*DeleteStaffRequest)(nil),       // 8: protobuf.DeleteStaffRequest
+	(*DeleteStaffResponse)(nil),      // 9: protobuf.DeleteStaffResponse
+	(*ListStaffResponse_Output)(nil), // 10: protobuf.ListStaffResponse.Output
 }
-var file_service_grpc_protobuf_staff_proto_depIdxs = []int32{
-	2, // 0: protobuf.StaffGrpcService.List:input_type -> protobuf.ListStaffRequest
-	4, // 1: protobuf.StaffGrpcService.Read:input_type -> protobuf.ReadStaffRequest
-	0, // 2: protobuf.StaffGrpcService.Create:input_type -> protobuf.CreateStaffRequest
-	6, // 3: protobuf.StaffGrpcService.Update:input_type -> protobuf.UpdateStaffRequest
-	8, // 4: protobuf.StaffGrpcService.Delete:input_type -> protobuf.DeleteStaffRequest
-	3, // 5: protobuf.StaffGrpcService.List:output_type -> protobuf.ListStaffResponse
-	5, // 6: protobuf.StaffGrpcService.Read:output_type -> protobuf.ReadStaffResponse
-	1, // 7: protobuf.StaffGrpcService.Create:output_type -> protobuf.CreateStaffResponse
-	7, // 8: protobuf.StaffGrpcService.Update:output_type -> protobuf.UpdateStaffResponse
-	9, // 9: protobuf.StaffGrpcService.Delete:output_type -> protobuf.DeleteStaffResponse
-	5, // [5:10] is the sub-list for method output_type
-	0, // [0:5] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+var file_service_grpc_staff_protobuf_staff_proto_depIdxs = []int32{
+	10, // 0: protobuf.ListStaffResponse.items:type_name -> protobuf.ListStaffResponse.Output
+	2,  // 1: protobuf.StaffGrpcService.List:input_type -> protobuf.ListStaffRequest
+	4,  // 2: protobuf.StaffGrpcService.Read:input_type -> protobuf.ReadStaffRequest
+	0,  // 3: protobuf.StaffGrpcService.Create:input_type -> protobuf.CreateStaffRequest
+	6,  // 4: protobuf.StaffGrpcService.Update:input_type -> protobuf.UpdateStaffRequest
+	8,  // 5: protobuf.StaffGrpcService.Delete:input_type -> protobuf.DeleteStaffRequest
+	3,  // 6: protobuf.StaffGrpcService.List:output_type -> protobuf.ListStaffResponse
+	5,  // 7: protobuf.StaffGrpcService.Read:output_type -> protobuf.ReadStaffResponse
+	1,  // 8: protobuf.StaffGrpcService.Create:output_type -> protobuf.CreateStaffResponse
+	7,  // 9: protobuf.StaffGrpcService.Update:output_type -> protobuf.UpdateStaffResponse
+	9,  // 10: protobuf.StaffGrpcService.Delete:output_type -> protobuf.DeleteStaffResponse
+	6,  // [6:11] is the sub-list for method output_type
+	1,  // [1:6] is the sub-list for method input_type
+	1,  // [1:1] is the sub-list for extension type_name
+	1,  // [1:1] is the sub-list for extension extendee
+	0,  // [0:1] is the sub-list for field type_name
 }
 
-func init() { file_service_grpc_protobuf_staff_proto_init() }
-func file_service_grpc_protobuf_staff_proto_init() {
-	if File_service_grpc_protobuf_staff_proto != nil {
+func init() { file_service_grpc_staff_protobuf_staff_proto_init() }
+func file_service_grpc_staff_protobuf_staff_proto_init() {
+	if File_service_grpc_staff_protobuf_staff_proto != nil {
 		return
 	}
 	if !protoimpl.UnsafeEnabled {
-		file_service_grpc_protobuf_staff_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
+		file_service_grpc_staff_protobuf_staff_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*CreateStaffRequest); i {
 			case 0:
 				return &v.state
@@ -688,7 +778,7 @@ func file_service_grpc_protobuf_staff_proto_init() {
 				return nil
 			}
 		}
-		file_service_grpc_protobuf_staff_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+		file_service_grpc_staff_protobuf_staff_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*CreateStaffResponse); i {
 			case 0:
 				return &v.state
@@ -700,7 +790,7 @@ func file_service_grpc_protobuf_staff_proto_init() {
 				return nil
 			}
 		}
-		file_service_grpc_protobuf_staff_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+		file_service_grpc_staff_protobuf_staff_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ListStaffRequest); i {
 			case 0:
 				return &v.state
@@ -712,7 +802,7 @@ func file_service_grpc_protobuf_staff_proto_init() {
 				return nil
 			}
 		}
-		file_service_grpc_protobuf_staff_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+		file_service_grpc_staff_protobuf_staff_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ListStaffResponse); i {
 			case 0:
 				return &v.state
@@ -724,7 +814,7 @@ func file_service_grpc_protobuf_staff_proto_init() {
 				return nil
 			}
 		}
-		file_service_grpc_protobuf_staff_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+		file_service_grpc_staff_protobuf_staff_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ReadStaffRequest); i {
 			case 0:
 				return &v.state
@@ -736,7 +826,7 @@ func file_service_grpc_protobuf_staff_proto_init() {
 				return nil
 			}
 		}
-		file_service_grpc_protobuf_staff_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+		file_service_grpc_staff_protobuf_staff_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ReadStaffResponse); i {
 			case 0:
 				return &v.state
@@ -748,7 +838,7 @@ func file_service_grpc_protobuf_staff_proto_init() {
 				return nil
 			}
 		}
-		file_service_grpc_protobuf_staff_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+		file_service_grpc_staff_protobuf_staff_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*UpdateStaffRequest); i {
 			case 0:
 				return &v.state
@@ -760,7 +850,7 @@ func file_service_grpc_protobuf_staff_proto_init() {
 				return nil
 			}
 		}
-		file_service_grpc_protobuf_staff_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+		file_service_grpc_staff_protobuf_staff_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*UpdateStaffResponse); i {
 			case 0:
 				return &v.state
@@ -772,7 +862,7 @@ func file_service_grpc_protobuf_staff_proto_init() {
 				return nil
 			}
 		}
-		file_service_grpc_protobuf_staff_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+		file_service_grpc_staff_protobuf_staff_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DeleteStaffRequest); i {
 			case 0:
 				return &v.state
@@ -784,8 +874,20 @@ func file_service_grpc_protobuf_staff_proto_init() {
 				return nil
 			}
 		}
-		file_service_grpc_protobuf_staff_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
+		file_service_grpc_staff_protobuf_staff_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DeleteStaffResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_service_grpc_staff_protobuf_staff_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListStaffResponse_Output); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -801,20 +903,20 @@ func file_service_grpc_protobuf_staff_proto_init() {
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: file_service_grpc_protobuf_staff_proto_rawDesc,
+			RawDescriptor: file_service_grpc_staff_protobuf_staff_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   10,
+			NumMessages:   11,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_service_grpc_protobuf_staff_proto_goTypes,
-		DependencyIndexes: file_service_grpc_protobuf_staff_proto_depIdxs,
-		MessageInfos:      file_service_grpc_protobuf_staff_proto_msgTypes,
+		GoTypes:           file_service_grpc_staff_protobuf_staff_proto_goTypes,
+		DependencyIndexes: file_service_grpc_staff_protobuf_staff_proto_depIdxs,
+		MessageInfos:      file_service_grpc_staff_protobuf_staff_proto_msgTypes,
 	}.Build()
-	File_service_grpc_protobuf_staff_proto = out.File
-	file_service_grpc_protobuf_staff_proto_rawDesc = nil
-	file_service_grpc_protobuf_staff_proto_goTypes = nil
-	file_service_grpc_protobuf_staff_proto_depIdxs = nil
+	File_service_grpc_staff_protobuf_staff_proto = out.File
+	file_service_grpc_staff_protobuf_staff_proto_rawDesc = nil
+	file_service_grpc_staff_protobuf_staff_proto_goTypes = nil
+	file_service_grpc_staff_protobuf_staff_proto_depIdxs = nil
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -1038,5 +1140,5 @@ var _StaffGrpcService_serviceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "service/grpc/protobuf/staff.proto",
+	Metadata: "service/grpc/staff/protobuf/staff.proto",
 }

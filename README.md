@@ -82,6 +82,9 @@ docker-compose up -d
 please see in the example code implement jaeger wrap service ```service/company/withtracer```
 
 
+### GRPC service
+
+
 ### Others
 
 - Uber golang style guide [link](https://github.com/uber-go/guide)

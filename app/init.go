@@ -7,8 +7,11 @@ import (
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/app/company"
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/app/staff"
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/config"
-	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/grpc/company/implement"
-	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/grpc/company/protobuf"
+	compImpl "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/grpc/company/implement"
+	pbComp "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/grpc/company/protobuf"
+	staffImpl "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/grpc/staff/implement"
+	pbStaff "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/grpc/staff/protobuf"
+
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/util"
 	validatorService "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/validator"
 	"google.golang.org/grpc"
@@ -35,8 +38,9 @@ func New(staffService staffService.Service, companyService companyService.Servic
 	}
 }
 
-func NewGrpcServer(appConfig *config.Config, uuid util.UUID, repo util.Repository, validator validatorService.Validator) {
-	companyServiceServer := implement.NewCompanyGrpcService(validator, repo, uuid)
+func NewGrpcServer(appConfig *config.Config, uuid util.UUID, compRepo util.Repository, staffRep util.Repository, validator validatorService.Validator) {
+	companyServiceServer := compImpl.NewCompanyGrpcService(validator, compRepo, uuid)
+	staffServiceServer := staffImpl.NewStaffGrpcService(validator, staffRep, uuid)
 
 	lis, err := net.Listen(NETWORK, appConfig.GRPCAddress)
 	if err != nil {
@@ -44,7 +48,8 @@ func NewGrpcServer(appConfig *config.Config, uuid util.UUID, repo util.Repositor
 	}
 
 	grpcServer := grpc.NewServer()
-	protobuf.RegisterCompanyGrpcServiceServer(grpcServer, companyServiceServer)
+	pbComp.RegisterCompanyGrpcServiceServer(grpcServer, companyServiceServer)
+	pbStaff.RegisterStaffGrpcServiceServer(grpcServer, staffServiceServer)
 
 	if err = grpcServer.Serve(lis); err != nil {
 		panic(err)

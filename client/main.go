@@ -34,10 +34,10 @@ func RegisterRoute(r *gin.Engine) {
 		apiRoutes.PUT("/companies/:id", companyHandlers.UpdateCompany)
 		apiRoutes.DELETE("/companies/:id", companyHandlers.DeleteCompany)
 
-		apiRoutes.GET("/companies", staffHandlers.ListStaff)
-		apiRoutes.GET("/companies/:id", staffHandlers.ReadStaff)
-		apiRoutes.POST("/companies", staffHandlers.CreateStaff)
-		apiRoutes.PUT("/companies/:id", staffHandlers.UpdateStaff)
-		apiRoutes.DELETE("/companies/:id", staffHandlers.DeleteStaff)
+		apiRoutes.GET("/staff", staffHandlers.ListStaff)
+		apiRoutes.GET("/staff/:id", staffHandlers.ReadStaff)
+		apiRoutes.POST("/staff", staffHandlers.CreateStaff)
+		apiRoutes.PUT("/staff/:id", staffHandlers.UpdateStaff)
+		apiRoutes.DELETE("/staff/:id", staffHandlers.DeleteStaff)
 	}
 }

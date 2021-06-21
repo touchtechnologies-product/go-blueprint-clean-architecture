@@ -62,7 +62,7 @@ func newApp(appConfig *config.Config) *app.App {
 	staff := staffService.New(validator, sRepo, generateID)
 
 	// Start GRPC server
-	go app.NewGrpcServer(appConfig, generateID, cRepo, validator)
+	go app.NewGrpcServer(appConfig, generateID, cRepo, sRepo, validator)
 	time.Sleep(1 * time.Second)
 
 	return app.New(staff, company)

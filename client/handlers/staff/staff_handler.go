@@ -2,6 +2,7 @@ package staff
 
 import (
 	"context"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	pb "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/grpc/staff/protobuf"
 )
@@ -9,7 +10,7 @@ import (
 func (impl *implement) CreateStaff(c *gin.Context) {
 	ctx := context.Background()
 	client := impl.conn
-	grpcCompanyClient := pb.NewStaffGrpcServiceClient(client)
+	grpcStaffClient := pb.NewStaffGrpcServiceClient(client)
 
 	input := &pb.CreateStaffRequest{}
 	if err := c.ShouldBindJSON(input); err != nil {
@@ -17,8 +18,10 @@ func (impl *implement) CreateStaff(c *gin.Context) {
 		return
 	}
 
-	output, err := grpcCompanyClient.Create(ctx, input)
+	output, err := grpcStaffClient.Create(ctx, input)
+	fmt.Println(output)
 	if err != nil {
+		fmt.Println(err.Error())
 		c.JSON(500, gin.H{"success": false, "code": 500, "msg": err.Error(), "data": new(pb.CreateStaffResponse)})
 		return
 	}
@@ -35,7 +38,7 @@ func (impl *implement) CreateStaff(c *gin.Context) {
 func (impl *implement) ListStaff(c *gin.Context) {
 	ctx := context.Background()
 	client := impl.conn
-	grpcCompanyClient := pb.NewStaffGrpcServiceClient(client)
+	grpcStaffClient := pb.NewStaffGrpcServiceClient(client)
 
 	input := &pb.ListStaffRequest{}
 	if err := c.ShouldBindQuery(input); err != nil {
@@ -43,7 +46,7 @@ func (impl *implement) ListStaff(c *gin.Context) {
 		return
 	}
 
-	output, err := grpcCompanyClient.List(ctx, input)
+	output, err := grpcStaffClient.List(ctx, input)
 	if err != nil {
 		c.JSON(500, gin.H{"success": false, "code": 500, "msg": err.Error(), "data": new(pb.ListStaffRequest)})
 		return
@@ -63,10 +66,10 @@ func (impl *implement) ListStaff(c *gin.Context) {
 func (impl *implement) ReadStaff(c *gin.Context) {
 	ctx := context.Background()
 	client := impl.conn
-	grpcCompanyClient := pb.NewStaffGrpcServiceClient(client)
+	grpcStaffClient := pb.NewStaffGrpcServiceClient(client)
 
 	input := &pb.UpdateStaffRequest{}
-	output, err := grpcCompanyClient.Update(ctx, input)
+	output, err := grpcStaffClient.Update(ctx, input)
 	if err != nil {
 		c.JSON(200, gin.H{"success": true, "code": 404, "msg": "Data not found", "data": new(pb.UpdateStaffResponse)})
 		return
@@ -79,7 +82,7 @@ func (impl *implement) ReadStaff(c *gin.Context) {
 func (impl *implement) UpdateStaff(c *gin.Context) {
 	ctx := context.Background()
 	client := impl.conn
-	grpcCompanyClient := pb.NewStaffGrpcServiceClient(client)
+	grpcStaffClient := pb.NewStaffGrpcServiceClient(client)
 
 	input := &pb.UpdateStaffRequest{Id: c.Param("id")}
 
@@ -88,7 +91,7 @@ func (impl *implement) UpdateStaff(c *gin.Context) {
 		return
 	}
 
-	output, err := grpcCompanyClient.Update(ctx, input)
+	output, err := grpcStaffClient.Update(ctx, input)
 	if err != nil {
 		c.JSON(500, gin.H{"success": false, "code": 500, "msg": err.Error(), "data": new(pb.UpdateStaffResponse)})
 		return
@@ -101,11 +104,11 @@ func (impl *implement) UpdateStaff(c *gin.Context) {
 func (impl *implement) DeleteStaff(c *gin.Context) {
 	ctx := context.Background()
 	client := impl.conn
-	grpcCompanyClient := pb.NewStaffGrpcServiceClient(client)
+	grpcStaffClient := pb.NewStaffGrpcServiceClient(client)
 
 	input := &pb.DeleteStaffRequest{Id: c.Param("id")}
 
-	_, err := grpcCompanyClient.Delete(ctx, input)
+	_, err := grpcStaffClient.Delete(ctx, input)
 	if err != nil {
 		c.JSON(500, gin.H{"success": false, "code": 500, "msg": err.Error(), "data": new(pb.DeleteStaffResponse)})
 		return

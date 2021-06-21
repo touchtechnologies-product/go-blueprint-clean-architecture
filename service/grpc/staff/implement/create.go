@@ -19,7 +19,7 @@ func (impl *implementation) Create(ctx context.Context, input *pb.CreateStaffReq
 
 	_, err = impl.repo.Create(ctx, staff)
 	if err != nil {
-		return nil, util.RepoCreateErr(err)
+		return nil, err
 	}
 
 	return out.OutputCreateStaffGrpc(staff), nil

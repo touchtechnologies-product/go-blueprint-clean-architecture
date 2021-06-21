@@ -68,8 +68,8 @@ func (impl *implement) ReadStaff(c *gin.Context) {
 	client := impl.conn
 	grpcStaffClient := pb.NewStaffGrpcServiceClient(client)
 
-	input := &pb.UpdateStaffRequest{}
-	output, err := grpcStaffClient.Update(ctx, input)
+	input := &pb.ReadStaffRequest{StaffId: c.Param("id")}
+	output, err := grpcStaffClient.Read(ctx, input)
 	if err != nil {
 		c.JSON(200, gin.H{"success": true, "code": 404, "msg": "Data not found", "data": new(pb.UpdateStaffResponse)})
 		return
@@ -114,6 +114,6 @@ func (impl *implement) DeleteStaff(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{"success": true, "code": 200, "msg": "", "data": new(pb.DeleteStaffResponse)})
+	c.JSON(200, gin.H{"success": true, "code": 200, "msg": "Deleted", "data": new(pb.DeleteStaffResponse)})
 	return
 }

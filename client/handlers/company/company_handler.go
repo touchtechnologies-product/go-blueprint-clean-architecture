@@ -65,10 +65,10 @@ func (impl *implement) ReadCompany(c *gin.Context) {
 	client := impl.conn
 	grpcCompanyClient := pb.NewCompanyGrpcServiceClient(client)
 
-	input := &pb.UpdateCompanyRequest{}
-	output, err := grpcCompanyClient.Update(ctx, input)
+	input := &pb.ReadCompanyRequest{CompanyId: c.Param("id")}
+	output, err := grpcCompanyClient.Read(ctx, input)
 	if err != nil {
-		c.JSON(200, gin.H{"success": true, "code": 404, "msg": "Data not found", "data": new(pb.UpdateCompanyResponse)})
+		c.JSON(200, gin.H{"success": true, "code": 404, "msg": "Data not found", "data": new(pb.ReadCompanyResponse)})
 		return
 	}
 
@@ -111,6 +111,6 @@ func (impl *implement) DeleteCompany(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{"success": true, "code": 200, "msg": "", "data": new(pb.DeleteCompanyRequest)})
+	c.JSON(200, gin.H{"success": true, "code": 200, "msg": "Deleted", "data": new(pb.DeleteCompanyRequest)})
 	return
 }

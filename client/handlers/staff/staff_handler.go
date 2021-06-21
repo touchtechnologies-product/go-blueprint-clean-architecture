@@ -3,7 +3,6 @@ package staff
 import (
 	"context"
 	"github.com/gin-gonic/gin"
-	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/grpc/company/protobuf"
 	pb "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/grpc/staff/protobuf"
 )
 
@@ -36,17 +35,17 @@ func (impl *implement) CreateStaff(c *gin.Context) {
 func (impl *implement) ListStaff(c *gin.Context) {
 	ctx := context.Background()
 	client := impl.conn
-	grpcCompanyClient := protobuf.NewCompanyGrpcServiceClient(client)
+	grpcCompanyClient := pb.NewStaffGrpcServiceClient(client)
 
-	input := &protobuf.ListCompanyRequest{}
+	input := &pb.ListStaffRequest{}
 	if err := c.ShouldBindQuery(input); err != nil {
-		c.JSON(400, gin.H{"success": false, "code": 400, "msg": err.Error(), "data": new(protobuf.ListCompanyResponse)})
+		c.JSON(400, gin.H{"success": false, "code": 400, "msg": err.Error(), "data": new(pb.ListStaffRequest)})
 		return
 	}
 
 	output, err := grpcCompanyClient.List(ctx, input)
 	if err != nil {
-		c.JSON(500, gin.H{"success": false, "code": 500, "msg": err.Error(), "data": new(protobuf.ListCompanyResponse)})
+		c.JSON(500, gin.H{"success": false, "code": 500, "msg": err.Error(), "data": new(pb.ListStaffRequest)})
 		return
 	} else {
 
@@ -57,19 +56,19 @@ func (impl *implement) ListStaff(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{"success": true, "code": 404, "msg": "Data not found", "data": new(protobuf.ListCompanyResponse)})
+	c.JSON(200, gin.H{"success": true, "code": 404, "msg": "Data not found", "data": new(pb.ListStaffRequest)})
 	return
 }
 
 func (impl *implement) ReadStaff(c *gin.Context) {
 	ctx := context.Background()
 	client := impl.conn
-	grpcCompanyClient := protobuf.NewCompanyGrpcServiceClient(client)
+	grpcCompanyClient := pb.NewStaffGrpcServiceClient(client)
 
-	input := &protobuf.UpdateCompanyRequest{}
+	input := &pb.UpdateStaffRequest{}
 	output, err := grpcCompanyClient.Update(ctx, input)
 	if err != nil {
-		c.JSON(200, gin.H{"success": true, "code": 404, "msg": "Data not found", "data": new(protobuf.UpdateCompanyResponse)})
+		c.JSON(200, gin.H{"success": true, "code": 404, "msg": "Data not found", "data": new(pb.UpdateStaffResponse)})
 		return
 	}
 
@@ -80,18 +79,18 @@ func (impl *implement) ReadStaff(c *gin.Context) {
 func (impl *implement) UpdateStaff(c *gin.Context) {
 	ctx := context.Background()
 	client := impl.conn
-	grpcCompanyClient := protobuf.NewCompanyGrpcServiceClient(client)
+	grpcCompanyClient := pb.NewStaffGrpcServiceClient(client)
 
-	input := &protobuf.UpdateCompanyRequest{Id: c.Param("id")}
+	input := &pb.UpdateStaffRequest{Id: c.Param("id")}
 
 	if err := c.ShouldBindJSON(input); err != nil {
-		c.JSON(400, gin.H{"success": false, "code": 400, "msg": err.Error(), "data": new(protobuf.UpdateCompanyResponse)})
+		c.JSON(400, gin.H{"success": false, "code": 400, "msg": err.Error(), "data": new(pb.UpdateStaffResponse)})
 		return
 	}
 
 	output, err := grpcCompanyClient.Update(ctx, input)
 	if err != nil {
-		c.JSON(500, gin.H{"success": false, "code": 500, "msg": err.Error(), "data": new(protobuf.UpdateCompanyResponse)})
+		c.JSON(500, gin.H{"success": false, "code": 500, "msg": err.Error(), "data": new(pb.UpdateStaffResponse)})
 		return
 	}
 
@@ -102,16 +101,16 @@ func (impl *implement) UpdateStaff(c *gin.Context) {
 func (impl *implement) DeleteStaff(c *gin.Context) {
 	ctx := context.Background()
 	client := impl.conn
-	grpcCompanyClient := protobuf.NewCompanyGrpcServiceClient(client)
+	grpcCompanyClient := pb.NewStaffGrpcServiceClient(client)
 
-	input := &protobuf.DeleteCompanyRequest{Id: c.Param("id")}
+	input := &pb.DeleteStaffRequest{Id: c.Param("id")}
 
 	_, err := grpcCompanyClient.Delete(ctx, input)
 	if err != nil {
-		c.JSON(500, gin.H{"success": false, "code": 500, "msg": err.Error(), "data": new(protobuf.DeleteCompanyRequest)})
+		c.JSON(500, gin.H{"success": false, "code": 500, "msg": err.Error(), "data": new(pb.DeleteStaffResponse)})
 		return
 	}
 
-	c.JSON(200, gin.H{"success": true, "code": 200, "msg": "", "data": new(protobuf.DeleteCompanyRequest)})
+	c.JSON(200, gin.H{"success": true, "code": 200, "msg": "", "data": new(pb.DeleteStaffResponse)})
 	return
 }

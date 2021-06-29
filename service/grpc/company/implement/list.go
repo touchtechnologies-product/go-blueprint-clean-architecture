@@ -3,15 +3,15 @@ package implement
 import (
 	"context"
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/domain"
-	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/company/companyin"
-	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/company/out"
+	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/grpc/company/companyin"
+	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/grpc/company/out"
 	pb "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/grpc/company/protobuf"
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/util"
 )
 
 func (impl *implementation) List(ctx context.Context, optGrpc *pb.ListCompanyRequest) (items *pb.ListCompanyResponse, err error) {
 
-	opt := companyin.CreateInputPageOptGrpcToPageOtpDomain(optGrpc)
+	opt := companyin.CreateInputPageOptGRPCToPageOtpDomain(optGrpc)
 	total, records, err := impl.repo.List(ctx, opt, &domain.Company{})
 	if err != nil {
 		return nil, util.RepoListErr(err)

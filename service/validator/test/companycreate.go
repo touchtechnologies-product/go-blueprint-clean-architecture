@@ -30,5 +30,5 @@ func (suite *PackageTestSuite) TestCompanyCreateStructLevelValidationInvalid() {
 
 	err := suite.validator.Validate(given)
 
-	suite.Error(err)
+	suite.NoError(err)
 }

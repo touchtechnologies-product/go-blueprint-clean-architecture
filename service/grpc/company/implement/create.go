@@ -2,8 +2,8 @@ package implement
 
 import (
 	"context"
-	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/company/companyin"
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/company/out"
+	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/grpc/company/companyin"
 	pb "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/grpc/company/protobuf"
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/util"
 )
@@ -15,7 +15,7 @@ func (impl *implementation) Create(ctx context.Context, input *pb.CreateCompanyR
 	}
 
 	input.Id = impl.uuid.Generate()
-	company := companyin.CreateInputGrpcToCompanyInputDomain(input)
+	company := companyin.CreateInputGRPCToCompanyInputDomain(input)
 
 	_, err = impl.repo.Create(ctx, company)
 	if err != nil {

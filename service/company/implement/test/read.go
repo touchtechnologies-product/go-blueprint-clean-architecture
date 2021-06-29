@@ -1,10 +1,9 @@
 package test
 
 import (
+	"github.com/stretchr/testify/mock"
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/domain"
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/company/companyin"
-
-	"github.com/stretchr/testify/mock"
 )
 
 func (suite *PackageTestSuite) TestRead() {

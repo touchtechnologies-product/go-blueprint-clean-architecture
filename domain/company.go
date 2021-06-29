@@ -7,7 +7,6 @@ type Company struct {
 
 func MakeTestCompany() (company *Company) {
 	return &Company{
-		ID:   "test",
 		Name: "test",
 	}
 }

@@ -3,7 +3,7 @@ package implement
 import (
 	"context"
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/domain"
-	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/company/out"
+	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/grpc/company/out"
 	pb "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/grpc/company/protobuf"
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/util"
 )
@@ -16,6 +16,5 @@ func (impl *implementation) Read(ctx context.Context, input *pb.ReadCompanyReque
 		return nil, util.RepoReadErr(err)
 	}
 
-	view = out.SingleItemSingleItemGrpcView(company)
-	return
+	return out.SingleItemSingleItemGrpcView(company), nil
 }

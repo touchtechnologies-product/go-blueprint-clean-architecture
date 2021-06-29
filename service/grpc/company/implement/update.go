@@ -2,8 +2,9 @@ package implement
 
 import (
 	"context"
-	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/company/companyin"
+	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/grpc/company/companyin"
 	pb "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/grpc/company/protobuf"
+	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/util"
 
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/domain"
 )
@@ -11,7 +12,7 @@ import (
 func (impl *implementation) Update(ctx context.Context, input *pb.UpdateCompanyRequest) (item *pb.UpdateCompanyResponse, err error) {
 	err = impl.validator.Validate(input)
 	if err != nil {
-		return nil, err
+		return nil, util.ValidationUpdateErr(err)
 	}
 
 	filters := makeCompanyIDFilters(input.Id)
@@ -19,15 +20,14 @@ func (impl *implementation) Update(ctx context.Context, input *pb.UpdateCompanyR
 	company := &domain.Company{}
 	err = impl.repo.Read(ctx, filters, company)
 	if err != nil {
-		return nil, err
+		return nil, util.RepoReadErr(err)
 	}
 
-	update := companyin.UpdateInputGrpcToCompanyInputDomain(input)
-	company.Name = update.Name
+	update := companyin.UpdateInputGRPCToCompanyInputDomain(input)
 
-	err = impl.repo.Update(ctx, filters, company)
+	err = impl.repo.Update(ctx, filters, update)
 	if err != nil {
-		return nil, err
+		return nil, util.RepoUpdateErr(err)
 	}
 
 	return new(pb.UpdateCompanyResponse), nil

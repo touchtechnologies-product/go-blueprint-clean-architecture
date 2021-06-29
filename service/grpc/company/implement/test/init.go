@@ -3,8 +3,8 @@ package test
 import (
 	"context"
 	"fmt"
-	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/company"
-	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/company/implement"
+	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/grpc/company"
+	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/grpc/company/implement"
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/util/mocks"
 	validatorMocks "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/validator/mocks"
 
@@ -26,7 +26,7 @@ func (suite *PackageTestSuite) SetupTest() {
 	suite.validator = &validatorMocks.Validator{}
 	suite.uuid = &mocks.UUID{}
 	suite.repo = &mocks.Repository{}
-	suite.service = implement.New(suite.validator, suite.repo, suite.uuid)
+	suite.service = implement.NewCompanyGrpcService(suite.validator, suite.repo, suite.uuid)
 }
 
 func (suite *PackageTestSuite) makeCompanyIDFilter(companyID string) (filters []string) {

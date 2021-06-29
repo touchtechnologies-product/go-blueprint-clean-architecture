@@ -30,6 +30,7 @@ require (
 	github.com/ugorji/go v1.1.10 // indirect
 	github.com/uniplaces/carbon v0.1.6
 	github.com/urfave/cli/v2 v2.2.0 // indirect
+	github.com/vektra/mockery/v2 v2.9.0 // indirect
 	go.mongodb.org/mongo-driver v1.4.1
 	go.uber.org/atomic v1.7.0 // indirect
 	golang.org/x/crypto v0.0.0-20201002170205-7f63de1d35b0 // indirect

@@ -1,7 +1,9 @@
 package test
 
 import (
+	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/company/companyin"
 	"net/http"
+	"reflect"
 
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/app/view"
 )
@@ -42,7 +44,8 @@ func (suite *PackageTestSuite) TestMakePaginatorRespNoContent() {
 
 func (suite *PackageTestSuite) TestMakeCreatedResp() {
 	newID := "new ID"
-	view.MakeCreatedResp(suite.ctx, newID)
+	company := &companyin.CreateInput{}
+	view.MakeCreatedResp(suite.ctx, newID, reflect.TypeOf(company))
 	suite.Equal(http.StatusCreated, suite.ctx.Writer.Status())
 	suite.Equal(newID, suite.ctx.Writer.Header().Get("Content-Location"))
 }

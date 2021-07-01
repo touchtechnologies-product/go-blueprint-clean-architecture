@@ -6,7 +6,7 @@ type DeleteInput struct {
 	ID string `json:"-" validate:"required"`
 }
 
-func MakeTestDeleteInput() (input *pb.DeleteCompanyRequest) {
+func MakeTestDeleteCompGRPCInput() (input *pb.DeleteCompanyRequest) {
 	return &pb.DeleteCompanyRequest{
 		Id: "test",
 	}

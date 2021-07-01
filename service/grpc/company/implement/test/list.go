@@ -9,8 +9,8 @@ import (
 )
 
 func (suite *PackageTestSuite) TestListCompanyGPRCSuccess() {
-	opt := companyin.MakeTestCreateInputPageOptGRPC()
-	finalOpt := companyin.MakeTestCreateInputPageOptGRPCToPageOtpDomain(opt)
+	opt := companyin.MakeTestCreatePageOptGRPCInput()
+	finalOpt := companyin.MakeTestCreatePageOptGRPCInputToPageOtpDomain(opt)
 	records := companyin.MakeTestRecordCompanyDomain()
 
 	suite.repo.On("List", mock.Anything, finalOpt, &domain.Company{}).Once().Return(len(records), records, nil)
@@ -21,8 +21,8 @@ func (suite *PackageTestSuite) TestListCompanyGPRCSuccess() {
 }
 
 func (suite *PackageTestSuite) TestListCompanyGPRCError() {
-	opt := companyin.MakeTestCreateInputPageOptGRPC()
-	finalOpt := companyin.MakeTestCreateInputPageOptGRPCToPageOtpDomain(opt)
+	opt := companyin.MakeTestCreatePageOptGRPCInput()
+	finalOpt := companyin.MakeTestCreatePageOptGRPCInputToPageOtpDomain(opt)
 	_ = companyin.MakeTestRecordCompanyDomain()
 
 	givenListRepoError := errors.New("REPOSITORY")

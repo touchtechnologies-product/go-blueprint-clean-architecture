@@ -8,8 +8,8 @@ import (
 )
 
 func (suite *PackageTestSuite) TestCreateCompanyGPRCSuccess() {
-	givenInput := companyin.MakeTestCreateGRPCInput()
-	givenCompany := companyin.MakeTestCreateGRPCCompanyToCompanyDomain()
+	givenInput := companyin.MakeTestCreateCompGRPCInput()
+	givenCompany := companyin.MakeTestCreateCompGRPCCToCompanyDomain()
 
 	suite.uuid.On("Generate").Once().Return("")
 	suite.validator.On("Validate", givenInput).Once().Return(nil)
@@ -20,8 +20,8 @@ func (suite *PackageTestSuite) TestCreateCompanyGPRCSuccess() {
 }
 
 func (suite *PackageTestSuite) TestCreateCompanyGPRCError() {
-	givenInput := companyin.MakeTestCreateGRPCInput()
-	givenCompany := companyin.MakeTestCreateGRPCCompanyToCompanyDomain()
+	givenInput := companyin.MakeTestCreateCompGRPCInput()
+	givenCompany := companyin.MakeTestCreateCompGRPCCToCompanyDomain()
 
 	givenCreateRepoError := errors.New("REPOSITORY")
 	expectedError := util.RepoCreateErr(errors.New("REPOSITORY"))
@@ -35,7 +35,7 @@ func (suite *PackageTestSuite) TestCreateCompanyGPRCError() {
 }
 
 func (suite *PackageTestSuite) TestCreateCompanyGPRCValidationError() {
-	givenInput := companyin.MakeTestCreateGRPCInput()
+	givenInput := companyin.MakeTestCreateCompGRPCInput()
 
 	givenValidateError := errors.New("VALIDATION")
 	expectedError := util.ValidationCreateErr(errors.New("VALIDATION"))

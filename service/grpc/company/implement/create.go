@@ -15,7 +15,7 @@ func (impl *implementation) Create(ctx context.Context, input *pb.CreateCompanyR
 	}
 
 	input.Id = impl.uuid.Generate()
-	company := companyin.CreateInputGRPCToCompanyInputDomain(input)
+	company := companyin.CreateCompGRPCInputToCompanyInputDomain(input)
 
 	_, err = impl.repo.Create(ctx, company)
 	if err != nil {

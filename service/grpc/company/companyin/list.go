@@ -25,7 +25,7 @@ func CreateInputPageOptGRPCToPageOtpDomain(opt *pb.ListCompanyRequest) *domain.P
 	}
 }
 
-func MakeTestCreateInputPageOptGRPC() *pb.ListCompanyRequest {
+func MakeTestCreatePageOptGRPCInput() *pb.ListCompanyRequest {
 	return &pb.ListCompanyRequest{
 		Page:    "1",
 		PerPage: "20",
@@ -34,7 +34,7 @@ func MakeTestCreateInputPageOptGRPC() *pb.ListCompanyRequest {
 	}
 }
 
-func MakeTestCreateInputPageOptGRPCToPageOtpDomain(opt *pb.ListCompanyRequest) *domain.PageOption {
+func MakeTestCreatePageOptGRPCInputToPageOtpDomain(opt *pb.ListCompanyRequest) *domain.PageOption {
 	page, err := strconv.Atoi(opt.Page)
 	if err != nil {
 		page = 1

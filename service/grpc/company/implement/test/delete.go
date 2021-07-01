@@ -9,7 +9,7 @@ import (
 )
 
 func (suite *PackageTestSuite) TestDeleteCompanyGPRCSuccess() {
-	givenInput := companyin.MakeTestDeleteInput()
+	givenInput := companyin.MakeTestDeleteCompGRPCInput()
 	givenCompany := &domain.Company{}
 	givenCompanyIDFilter := suite.makeCompanyIDFilter(givenInput.Id)
 
@@ -21,7 +21,7 @@ func (suite *PackageTestSuite) TestDeleteCompanyGPRCSuccess() {
 }
 
 func (suite *PackageTestSuite) TestDeleteCompanyGPRCReadError() {
-	givenInput := companyin.MakeTestDeleteInput()
+	givenInput := companyin.MakeTestDeleteCompGRPCInput()
 	givenCompany := &domain.Company{}
 
 	givenReadRepoError := errors.New("READ REPO ERROR")
@@ -37,7 +37,7 @@ func (suite *PackageTestSuite) TestDeleteCompanyGPRCReadError() {
 }
 
 func (suite *PackageTestSuite) TestDeleteCompanyGPRCError() {
-	givenInput := companyin.MakeTestDeleteInput()
+	givenInput := companyin.MakeTestDeleteCompGRPCInput()
 	givenCompany := &domain.Company{}
 
 	givenDeleteRepoError := errors.New("DELETE REPO ERROR")

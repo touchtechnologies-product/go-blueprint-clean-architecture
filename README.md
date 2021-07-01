@@ -82,7 +82,12 @@ docker-compose up -d
 please see in the example code implement jaeger wrap service ```service/company/withtracer```
 
 
-### GRPC service
+### gRPC service
+- Generate protobuf from staff.proto and company.proto files
+```
+protoc --go_out=plugins=grpc:./service/grpc/company ./service/grpc/company/protobuf/company.proto
+protoc --go_out=plugins=grpc:./service/grpc/staff ./service/grpc/company/protobuf/staff.proto
+```
 
 
 ### Others

@@ -8,7 +8,6 @@ require (
 	github.com/bwmarrin/snowflake v0.3.0
 	github.com/caarlos0/env/v6 v6.3.0
 	github.com/codahale/hdrhistogram v0.9.0 // indirect
-	github.com/cpuguy83/go-md2man/v2 v2.0.0 // indirect
 	github.com/gin-gonic/gin v1.6.3
 	github.com/go-openapi/spec v0.19.9 // indirect
 	github.com/go-openapi/swag v0.19.9 // indirect
@@ -29,8 +28,7 @@ require (
 	github.com/uber/jaeger-lib v2.4.0+incompatible
 	github.com/ugorji/go v1.1.10 // indirect
 	github.com/uniplaces/carbon v0.1.6
-	github.com/urfave/cli/v2 v2.2.0 // indirect
-	go.mongodb.org/mongo-driver v1.4.1
+	go.mongodb.org/mongo-driver v1.5.1
 	go.uber.org/atomic v1.7.0 // indirect
 	golang.org/x/crypto v0.0.0-20201002170205-7f63de1d35b0 // indirect
 	golang.org/x/net v0.0.0-20201006153459-a7d1128ccaa0 // indirect

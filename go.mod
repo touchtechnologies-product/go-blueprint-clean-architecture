@@ -3,11 +3,10 @@ module github.com/touchtechnologies-product/go-blueprint-clean-architecture
 go 1.15
 
 require (
-	github.com/HdrHistogram/hdrhistogram-go v0.9.0 // indirect
+	github.com/HdrHistogram/hdrhistogram-go v1.1.2 // indirect
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/bwmarrin/snowflake v0.3.0
 	github.com/caarlos0/env/v6 v6.3.0
-	github.com/codahale/hdrhistogram v0.9.0 // indirect
 	github.com/gin-gonic/gin v1.6.3
 	github.com/go-openapi/spec v0.19.9 // indirect
 	github.com/go-openapi/swag v0.19.9 // indirect
@@ -19,7 +18,7 @@ require (
 	github.com/mailru/easyjson v0.7.6 // indirect
 	github.com/opentracing/opentracing-go v1.2.0
 	github.com/sirupsen/logrus v1.7.0
-	github.com/stretchr/testify v1.6.1
+	github.com/stretchr/testify v1.7.0
 	github.com/swaggo/files v0.0.0-20190704085106-630677cd5c14
 	github.com/swaggo/gin-swagger v1.2.0
 	github.com/swaggo/swag v1.6.7

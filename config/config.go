@@ -6,6 +6,7 @@ import (
 
 type Config struct {
 	AppName string `env:"APP_NAME" envDefault:"gogo_blueprint"`
+	AppEnv  string `env:"APP_ENV"`
 
 	// MongoDB config
 	MongoDBEndpoint         string `env:"MONGODB_ENDPOINT" envDefault:"mongodb://localhost:27017"`

@@ -2,9 +2,13 @@ package main
 
 import (
 	"context"
-	validatorService "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/validator"
+
+	"github.com/uber/jaeger-client-go/rpcmetrics"
+
 	"io"
 	"log"
+
+	validatorService "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/validator"
 
 	"github.com/opentracing/opentracing-go"
 	"github.com/sirupsen/logrus"
@@ -27,24 +31,28 @@ func setupJaeger(appConfig *config.Config) io.Closer {
 	cfg, err := jaegerConf.FromEnv()
 	panicIfErr(err)
 
-	cfg.ServiceName = appConfig.AppName
+	cfg.ServiceName = appConfig.AppName + "-" + appConfig.AppEnv
 	cfg.Sampler.Type = "const"
 	cfg.Sampler.Param = 1
-	cfg.Reporter = &jaegerConf.ReporterConfig{LogSpans: true}
+	cfg.Reporter = &jaegerConf.ReporterConfig{
+		LogSpans:           true,
+		LocalAgentHostPort: appConfig.JaegerAgentHost + ":" + appConfig.JaegerAgentPort,
+	}
 
 	jLogger := jaegerLog.StdLogger
 	jMetricsFactory := metrics.NullFactory
+	jMetricsFactory = jMetricsFactory.Namespace(metrics.NSOptions{Name: appConfig.AppName + "-" + appConfig.AppEnv, Tags: nil})
 
 	tracer, closer, err := cfg.NewTracer(
 		jaegerConf.Logger(jLogger),
 		jaegerConf.Metrics(jMetricsFactory),
+		jaegerConf.Observer(rpcmetrics.NewObserver(jMetricsFactory, rpcmetrics.DefaultNameNormalizer)),
 	)
 	panicIfErr(err)
 	opentracing.SetGlobalTracer(tracer)
 
 	return closer
 }
-
 func newApp(appConfig *config.Config) *app.App {
 	ctx := context.Background()
 

@@ -9,7 +9,7 @@ import (
 
 func (suite *PackageTestSuite) TestUpdate() {
 	givenInput := companyin.MakeTestUpdateInput()
-	givenCompany := domain.MakeTestCompany()
+	givenCompany := suite.makeDataTestCompany
 	givenCompanyIDFilter := suite.makeCompanyIDFilter(givenInput.ID)
 
 	suite.repo.On("Read", mock.Anything, givenCompanyIDFilter, &domain.Company{}).Once().Return(nil)

@@ -1,7 +1,6 @@
 package test
 
 import (
-	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/domain"
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/staff/staffin"
 
 	"github.com/stretchr/testify/mock"
@@ -9,7 +8,7 @@ import (
 
 func (suite *PackageTestSuite) TestCreate() {
 	givenInput := staffin.MakeTestCreateInput()
-	givenStaff := domain.MakeTestStaff()
+	givenStaff := suite.makeDataTestStaff
 
 	suite.validator.On("Validate", givenInput).Once().Return(nil)
 	suite.repo.On("Create", mock.Anything, givenStaff).Once().Return(givenStaff.ID, nil)

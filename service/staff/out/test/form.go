@@ -1,12 +1,11 @@
 package test
 
 import (
-	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/domain"
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/staff/out"
 )
 
 func (suite *PackageTestSuite) TestStaffToView() {
-	given := domain.MakeTestStaff()
+	given := MakeTestStaff()
 
 	actual := out.StaffToView(given)
 

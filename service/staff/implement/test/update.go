@@ -9,7 +9,7 @@ import (
 
 func (suite *PackageTestSuite) TestUpdate() {
 	givenInput := staffin.MakeTestUpdateInput()
-	givenStaff := domain.MakeTestStaff()
+	givenStaff := suite.makeDataTestStaff
 	givenStaff.CreatedAt = 0
 	givenStaffIDFilter := suite.makeStaffIDFilter(givenInput.ID)
 

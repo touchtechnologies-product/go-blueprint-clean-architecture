@@ -1,7 +1,8 @@
-package implement
+package wrapper
 
 import (
 	"context"
+	"log"
 
 	"github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/company/companyin"
 
@@ -11,6 +12,7 @@ import (
 func (wrp *wrapper) Create(ctx context.Context, input *companyin.CreateInput) (ID string, err error) {
 	sp, ctx := opentracing.StartSpanFromContext(ctx, "service.company.Create")
 	defer sp.Finish()
+	log.Println("fuck")
 
 	sp.LogKV("ID", input.ID)
 	sp.LogKV("Name", input.Name)

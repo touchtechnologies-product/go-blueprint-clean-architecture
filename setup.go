@@ -8,6 +8,8 @@ import (
 	"io"
 	"log"
 
+	companyWrapper "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/company/wrapper"
+	staffWrapper "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/staff/wrapper"
 	validatorService "github.com/touchtechnologies-product/go-blueprint-clean-architecture/service/validator"
 
 	"github.com/opentracing/opentracing-go"
@@ -66,9 +68,10 @@ func newApp(appConfig *config.Config) *app.App {
 	panicIfErr(err)
 
 	company := companyService.New(validator, cRepo, generateID)
+	warpCompany := companyWrapper.WrapCompany(company)
 	staff := staffService.New(validator, sRepo, generateID)
-
-	return app.New(staff, company)
+	wrapperStaff := staffWrapper.WrapperStaff(staff)
+	return app.New(wrapperStaff, warpCompany)
 }
 
 func setupLog() *logrus.Logger {

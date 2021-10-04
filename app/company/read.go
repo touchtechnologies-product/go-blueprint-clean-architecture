@@ -33,6 +33,8 @@ func (ctrl *Controller) Read(c *gin.Context) {
 
 	input := &companyin.ReadInput{CompanyID: c.Param("id")}
 
+	span.LogKV("Input Handler", input)
+
 	company, err := ctrl.service.Read(ctx, input)
 	if err != nil {
 		view.MakeErrResp(c, err)

@@ -38,6 +38,8 @@ func (ctrl *Controller) Create(c *gin.Context) {
 		return
 	}
 
+	span.LogKV("Input Handler", input)
+
 	ID, err := ctrl.service.Create(ctx, input)
 	if err != nil {
 		view.MakeErrResp(c, err)

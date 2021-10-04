@@ -42,6 +42,8 @@ func (ctrl *Controller) List(c *gin.Context) {
 		input.Sorts = append(input.Sorts, "createdAt:desc")
 	}
 
+	span.LogKV("Input Handler", input)
+
 	total, items, err := ctrl.service.List(ctx, input)
 	if err != nil {
 		view.MakeErrResp(c, err)

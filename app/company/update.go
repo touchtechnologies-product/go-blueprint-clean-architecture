@@ -40,10 +40,13 @@ func (ctrl *Controller) Update(c *gin.Context) {
 	input := &companyin.UpdateInput{
 		ID: c.Param("id"),
 	}
+
 	if err := c.ShouldBindJSON(input); err != nil {
 		view.MakeErrResp(c, err)
 		return
 	}
+	
+	span.LogKV("Input Handler", input)
 
 	err := ctrl.service.Update(ctx, input)
 	if err != nil {

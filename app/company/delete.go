@@ -34,8 +34,10 @@ func (ctrl *Controller) Delete(c *gin.Context) {
 	defer span.Finish()
 
 	input := &companyin.DeleteInput{
-		ID:    c.Param("id"),
+		ID: c.Param("id"),
 	}
+
+	span.LogKV("Input Handler", input)
 
 	err := ctrl.service.Delete(ctx, input)
 	if err != nil {

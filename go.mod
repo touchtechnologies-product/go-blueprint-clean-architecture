@@ -29,10 +29,7 @@ require (
 	github.com/uniplaces/carbon v0.1.6
 	go.mongodb.org/mongo-driver v1.5.1
 	go.uber.org/atomic v1.7.0 // indirect
-	golang.org/x/crypto v0.0.0-20201002170205-7f63de1d35b0 // indirect
-	golang.org/x/net v0.0.0-20201006153459-a7d1128ccaa0 // indirect
-	golang.org/x/sys v0.0.0-20201007082116-8445cc04cbdf // indirect
-	golang.org/x/tools v0.0.0-20201007032633-0806396f153e // indirect
+	golang.org/x/net v0.7.0 // indirect
 	google.golang.org/protobuf v1.25.0 // indirect
 	gopkg.in/yaml.v2 v2.3.0 // indirect
 )
